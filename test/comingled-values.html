@@ -1,0 +1,174 @@
+<html>
+
+<head>
+
+<title>Test</title>
+
+<script src="../src/chartlets.js"></script>
+
+<!-- Documentation Style -->
+<style>
+.chartlet{border:1px solid #ddd;margin:2px}body{font-family:Helvetica,Arial;background-color:#fff;padding:20px 50px}header{margin-bottom:50px}footer{font-size:.8em;color:#999}h1,h2,h3{font-family:Helvetica,Arial;font-weight:400;color:#222;margin:0;padding:0}h1{font-size:3.75em}h2{font-size:1.7em}h3{font-size:1.5em;margin-bottom:.25em;color:hsl(336,76%,50%)}p{font-family:Helvetica,Arial}a,a:visited{color:hsl(225,65%,50%)}a:hover{color:hsl(336,76%,50%)}small{font-size:.75em;color:#999}section{margin-bottom:50px}#download{text-align:right;font-size:1.35em;font-weight:700;color:#222}table.examples tr td{padding:0 10px 15px 0}td,th{text-align:left;vertical-align:top}.highlight{background-color:#ffc;border:1px solid #fc3;padding:1px 2px;border-radius:4px}.swatch,.tx{display:inline-block}.swatch p{margin:4px 0;color:#999;font-size:.9em}.tx{margin:10px 10px 10px 0}.tx canvas{display:block;margin-bottom:6px}code,pre{font-family:Monaco,Courier,monospace;font-size:.8em}li strong{color:hsl(336,76%,50%)}@media only screen and (max-width: 480px){body{padding:8px}h1{font-size:3em}code,pre{white-space:pre-wrap;word-break:break-all}td,th{padding:2px}}
+</style>
+
+<style>
+canvas {
+  border: 1px solid #ddd;
+}
+
+table tr td span:first-child{color:red;}
+table tr td span:nth-child(2){color:green;}
+table tr td span:nth-child(3){color:blue;}
+table tr td span:nth-child(4){color:orange;}
+table tr td span:nth-child(5){color:teal;}
+table tr td span:nth-child(6){color:brown;}
+</style>
+
+</head>
+
+<body>
+
+  <h3>Stacked Bar Charts with Commingled Positive Negative Values</h3>
+  <table cellspacing="50">
+    <tr>
+      <td><span>[1 3 -2 4 2 -3 -6]</span><span>[10 8 -6 2 -3 2 2]</span><span>[20 6 -8 6 -5 -5 4]</span></td>
+      <td><span>[1 -1 3 4]</span><span>[2 -3 4 5]</span><span>[3 -4 5 6]</span></td>
+      <td><span>[1 2 3]</span><span>[1.5 -1 3.5]</span></td>
+    </tr>
+
+    <tr>
+      <td>
+        <canvas  class="chartlet" 
+          data-type="bar" 
+          data-colors="red green blue orange teal brown" 
+          data-range="-15 15" 
+          data-sets="[1 3 -2 4 2 -3 -6] [10 8 -6 2 -3 2 2] [20 6 -8 6 -5 -5 4]" 
+          width="400" height="200" 
+          data-opts="transform:stack">
+        </canvas>
+        <div style="padding: 10px; text-align:right;font-size:14px;">Compare <a target="_blank" href="http://jsfiddle.net/x478jnqy/">Fiddle</a></div>
+      </td>
+
+      <td>
+        <canvas  class="chartlet" 
+          data-type="bar" 
+          data-colors="red green blue orange teal brown" 
+          data-sets="[1 -1 3 4] [2 -3 4 5] [3 -4 5 6]" 
+          width="150" height="55" 
+          data-opts="transform:stack">
+        </canvas>
+        <div style="padding: 10px; text-align:right;font-size:14px;">Compare <a target="_blank" href="http://jsfiddle.net/49pnc0co/">Fiddle</a></div>
+      </td>
+
+      <td>
+        <canvas  class="chartlet" 
+          data-type="bar" 
+          data-colors="red green blue orange teal brown" 
+          data-sets="[1 2 3] [1.5 -1 3.5]" 
+          width="150" height="55" 
+          data-opts="transform:stack">
+        </canvas>
+        <div style="padding: 10px; text-align:right;font-size:14px;">Compare <a target="_blank" href="http://jsfiddle.net/q3w1t3g1/">Fiddle</a></div>
+      </td>
+    </tr>
+  </table>
+  <hr /><br /><br />
+
+  <h3>Stacked Line Charts with Commingled Positive Negative Values</h3>
+  <table cellspacing="50">
+    <tr>
+      <td><span>[1 2 3 -7 5 6 7 8 -9 10]</span><span>[10 9 8 -4 6 5 4 3 -2 1]</span></td>
+      <td><span>[1 2 3 -4 5 6 7 8 -9 10]</span><span>[10 9 8 -7 6 5 4 3 -2 1]</span></td>
+      <td><span>[1 2 3 -9 5 6 7 8 -2 10]</span><span>[10 9 8 -7 6 5 4 3 -6 1]</span><span>[20 8 6 -4 6 6 5 4 -8 2]</span></td>
+      <td><span>[1 3 -2 4 2 -3 -6]</span><span>[10 8 -6 2 -3 2 2]</span><span>[20 6 -8 6 -5 -5 4]</span></td>
+    </tr>
+    <tr>
+      <td>
+        <canvas id="test_1a" 
+          class="chartlet" 
+          data-type="line" 
+          data-sets="[1 2 3 -7 5 6 7 8 -9 10] [10 9 8 -4 6 5 4 3 -2 1]" 
+          data-colors="#f00 #0f0" 
+          width="150" 
+          height="55" 
+          data-opts="cap:circle shape:smooth  transform:stack">
+        </canvas>
+      </td>
+
+      <td>
+        <canvas id="test_1b" 
+          class="chartlet" 
+          data-type="line" 
+          data-sets="[1 2 3 -7 5 6 7 8 -9 10] [10 9 8 -4 6 5 4 3 -2 1]" 
+          data-colors="#f00 #0f0" 
+          width="150" 
+          height="55" 
+          data-opts="cap:circle shape:smooth  transform:stack">
+        </canvas>
+      </td>
+
+      <td>
+        <canvas id="test_1b" 
+          class="chartlet" 
+          data-type="line" 
+          data-sets="[1 2 3 -9 5 6 7 8 -2 10] [10 9 8 -7 6 5 4 3 -6 1] [20 8 6 -4 6 6 5 4 -8 2]" 
+          data-colors="#f00 #0f0 #00f" 
+          width="150" 
+          height="55" 
+          data-opts="cap:circle shape:smooth  transform:stack">
+        </canvas>
+      </td>
+
+      <td>
+        <canvas id="test_1b" 
+          class="chartlet" 
+          data-type="line" 
+          data-sets="[1 3 -2 4 2 -3 -6] [10 8 -6 2 -3 2 2] [20 6 -8 6 -5 -5 4]" 
+          data-colors="#f00 #0f0 #00f" 
+          width="400" 
+          height="200" 
+          data-opts="cap:circle shape:smooth  transform:stack">
+        </canvas>
+        <br>
+        Check <a href="http://jsfiddle.net/1wwnces9/">Fiddle</a>
+      </td>
+    </tr>
+  </table>
+  <hr /><br /><br />
+
+  <h3>Line Charts with Commingled Positive Negative Values</h3>
+  <table cellspacing="50">
+    <tr>
+      <td>[1 2 3 -7 5 6 7 8 -9 10] [10 9 8 -4 6 5 4 3 -2 1]</td><td>[1 2 3 -4 5 6 7 8 -9 10] [10 9 8 -7 6 5 4 3 -2 1]</td>
+    </tr>
+    <tr>
+      <td>
+        <canvas id="test_2a" 
+          class="chartlet" 
+          data-type="line" 
+          data-sets="[1 2 3 -7 5 6 7 8 -9 10] [10 9 8 -4 6 5 4 3 -2 1]" 
+          data-colors="#f00 #00f" 
+          width="150" 
+          height="55" 
+          data-opts="cap:circle shape:smooth">
+        </canvas>
+      </td>
+
+      <td>
+        <canvas id="test_2b" 
+          class="chartlet" 
+          data-type="line" 
+          data-sets="[1 2 3 -4 5 6 7 8 -9 10] [10 9 8 -7 6 5 4 3 -2 1]" 
+          data-colors="#f00 #00f" 
+          width="150" 
+          height="55" 
+          data-opts="cap:circle shape:smooth">
+        </canvas>
+      </td>
+    </tr>
+  </table>
+  <hr /><br /><br />
+  <script>
+    Chartlets.render();
+  </script>
+</body>

@@ -32,7 +32,8 @@
   renderers = {
     "line": renderLineChart,
     "bar": renderBarChart,
-    "pie": renderPieChart
+    "pie": renderPieChart,
+    "barline": renderBarLineChart
   };
 
   // Built-in color themes. A theme can have any number of colors (as hex, RGB/A, or HSL/A)
@@ -270,6 +271,25 @@
     return h - (h * ((val - range[0]) / (range[1] - range[0])));
   }
 
+  function getSignedSetIndices(sets, j, s) {
+    var positiveSetIndecies = [];
+    var negativeSetIndecies = [];
+
+    for(i=0; i<sets.length; i++) {
+      if(sets[i][j] >= 0) {
+        positiveSetIndecies.push(i);
+      }else{
+        negativeSetIndecies.push(i);
+      }
+    }
+    
+    if('undefined' == typeof s || s == 'positive') {
+      return positiveSetIndecies;
+    }else {
+      return negativeSetIndecies;
+    }
+  }
+
   // Sum all the values in a set. e.g. sumSet([1,2,3]) -> 6
   function sumSet(set) {
     var i, n = 0;
@@ -290,6 +310,19 @@
     }
 
     return n;
+  }
+
+  // Sum all the values at the given index across sets with positive and negative rows separated
+  // Returns sum of column j values from start to ith row from rows of given sign.
+  function sumYSigned(sets, i, j) {
+    var signedSetIndices = getSignedSetIndices(sets, j, sets[i][j] >= 0 ? 'positive' : 'negative');
+    var sIndex, sum = 0;
+    for(sIndex = 0; sIndex < signedSetIndices.length; sIndex++) {
+      if(signedSetIndices[sIndex] <= i){
+        sum += sets[signedSetIndices[sIndex]][j];
+      }
+    }
+    return sum;
   }
 
   // Merge two or more sets into one array. e.g. mergeSets([[1,2],[3,4]]) -> [4,6]
@@ -505,7 +538,8 @@
         offset = i > 0 ? mergeSets(sets.slice(0, i)) : null;
       }
 
-      drawLineForSet(set, strokeStyle, opts.stroke || 1.5, null);
+      
+      drawLineForSet(set, strokeStyle, opts.stroke || 1.5, null, offset);
 
       // TODO account for negative and positive values in same stack
       if (isStacked() || isFilled()) {
@@ -551,12 +585,31 @@
           // TODO account for negative and positive values in same stack
           w = (a / len) - 2;
           x = getXForIndex(j, len + 1);
-          y = getYForValue(sumY(sets.slice(0, i + 1), j));
+          //y = getYForValue(sumY(sets.slice(0, i + 1), j));
+          
+          // Accounting for negative and positive values in same stack
+          y = getYForValue(sumYSigned(sets, i, j));
         }
 
         drawRect(colorOf(i), x, y, w, h);
       }
     }
+  }
+
+  // Render a bar line chart, reusing the default renderers
+  function renderBarLineChart() {
+    renderBarChart();
+    
+    // If axis was required, it would have been drawn by bar chart renderer, disabling the option
+    opts.axis = NaN;
+    
+    // Lines shadow overrides
+    ctx.shadowBlur = opts.shadowBlur || 4;
+    ctx.shadowOffsetX = opts.shadowOffsetX || 2;
+    ctx.shadowOffsetY = opts.shadowOffsetY || 2;
+    ctx.shadowColor =  opts.shadowColor || 'black';
+    
+    renderLineChart();
   }
 
   // Render a pie chart
