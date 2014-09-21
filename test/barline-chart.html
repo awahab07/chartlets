@@ -28,15 +28,24 @@ table tr td span:nth-child(6){color:brown;}
 
 <body>
 
-  <h3>BarLine Charts</h3>
+  <h3>BarLine Chart</h3>
 
   <section id="options">
-    <h4>Line Shadow Options</h4>
+    <p>
+      This page contains tests for <code>barline</code> chart type defined as <span class="highlight">data-type="barline"</span>.
+      <code>barline</code> chart type consists of a line chart above and a bar chart below with same or separate series if explicitly provided. If cofiguration is provided in usual way, both charts will try to adopt the given configuration. Explicit or a mix of default and Explicit configuration can be provided by using <code>data-line-</code> or <code>data-bar-</code> prefixes instead of <code>data-</code> prefix for each chart type respectively for <span class="highlight">data-sets, data-opts, data-colors, data-range</span> configurations.
+    </p>
+    <h4>Configurations Specific to barline</h4>
     <ul>
-      <li><p><strong>shadowColor</strong> color of line shadows <code>black</code>.</p></li>
-      <li><p><strong>shadowBlur</strong> the amount of blurring effect of line shadows. The default value is <code>4</code>.</p></li>
-      <li><p><strong>shadowOffsetX</strong> horizontal distance the line shadows will be offset. The default value is <code>2</code>.</p></li>
-      <li><p><strong>shadowOffsetY</strong> vertical distance the line shadows will be offset. The default value is <code>2</code>.</p></li>
+      <li><p><strong>Data</strong> default can be provided as  <code>data-sets</code> or can be defined explicitly by <span class="highlight">data-line-sets</span> or <span class="highlight">data-bar-sets</span> for each chart.</p></li>
+      
+      <li><p><strong>Options</strong> default can be provided as  <code>data-opts</code> or can be defined explicitly by <span class="highlight">data-line-opts</span> or <span class="highlight">data-bar-opts</span> for each chart.</p></li>
+      
+      <li><p><strong>Colors</strong> default can be provided as  <code>data-colors</code> or can be defined explicitly by <span class="highlight">data-line-colors</span> or <span class="highlight">data-bar-colors</span> for each chart.</p></li>
+      
+      <li><p><strong>Range</strong> default can be provided as  <code>data-range</code> or can be defined explicitly by <span class="highlight">data-line-range</span> or <span class="highlight">data-bar-range</span> for each chart.</p></li>
+      
+      <li><p><strong>Height Ratio</strong> is the ratio of height of line chart to the height of bar chart. It is provided as a single decimal value and evaluated as <code>x:1</code> where <code>x</code> and <code>1</code> are the ratios of heights of line and bar charts respectively. For example  <span class="highlight">data-height-ratio="2"</span> evaluated as <code>2:1</code> will make the height of line chart twice of bar chart's height. It will not affect the overall height of chart's canvas.</p></li>
     </ul>
   </section>
 
@@ -46,35 +55,55 @@ table tr td span:nth-child(6){color:brown;}
   <table cellspacing="50">
 
     <!-- Test Case -->
-    <tr><td><span>[1 3 -2 4]</span><br><span>[10 8 -6 2]</span><br><span>[20 6 -8 6]</span></td></tr>
     <tr>
-      <td>
+      <td>[1 3 -2 4]<br>[10 8 -6 2]<br>[20 6 -8 6]</td>
+      <td><span>[1 3 -2 4]</span><br><span>[10 8 -6 2]</span><br><span>[20 6 -8 6]</span><br><span>[6 7 -3 5]</span><br><span>[24 10 -8 8]</span><br><span>[10 8 -6 2]</span></td>
+    </tr>
+    <tr>
+      <td colspan="2">
         <canvas  class="chartlet" 
           data-type="barline"
           data-colors="red green blue orange teal brown" 
-          data-range="-15 15" 
-          data-sets="[1 3 -2 4] [10 8 -6 2] [20 6 -8 6]" 
+          data-line-range="-10 10" 
+          data-sets="[1 3 -2 4] [10 8 -6 2] [20 6 -8 6]"
+          data-bar-sets="[1 3 -2 4] [10 8 -6 2] [20 6 -8 6] [2 5 -3 6] [6 7 -3 5] [24 10 -8 8] [10 8 -6 2]"
+          data-height-ratio="3.5"
           width="200" height="200"
-          data-opts="apha:0.1 shadowBlur:4 axis:-2">
+          data-opts="apha:0.1 shadowBlur:4 axis:0"
+          data-line-opts="theme:money axis:-8">
         </canvas>
       </td>
       <td>
         <code>
-          <canvas  class="chartlet" data-type="barline" data-colors="red green blue orange teal brown" data-range="-15 15" data-sets="[1 3 -2 4] [10 8 -6 2] [20 6 -8 6]" width="200" height="200" data-opts="apha:0.1 shadowBlur:4 axis:-2"> </canvas>
-        </code>
+          <canvas  class="chartlet" 
+          data-type="barline"
+          data-colors="red green blue orange teal brown" 
+          data-line-range="-10 10" 
+          data-sets="[1 3 -2 4] [10 8 -6 2] [20 6 -8 6]"
+          data-bar-sets="[1 3 -2 4] [10 8 -6 2] [20 6 -8 6] [2 5 -3 6] [6 7 -3 5] [24 10 -8 8] [10 8 -6 2]"
+          data-height-ratio="3.5"
+          width="200" height="200"
+          data-opts="apha:0.1 shadowBlur:4 axis:0"
+          data-line-opts="theme:money axis:-8">
+        </canvas>
       </td>
     </tr>
 
     <!-- Test Case -->
-    <tr><td><span>[1 -1 3 4]</span></td></tr>
     <tr>
-      <td>
+      <td><span>[1 -1 3 4]</span></td>
+      <td><span>[2 2 4 2]</span></td>
+    </tr>
+    <tr>
+      <td colspan="2">
         <canvas  class="chartlet" 
           data-type="barline" 
           data-colors="red" 
-          data-sets="[1 -1 3 4]" 
+          data-line-sets="[1 -1 3 4]"
+          data-bar-sets="[2 2 4 2]"
+          data-bar-range="0 4"
           width="150" height="55"
-          data-opts="stroke:4 shadowColor:white shadowOffsetX:1 shadowOffsetY:1 shadowBlur:3">
+          data-opts="stroke:4">
         </canvas>
       </td>
       <td>
@@ -82,9 +111,10 @@ table tr td span:nth-child(6){color:brown;}
           <canvas  class="chartlet" 
           data-type="barline" 
           data-colors="red" 
-          data-sets="[1 -1 3 4]" 
+          data-line-sets="[1 -1 3 4]"
+          data-bar-sets="[2 2 4 2]"
           width="150" height="55"
-          data-opts="stroke:4 shadowColor:white shadowOffsetX:1 shadowOffsetY:1 shadowBlur:3">
+          data-opts="stroke:4">
         </canvas>
         </code>
       </td>
@@ -93,7 +123,7 @@ table tr td span:nth-child(6){color:brown;}
     <!-- Test Case -->
     <tr><td><span>[1 2 3]</span><span>[1.5 -1 3.5]</span></td></tr>
     <tr>
-      <td>
+      <td colspan="2">
         <canvas  class="chartlet" 
           data-type="barline" 
           data-colors="red green blue orange teal brown" 
@@ -103,14 +133,15 @@ table tr td span:nth-child(6){color:brown;}
       </td>
       <td>
         <code>
-          <canvas class="chartlet" data-type="barline" data-colors="red green blue orange teal brown" data-sets="[1 2 3] [1.5 -1 3.5]" width="150" height="55"></canvas>
+          <canvas  class="chartlet" 
+          data-type="barline" 
+          data-colors="red green blue orange teal brown" 
+          data-sets="[1 2 3] [1.5 -1 3.5]" 
+          width="150" height="55">
+        </canvas>
       </td>
     </tr>
   </table>
-  
-  <script>
-    Chartlets.render();
-  </script>
 
   <!-- JavaScript Tweek for displaying HTML code -->
   <script type="text/javascript">
@@ -121,10 +152,14 @@ table tr td span:nth-child(6){color:brown;}
              replace(/"/g,'&quot;')
       );
     };
-    var codeElements = document.getElementsByTagName('code');
-    for(codeElementsIndex in codeElements) {
-      codeElement = codeElements[codeElementsIndex];
-      codeElement.innerHTML = codeElement.innerHTML.escapeHTML();
+
+    var codeElementsIndex, codeElements = document.getElementsByTagName('code');
+    for(codeElementsIndex=0; codeElementsIndex < codeElements.length; codeElementsIndex++) {
+      var codeElement = codeElements[codeElementsIndex];
+      if('undefined' != typeof codeElement.innerHTML)
+        codeElement.innerHTML = codeElement.innerHTML.escapeHTML();
     }
+
+    Chartlets.render();
   </script>
 </body>

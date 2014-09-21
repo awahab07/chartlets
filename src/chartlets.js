@@ -5,7 +5,6 @@
 */
 (function (win) {
   var Chartlets, type, ctx, width, height, rotated, range, sets, opts, colors, themes, renderers, animate;
-
   // Type of chart ("line", "bar" or "pie")
   type = null;
 
@@ -81,6 +80,19 @@
 
     return opts;
   }
+
+  // Parse options from parsed attribute data-opts attribute. "a:b c:d" -> {a:"b", c:"d"}
+  function parseOptsPairs(pairs) {
+    var pair, opts, i;
+    opts = {};
+
+    for (i = 0; i < pairs.length; i++) {
+      pair = pairs[i].split(":");
+      opts[pair[0]] = pair[1];
+    }
+
+    return opts;
+  }  
 
   // Parse data-sets attribute. "[1 2] [3 4]" -> [[1,2], [3,4]]
   function parseSets(str) {
@@ -598,18 +610,37 @@
 
   // Render a bar line chart, reusing the default renderers
   function renderBarLineChart() {
-    renderBarChart();
+    var elem = ctx.canvas;
     
-    // If axis was required, it would have been drawn by bar chart renderer, disabling the option
-    opts.axis = NaN;
+    // Retrieving and calculating height ratio of Line Chart to the Bar Chart
+    var heightRatio = parseFloat(elem.getAttribute("data-height-ratio") || 1);
+    var heightProportions = height / (heightRatio + 1);
+    height = Math.round(heightProportions * heightRatio);
+    var barChartHeight = Math.round(heightProportions);
     
-    // Lines shadow overrides
-    ctx.shadowBlur = opts.shadowBlur || 4;
-    ctx.shadowOffsetX = opts.shadowOffsetX || 2;
-    ctx.shadowOffsetY = opts.shadowOffsetY || 2;
-    ctx.shadowColor =  opts.shadowColor || 'black';
+    // Line Chart Definition Override's
+    sets = elem.getAttribute("data-line-sets") !== null ? parseSets(elem.getAttribute("data-line-sets")) : sets;
+    opts = parseAttr(elem, "data-line-opts") !== null ? parseOptsPairs(parseAttr(elem, "data-line-opts") || []) : opts;
+    colors = themes[opts.theme] || parseAttr(elem, "data-line-colors") || parseAttr(elem, "data-colors") || themes.basic;
+    range = parseAttr(elem, "data-line-range") || parseAttr(elem, "data-range") || getRange(sets, isStacked());
+    rotated = false;
     
     renderLineChart();
+
+    // Requesting separate context for Bar Portion
+    ctx = ctx.canvas.getContext("2d");
+    ctx.translate(0, height);
+    
+    height = barChartHeight;
+
+    // Line Chart Definition Override's
+    sets = elem.getAttribute("data-bar-sets") !== null ? parseSets(elem.getAttribute("data-bar-sets")) : parseSets(elem.getAttribute("data-sets"));
+    opts = parseAttr(elem, "data-bar-opts") !== null ? parseOptsPairs(parseAttr(elem, "data-bar-opts") || []) : parseOpts(elem);
+    colors = themes[opts.theme] || parseAttr(elem, "data-bar-colors") || parseAttr(elem, "data-colors") || themes.basic;
+    range = parseAttr(elem, "data-bar-range") || parseAttr(elem, "data-range") || getRange(sets, isStacked());
+    rotated = false;
+
+    renderBarChart();
   }
 
   // Render a pie chart
@@ -650,7 +681,7 @@
     }
 
     type = parseAttr(elem, "data-type")[0];
-    sets = parseSets(elem.getAttribute("data-sets"));
+    sets = elem.getAttribute("data-sets") !== null ? parseSets(elem.getAttribute("data-sets")) : null;
     opts = parseOpts(elem);
     ctx = elem.getContext("2d");
     width = elem.width;
