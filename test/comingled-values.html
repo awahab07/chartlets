@@ -74,6 +74,46 @@ table tr td span:nth-child(6){color:brown;}
   </table>
   <hr /><br /><br />
 
+  <h3>Bar Charts with Commingled Positive Negative Values</h3>
+  <table cellspacing="50">
+    <tr>
+      <td><span>[1 3 -2 4 2 -3 -6]</span><span>[10 8 -6 2 -3 2 2]</span><span>[20 6 -8 6 -5 -5 4]</span></td>
+      <td><span>[1 -1 3 4]</span><span>[2 -3 4 5]</span><span>[3 -4 5 6]</span></td>
+      <td><span>[1 2 3]</span><span>[1.5 -1 3.5]</span></td>
+    </tr>
+
+    <tr>
+      <td>
+        <canvas  class="chartlet" 
+          data-type="bar" 
+          data-colors="red green blue orange teal brown" 
+          data-range="-15 15" 
+          data-sets="[1 3 -2 4 2 -3 -6] [10 8 -6 2 -3 2 2] [20 6 -8 6 -5 -5 4]" 
+          width="400" height="200">
+        </canvas>
+      </td>
+
+      <td>
+        <canvas  class="chartlet" 
+          data-type="bar" 
+          data-colors="red green blue orange teal brown" 
+          data-sets="[1 -1 3 4] [2 -3 4 5] [3 -4 5 6]" 
+          width="150" height="55">
+        </canvas>
+      </td>
+
+      <td>
+        <canvas  class="chartlet" 
+          data-type="bar" 
+          data-colors="red green blue orange teal brown" 
+          data-sets="[1 2 3] [1.5 -1 3.5]" 
+          width="150" height="55">
+        </canvas>
+      </td>
+    </tr>
+  </table>
+  <hr /><br /><br />
+
   <h3>Stacked Line Charts with Commingled Positive Negative Values</h3>
   <table cellspacing="50">
     <tr>
