@@ -32,7 +32,8 @@
     "line": renderLineChart,
     "bar": renderBarChart,
     "pie": renderPieChart,
-    "barline": renderBarLineChart
+    "barline": renderBarLineChart,
+    "scatter": renderScatterChart
   };
 
   // Built-in color themes. A theme can have any number of colors (as hex, RGB/A, or HSL/A)
@@ -108,6 +109,31 @@
     }
 
     return sets;
+  }
+
+  // Parse data-sets attribute. "[1 2] [3 4]" -> [[1,2], [3,4]]
+  function parseSetsWithStrings(str) {
+    // or "[[1,2], [3,4]]" -> [[1,2], [3,4]]
+    var sets = str.match(/\[[^\[]+\]/g) || [], i, j;
+
+    for (i = 0; i < sets.length; i++) {
+      // Splitting apart numbers and strings from dataset string 
+      sets[i] = sets[i].match(/('(?:[^\\"\']+|\\.)*')|([-\d\.]+)/g);
+
+      for (j = 0; j < sets[i].length; j++) {
+        sets[i][j] = isNaN(sets[i][j]) ? stripSingleQuotes(sets[i][j]) : +sets[i][j];
+      }
+    }
+
+    return sets;
+  }
+
+  // Stripping single quotes around the string if present
+  function stripSingleQuotes(str) {
+    if(str.startsWith("'") && str.endsWith("'")) {
+      return str.substring(1, str.length-1);
+    }
+    return str;
   }
 
   // Is the bar or line chart stacked?
@@ -421,6 +447,19 @@
     }
   }
 
+  // Draw Scatter Circle, function customized to draw circles for scatter plot chart
+  function drawScatterCircles(set, fillStyle, lineWidth) {
+    var i = -1, x, y, w;
+
+    while (++i < set.length) {
+      x = getXForIndex(i, set.length);
+      y = getYForValue(set[i]);
+
+      w = lineWidth + 1;
+      drawCircle(fillStyle, x, y, w);
+    }
+  }
+
   // Draw circle or square caps for a data set
   function drawCapsForSet(set, capStyle, fillStyle, lineWidth) {
     var i = -1, x, y, w;
@@ -665,6 +704,28 @@
       ctx.lineTo(x, y);
       ctx.fill();
       a1 = a2;
+    }
+  }
+
+  // Render a x-y scatter chart
+  function renderScatterChart() {
+    var elem = ctx.canvas;
+    sets = elem.getAttribute("data-sets") !== null ? parseSetsWithStrings(elem.getAttribute("data-sets")) : null;
+    console.log(sets);
+
+    var i, set, strokeStyle, fillStyle, alphaMultiplier, offset;
+    console.log(sets);
+    drawAxis();
+
+    for (i = 0; i < sets.length; i++) {
+      set = sets[i];
+      strokeStyle = colorOf(i);
+
+      alphaMultiplier = opts.alpha || 0.5;
+
+      fillStyle = toRGBString(sheerColor(parseColor(strokeStyle), alphaMultiplier));
+
+      drawScatterCircles(set, strokeStyle, ctx.lineWidth);
     }
   }
 
