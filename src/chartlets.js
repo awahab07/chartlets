@@ -309,6 +309,20 @@
     return h - (h * ((val - range[0]) / (range[1] - range[0])));
   }
 
+  // Get the y position in pixels for the given data value and range
+  function getYForValueAndRange(val, range) {
+    var h = rotated ? width : height;
+
+    return h - (h * ((val - range[0]) / (range[1] - range[0])));
+  }
+
+  // Get the x position in pixels for the given data value and range
+  function getXForValueAndRange(val, range) {
+    var w = rotated ? height : width;
+
+    return w - (w * ((val - range[0]) / (range[1] - range[0])));
+  }
+
   function getSignedSetIndices(sets, j, s) {
     var positiveSetIndecies = [];
     var negativeSetIndecies = [];
@@ -516,6 +530,54 @@
     }
   }
 
+  // Draw a X or Y axis at given v position, the value "v" should be normalized i.e. with getYForValue or getVForValue operation applied
+  function drawXYAxisAt(v, axis) {
+    if('undefined' == typeof axis)
+      axis = 'y';
+    
+    var start, end;
+    end = axis == 'y' ? width : height;
+
+    if (!isNaN(+v)) {
+      start = 0;
+      v = Math.round(v);
+
+      ctx.lineWidth = 1;
+      ctx.lineJoin = "round";
+      ctx.strokeStyle = "#bbb";
+      ctx.moveTo(start, v);
+
+      while (start < end) {
+        ctx.lineTo(start + 5, v);
+        ctx.moveTo(start + 8, v);
+        start += 8;
+      }
+
+      ctx.stroke();
+    }
+  }
+
+  function drawAxisForRanges(xAxisRange, yAxisRange) {
+    if('undefined' == typeof xAxisRange || 'undefined' == typeof yAxisRange) {
+      console.error('Range parameters for function "drawAxisForRanges" not provided');
+    }
+
+    // Drawing Axis if provided either explicitly for x or y or combinely for both
+    if(!isNaN(+opts.xAxis) || !isNaN(+opts.yAxis)) {
+      if(!isNaN(+opts.xAxis)) {
+        drawXYAxisAt(getXForValueAndRange(+opts.xAxis, xAxisRange), 'x');
+      }
+
+      if(!isNaN(+opts.yAxis)) {
+        drawXYAxisAt(getYForValueAndRange(+opts.yAxis, yAxisRange), 'y');
+      }
+    } else if(!isNaN(+opts.axis)) {
+      // Drawing both axis
+      drawXYAxisAt(getXForValueAndRange(+opts.axis, xAxisRange), 'x');
+      drawXYAxisAt(getYForValueAndRange(+opts.axis, yAxisRange), 'y');
+    }
+  }
+
   // Interpolate a value between a and b. e.g. interpolate(0,1,5,10) -> 0.5
   function interpolate(a, b, idx, steps) {
     return +a + ((+b - +a) * (idx / steps));
@@ -709,13 +771,29 @@
 
   // Render a x-y scatter chart
   function renderScatterChart() {
-    var elem = ctx.canvas;
+    var i, xSets, ySets, xAxisRange, yAxisRange, elem = ctx.canvas;
+    
+    // Retrieving sets with string literals
     sets = elem.getAttribute("data-sets") !== null ? parseSetsWithStrings(elem.getAttribute("data-sets")) : null;
-    console.log(sets);
+    
+    // Separating X axis and Y axis sets
+    xSets = [];
+    ySets = [];
+    for (i = 0; i < sets.length; i++) {
+      xSets[i] = sets[i][0];
+      ySets[i] = sets[i][1];
+    }
+    
+    // Retrieving x-axis range if present or use default if present or calculate if neither of them present in configuration
+    xAxisRange = parseAttr(elem, "data-range-x") || parseAttr(elem, "data-range") || getRange(xSets, isStacked());
+    yAxisRange = parseAttr(elem, "data-range-y") || parseAttr(elem, "data-range") || getRange(ySets, isStacked());
 
-    var i, set, strokeStyle, fillStyle, alphaMultiplier, offset;
-    console.log(sets);
-    drawAxis();
+    var set, strokeStyle, fillStyle, alphaMultiplier, offset;
+    
+    // Drawing Axis for ranged based on provided opts
+    drawAxisForRanges(xAxisRange, yAxisRange);
+
+    // @ TODO from here on
 
     for (i = 0; i < sets.length; i++) {
       set = sets[i];
