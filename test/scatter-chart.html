@@ -19,7 +19,7 @@ canvas {
 table tr td span:first-child{color:red;}
 table tr td span:nth-child(2){color:green;}
 table tr td span:nth-child(3){color:blue;}
-table tr td span:nth-child(4){color:orange;}
+table tr td span:nth-child(4){color:#FFA500;}
 table tr td span:nth-child(5){color:teal;}
 table tr td span:nth-child(6){color:brown;}
 </style>
@@ -56,17 +56,17 @@ table tr td span:nth-child(6){color:brown;}
 
     <!-- Test Case -->
     <tr>
-      <td>[1 3 -2 4]<br>[10 8 -6 2]<br>[20 6 -8 6]</td>
+      <td><span>[2 2 '.' 'red' Good]</span><br><span>[4 4 'x' 'green' 'Very Good']</span><br><span>[6 6 '*' 'blue' 'Excellent']</span><br><span>[8 8 '-' 'orange' 'Fair']</span></td>
     </tr>
     <tr>
       <td>
         <canvas  class="chartlet" 
           data-type="scatter"
           data-colors="red green blue orange teal brown" 
-          data-range="1 10" 
-          data-sets="[2 2 '.' 'red' Good] [2 8 'x' 'green' 'Very Good'] [8 8 '*' 'blue' 'Excellent']"
+          data-range="0 10" 
+          data-sets="[2 2 '.' 'red' Good] [4 4 'x' 'green' 'Very Good'] [6 6 '*' 'blue' 'Excellent'] [8 8 '-' 'orange' 'Fair']"
           width="200" height="200"
-          data-opts="alpha:0.5 axis:0">
+          data-opts="alpha:0.5 xAxis:6 yAxis:6">
         </canvas>
       </td>
       <td>
@@ -74,11 +74,39 @@ table tr td span:nth-child(6){color:brown;}
           <canvas  class="chartlet" 
           data-type="scatter"
           data-colors="red green blue orange teal brown" 
-          data-range="-10 10" 
-          data-sets="[1 3 -2 4] [10 8 -6 2] [20 6 -8 6]"
+          data-range="0 10" 
+          data-sets="[2 2 '.' 'red' Good] [4 4 'x' 'green' 'Very Good'] [6 6 '*' 'blue' 'Excellent'] [8 8 '-' 'orange' 'Fair']"
           width="200" height="200"
-          data-opts="alpha:0.5 axis:0">
+          data-opts="alpha:0.5 xAxis:6 yAxis:6">
         </canvas>
+        </code>
+      </td>
+    </tr>
+
+    <!-- Test Case -->
+    <tr>
+      <td><span>[2 2 '.' 'red' Good]</span><br><span>[2 8 'x' 'green' 'Very Good']</span><br><span>[8 8 '*' 'blue' 'Excellent']</span><br><span>[8 2 '-' 'orange' 'Fair']</span></td>
+    </tr>
+    <tr>
+      <td>
+        <canvas  class="chartlet" 
+          data-type="scatter"
+          data-colors="red green blue orange teal brown" 
+          data-sets="[2 2 '.' 'red' Good] [4 4 'x' 'green' 'Very Good'] [6 6 '*' 'blue' 'Excellent'] [8 8 '-' 'orange' 'Fair']"
+          width="200" height="200"
+          data-opts="alpha:0.5 xAxis:5 yAxis:6">
+        </canvas>
+      </td>
+      <td>
+        <code>
+          <canvas  class="chartlet" 
+          data-type="scatter"
+          data-colors="red green blue orange teal brown" 
+          data-sets="[2 2 '.' 'red' Good] [2 8 'x' 'green' 'Very Good'] [8 8 '*' 'blue' 'Excellent'] [8 2 '-' 'orange' 'Fair']"
+          width="200" height="200"
+          data-opts="alpha:0.5 xAxis:5 yAxis:6">
+        </canvas>
+        </code>
       </td>
     </tr>
 

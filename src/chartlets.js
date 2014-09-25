@@ -319,8 +319,8 @@
   // Get the x position in pixels for the given data value and range
   function getXForValueAndRange(val, range) {
     var w = rotated ? height : width;
-
-    return w - (w * ((val - range[0]) / (range[1] - range[0])));
+  
+    return (w * ((val - range[0]) / (range[1] - range[0])));
   }
 
   function getSignedSetIndices(sets, j, s) {
@@ -461,22 +461,6 @@
     }
   }
 
-  // Draw Scatter Circle, function customized to draw circles for scatter plot chart
-  function drawScatterCircles(set, fillStyle, lineWidth, xAxisRange, yAxisRange) {
-    var i = -1, x, y, w;
-
-    // Set contains the scatter plot data set having x, y, letter, color, size attributes
-    
-    while (++i < set.length) {
-      x = getXForValueAndRange()
-      x = getXForIndex(i, set.length);
-      y = getYForValue(set[i]);
-
-      w = lineWidth + 1;
-      drawCircle(fillStyle, x, y, w);
-    }
-  }
-
   // Draw circle or square caps for a data set
   function drawCapsForSet(set, capStyle, fillStyle, lineWidth) {
     var i = -1, x, y, w;
@@ -536,7 +520,7 @@
   // Draw a X or Y axis at given v position, the value "v" should be normalized i.e. with getYForValue or getVForValue operation applied
   function drawXYAxisAt(v, axis) {
     if('undefined' == typeof axis)
-      axis = 'y';
+      axis = 'x';
     
     var start, end;
     end = axis == 'y' ? width : height;
@@ -548,11 +532,21 @@
       ctx.lineWidth = 1;
       ctx.lineJoin = "round";
       ctx.strokeStyle = "#bbb";
-      ctx.moveTo(start, v);
+
+      if(axis == 'x')
+        ctx.moveTo(start, v);
+      else
+        ctx.moveTo(v, start);
 
       while (start < end) {
-        ctx.lineTo(start + 5, v);
-        ctx.moveTo(start + 8, v);
+        if(axis == 'x') {
+          ctx.lineTo(start + 5, v);
+          ctx.moveTo(start + 8, v);
+        }else {
+          ctx.lineTo(v, start + 5);
+          ctx.moveTo(v, start + 8);
+        }
+        
         start += 8;
       }
 
@@ -796,8 +790,7 @@
     // Drawing Axis for ranged based on provided opts
     drawAxisForRanges(xAxisRange, yAxisRange);
 
-    // @ TODO from here on
-
+    // Plotting
     for (i = 0; i < sets.length; i++) {
       set = sets[i];
       strokeStyle = colorOf(i);
@@ -806,8 +799,19 @@
 
       fillStyle = toRGBString(sheerColor(parseColor(strokeStyle), alphaMultiplier));
 
-      drawScatterCirclesForRanges(set, strokeStyle, ctx.lineWidth, xAxisRange, yAxisRange);
+      // Draw Circles for Scatter Plot Chart
+      var x, y, w;
+      x = getXForValueAndRange(set[0], xAxisRange);
+      y = getYForValueAndRange(set[1], yAxisRange);
+      w = ctx.lineWidth + 1;
+      console.log("Set: ", set, "Circle Coord: ", x, y);
+      //drawCircle(strokeStyle, x, y, w);
+      ctx.fillText(set[2], x, y);
+      ctx.strokeText(set[2], x+5, y+5);
     }
+    ctx.fillStyle = "rgba(55, 55, 55, 0.2)";
+    ctx.fillText('The Long Text', 50, 50);
+    ctx.fillRect(40, 40, 160, 160);
   }
 
   // Render or re-render the chart for the given element
