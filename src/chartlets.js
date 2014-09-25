@@ -462,10 +462,13 @@
   }
 
   // Draw Scatter Circle, function customized to draw circles for scatter plot chart
-  function drawScatterCircles(set, fillStyle, lineWidth) {
+  function drawScatterCircles(set, fillStyle, lineWidth, xAxisRange, yAxisRange) {
     var i = -1, x, y, w;
 
+    // Set contains the scatter plot data set having x, y, letter, color, size attributes
+    
     while (++i < set.length) {
+      x = getXForValueAndRange()
       x = getXForIndex(i, set.length);
       y = getYForValue(set[i]);
 
@@ -803,7 +806,7 @@
 
       fillStyle = toRGBString(sheerColor(parseColor(strokeStyle), alphaMultiplier));
 
-      drawScatterCircles(set, strokeStyle, ctx.lineWidth);
+      drawScatterCirclesForRanges(set, strokeStyle, ctx.lineWidth, xAxisRange, yAxisRange);
     }
   }
 
