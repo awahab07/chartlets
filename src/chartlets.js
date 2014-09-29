@@ -61,12 +61,17 @@
     };
 
   // Split attribute value into array. "a b c" -> ["a", "b", "c"]
-  // @TODO Account for single quoted string literals containing space
-  //     Can try: var r = /\\s+(?=((\\\\[\\\\\"]|[^\\\\\"])*\"(\\\\[\\\\\"]|[^\\\\\"])*\")*(\\\\[\\\\\"]|[^\\\\\"])*$)/g; for double quotes
   function parseAttr(elem, attr) {
     var val = elem.getAttribute(attr);
 
     return val ? val.replace(/, +/g, ",").split(/ +/g) : null;
+  }
+
+  // Accounting for string and single quoted string literals containing space
+  function parseAttrWithStrings(elem, attr) {
+    var val = elem.getAttribute(attr);
+    var regexToExtractOption = /([\w]*?:'(?:[^\\"\']+|\\.)*')|([\w]*?:[-\d\.]+)/g;
+    return val ?  val.match(regexToExtractOption): null;
   }
 
   // Parse data-opts attribute. "a:b c:d" -> {a:"b", c:"d"}
@@ -97,6 +102,25 @@
     return opts;
   }  
 
+  // Parse options JSON. ["a:10", "b:'Very Good'"] -> {a:10, b:'Very Good'}
+  function parseOptsWithStrings(elem, attr) {
+    var opts = parseAttrWithStrings(elem, attr);
+    
+    if(opts) {
+      var pair, optsObj, i;
+      optsObj = {};
+
+      for (i = 0; i < opts.length; i++) {
+        pair = opts[i].split(":");
+        optsObj[pair[0]] = isNaN(pair[1]) ? stripSingleQuotes(pair[1]) : +pair[1];
+      }
+
+      return optsObj;
+    }
+    
+    return opts;
+  }
+
   // Parse data-sets attribute. "[1 2] [3 4]" -> [[1,2], [3,4]]
   function parseSets(str) {
     // or "[[1,2], [3,4]]" -> [[1,2], [3,4]]
@@ -118,7 +142,7 @@
     var sets = str.match(/\[[^\[]+\]/g) || [], i, j;
 
     for (i = 0; i < sets.length; i++) {
-      // Splitting apart numbers and strings from dataset string 
+      // Splitting apart numbers/strings from dataset string 
       sets[i] = sets[i].match(/('(?:[^\\"\']+|\\.)*')|([-\d\.]+)/g);
 
       for (j = 0; j < sets[i].length; j++) {
@@ -769,10 +793,14 @@
 
   // Render a x-y scatter chart
   function renderScatterChart() {
-    var i, xSets, ySets, xAxisRange, yAxisRange, elem = ctx.canvas;
+    var i, xSets, ySets, xAxisRange, yAxisRange, textOpts, textStrokeOpts, elem = ctx.canvas;
     
     // Retrieving sets with string literals
     sets = elem.getAttribute("data-sets") !== null ? parseSetsWithStrings(elem.getAttribute("data-sets")) : null;
+
+    // Retrieving options for text and stroke text
+    textOpts = parseOptsWithStrings(elem, "data-text-opts");
+    textStrokeOpts = parseOptsWithStrings(elem, "data-text-stroke-opts");
     
     // Separating X axis and Y axis sets
     xSets = [];
@@ -782,11 +810,11 @@
       ySets[i] = sets[i][1];
     }
     
-    // Retrieving x-axis range if present or use default if present or calculate if neither of them present in configuration
+    // Retrieving x-axis/y-axis ranges if present or use default if present or calculate if neither of them present in configuration
     xAxisRange = parseAttr(elem, "data-range-x") || parseAttr(elem, "data-range") || getRange(xSets, isStacked());
     yAxisRange = parseAttr(elem, "data-range-y") || parseAttr(elem, "data-range") || getRange(ySets, isStacked());
 
-    var set, strokeStyle, fillStyle, alphaMultiplier, offset;
+    var set, fillStyle, alphaMultiplier, offset;
     
     // Drawing Axis for range based on provided opts
     drawAxisForRanges(xAxisRange, yAxisRange);
@@ -794,23 +822,37 @@
     // Plotting
     for (i = 0; i < sets.length; i++) {
       set = sets[i];
-      strokeStyle = colorOf(i);
 
-      alphaMultiplier = opts.alpha || 0.5;
-
-      fillStyle = toRGBString(sheerColor(parseColor(strokeStyle), alphaMultiplier));
-
-      // Draw Circles for Scatter Plot Chart
-      var x, y, w;
+      // Draw Text and Circles for Scatter Plot Chart
+      var x, y, alpha, fillColor;
       x = getXForValueAndRange(set[0], xAxisRange);
       y = getYForValueAndRange(set[1], yAxisRange);
-      w = ctx.lineWidth + 1;
       
-      //drawCircle(strokeStyle, x, y, w);
-      ctx.fillText(set[2], x, y);
-      ctx.strokeText(set[2], x+5, y+5);
+      if(opts.bubbles || opts.bubble) {
+        alpha = opts.alphaBubbles || opts.alphaBubble || opts.alpha || 0.5;
+        fillColor = set[3] || colorOf(i) || 'black';
+        fillStyle = toRGBString(sheerColor(parseColor(fillColor), alpha));
+        
+        drawCircle(fillStyle, x, y, 5);
+        
+        // Applying white shadow to text to make it visible over bubbles
+        ctx.shadowBlur = 4;
+        ctx.shadowColor = 'white';
+      }
 
-      console.log(opts.font);
+      // Drawing Text Stroke
+      if(textStrokeOpts) {
+        ctx.font = textStrokeOpts.font || '10px sans-serif';
+        ctx.strokeText(set[2], x, y, textStrokeOpts.maxWidth || undefined);
+      }
+
+      // Drawing Text
+      alpha = textOpts && textOpts.alpha || opts.alpha || 0.7;
+      fillColor = textOpts && textOpts.color || fillColor;
+      fillStyle = toRGBString(sheerColor(parseColor(fillColor), alpha));
+      ctx.font = textOpts && textOpts.font || '10px sans-serif';
+      // @TODO error is occurring below
+      ctx.fillText(set[2], x, y, (textOpts && textOpts.maxWidth) || undefined);
     }
   }
 
