@@ -61,6 +61,8 @@
     };
 
   // Split attribute value into array. "a b c" -> ["a", "b", "c"]
+  // @TODO Account for single quoted string literals containing space
+  //     Can try: var r = /\\s+(?=((\\\\[\\\\\"]|[^\\\\\"])*\"(\\\\[\\\\\"]|[^\\\\\"])*\")*(\\\\[\\\\\"]|[^\\\\\"])*$)/g; for double quotes
   function parseAttr(elem, attr) {
     var val = elem.getAttribute(attr);
 
@@ -111,9 +113,8 @@
     return sets;
   }
 
-  // Parse data-sets attribute. "[1 2] [3 4]" -> [[1,2], [3,4]]
+  // Parse data-sets attribute taking account single quoted string literals. "[1 2 'Good'] [3 4 'Very Good']" -> [[1,2,"Good"], [3,4,"Very Good"]]
   function parseSetsWithStrings(str) {
-    // or "[[1,2], [3,4]]" -> [[1,2], [3,4]]
     var sets = str.match(/\[[^\[]+\]/g) || [], i, j;
 
     for (i = 0; i < sets.length; i++) {
@@ -787,7 +788,7 @@
 
     var set, strokeStyle, fillStyle, alphaMultiplier, offset;
     
-    // Drawing Axis for ranged based on provided opts
+    // Drawing Axis for range based on provided opts
     drawAxisForRanges(xAxisRange, yAxisRange);
 
     // Plotting
@@ -804,14 +805,13 @@
       x = getXForValueAndRange(set[0], xAxisRange);
       y = getYForValueAndRange(set[1], yAxisRange);
       w = ctx.lineWidth + 1;
-      console.log("Set: ", set, "Circle Coord: ", x, y);
+      
       //drawCircle(strokeStyle, x, y, w);
       ctx.fillText(set[2], x, y);
       ctx.strokeText(set[2], x+5, y+5);
+
+      console.log(opts.font);
     }
-    ctx.fillStyle = "rgba(55, 55, 55, 0.2)";
-    ctx.fillText('The Long Text', 50, 50);
-    ctx.fillRect(40, 40, 160, 160);
   }
 
   // Render or re-render the chart for the given element
