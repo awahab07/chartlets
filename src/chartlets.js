@@ -33,7 +33,8 @@
     "bar": renderBarChart,
     "pie": renderPieChart,
     "barline": renderBarLineChart,
-    "scatter": renderScatterChart
+    "scatter": renderScatterChart,
+    "gauge": renderGaugeChart
   };
 
   // Built-in color themes. A theme can have any number of colors (as hex, RGB/A, or HSL/A)
@@ -70,7 +71,7 @@
   // Accounting for string and single quoted string literals containing space
   function parseAttrWithStrings(elem, attr) {
     var val = elem.getAttribute(attr);
-    var regexToExtractOption = /([\w]*?:'(?:[^\\"\']+|\\.)*')|([\w]*?:[-\d\.]+)/g;
+    var regexToExtractOption = /([\w]*?:'(?:[^\\"\']+|\\.)*')|([\w]*?:[-\d\S\.]+)/g;
     return val ?  val.match(regexToExtractOption): null;
   }
 
@@ -143,7 +144,7 @@
 
     for (i = 0; i < sets.length; i++) {
       // Splitting apart numbers/strings from dataset string 
-      sets[i] = sets[i].match(/('(?:[^\\"\']+|\\.)*')|([-\d\.]+)/g);
+      sets[i] = sets[i].match(/('(?:[^\\"\']+|\\.)*')|([-\w\.]+)/g);
 
       for (j = 0; j < sets[i].length; j++) {
         sets[i][j] = isNaN(sets[i][j]) ? stripSingleQuotes(sets[i][j]) : +sets[i][j];
@@ -334,18 +335,27 @@
     return h - (h * ((val - range[0]) / (range[1] - range[0])));
   }
 
+  // Get the x position in pixels for the given data value and range
+  function getXForValueAndRange(val, range) {
+    var w = rotated ? height : width;
+  
+    return (w * ((val - range[0]) / (range[1] - range[0])));
+  }
+
   // Get the y position in pixels for the given data value and range
+  // Also it iverts the calculated value as y increases downwards which is contradictory to that of cartesian system
   function getYForValueAndRange(val, range) {
     var h = rotated ? width : height;
 
     return h - (h * ((val - range[0]) / (range[1] - range[0])));
   }
 
-  // Get the x position in pixels for the given data value and range
-  function getXForValueAndRange(val, range) {
-    var w = rotated ? height : width;
-  
-    return (w * ((val - range[0]) / (range[1] - range[0])));
+  // Get the z/size/third dimension in pixels for the given data value and ranges
+  // Maps/adjusts the size of z/size axis to width or height, whichever is greater
+  function getZForValueAndRange(val, range) {
+    var d = width > height ? width : height;
+
+    return ( d / 10 * val / range[1] );
   }
 
   function getSignedSetIndices(sets, j, s) {
@@ -792,8 +802,9 @@
   }
 
   // Render a x-y scatter chart
+  // Bubble chart is plotted via the x-y scatter chart option provided bubbles:true
   function renderScatterChart() {
-    var i, xSets, ySets, xAxisRange, yAxisRange, textOpts, textStrokeOpts, elem = ctx.canvas;
+    var i, xSets, ySets, xAxisRange, yAxisRange, zAxisRange, textOpts, textStrokeOpts, elem = ctx.canvas;
     
     // Retrieving sets with string literals
     sets = elem.getAttribute("data-sets") !== null ? parseSetsWithStrings(elem.getAttribute("data-sets")) : null;
@@ -803,18 +814,23 @@
     textStrokeOpts = parseOptsWithStrings(elem, "data-text-stroke-opts");
     
     // Separating X axis and Y axis sets
-    xSets = [];
-    ySets = [];
+    xSets = [], ySets = [], zSets = [];
     for (i = 0; i < sets.length; i++) {
       xSets[i] = sets[i][0];
       ySets[i] = sets[i][1];
+      
+      if(typeof sets[i][4] != "undefined")
+        zSets[i] = sets[i][4];
     }
     
     // Retrieving x-axis/y-axis ranges if present or use default if present or calculate if neither of them present in configuration
     xAxisRange = parseAttr(elem, "data-range-x") || parseAttr(elem, "data-range") || getRange(xSets, isStacked());
     yAxisRange = parseAttr(elem, "data-range-y") || parseAttr(elem, "data-range") || getRange(ySets, isStacked());
 
-    var set, fillStyle, alphaMultiplier, offset;
+    if(zSets.length > 0)
+      zAxisRange = parseAttr(elem, "data-range-z") || getRange(zSets, false);
+
+    var set, fillStyle, alphaMultiplier, offsetX, offsetY;
     
     // Drawing Axis for range based on provided opts
     drawAxisForRanges(xAxisRange, yAxisRange);
@@ -824,36 +840,80 @@
       set = sets[i];
 
       // Draw Text and Circles for Scatter Plot Chart
-      var x, y, alpha, fillColor;
+      var x, y, z, alpha, 
+          fillColor = colorOf(i) || '#000';
+      
       x = getXForValueAndRange(set[0], xAxisRange);
       y = getYForValueAndRange(set[1], yAxisRange);
+      z = set[4] && zAxisRange ? getZForValueAndRange(set[4], zAxisRange) : width / 10;
       
       if(opts.bubbles || opts.bubble) {
-        alpha = opts.alphaBubbles || opts.alphaBubble || opts.alpha || 0.5;
-        fillColor = set[3] || colorOf(i) || 'black';
+        alpha = opts.alphaBubbles || opts.alphaBubble || opts.alpha || 1;
+        fillColor = set[3] || fillColor;
         fillStyle = toRGBString(sheerColor(parseColor(fillColor), alpha));
         
-        drawCircle(fillStyle, x, y, 5);
-        
-        // Applying white shadow to text to make it visible over bubbles
-        ctx.shadowBlur = 4;
-        ctx.shadowColor = 'white';
+        drawCircle(fillStyle, x, y, z);
       }
+
+      ctx.textAlign = 'center';
 
       // Drawing Text Stroke
       if(textStrokeOpts) {
+        offsetX = !isNaN(textStrokeOpts.offsetX) ? +textStrokeOpts.offsetX : 0;
+        offsetY = !isNaN(textStrokeOpts.offsetY) ? +textStrokeOpts.offsetY : 0;
+        alpha = textStrokeOpts.alpha || false;
+        fillColor = textStrokeOpts.color || '#FFF';
+
+        if(alpha)
+          ctx.fillStyle = toRGBString(sheerColor(parseColor(fillColor), alpha));
+        else
+          ctx.fillStyle = fillColor;
+        
         ctx.font = textStrokeOpts.font || '10px sans-serif';
-        ctx.strokeText(set[2], x, y, textStrokeOpts.maxWidth || undefined);
+        ctx.strokeText(set[2], x + offsetX, y + offsetY, textStrokeOpts.maxWidth || undefined);
       }
 
       // Drawing Text
-      alpha = textOpts && textOpts.alpha || opts.alpha || 0.7;
-      fillColor = textOpts && textOpts.color || fillColor;
-      fillStyle = toRGBString(sheerColor(parseColor(fillColor), alpha));
+      alpha = false, offsetX = 0, offsetY = 0;
+      if(textOpts) {
+        offsetX = !isNaN(textOpts.offsetX) ? +textOpts.offsetX : 0;
+        offsetY = !isNaN(textOpts.offsetY) ? +textOpts.offsetY : 0;
+        alpha = textOpts.alpha || false;
+        fillColor = textOpts.color || set[3] || colorOf(i) || '#000';
+      }
+
+      if(alpha)
+        ctx.fillStyle = toRGBString(sheerColor(parseColor(fillColor), alpha));
+      else
+        ctx.fillStyle = fillColor;
+
       ctx.font = textOpts && textOpts.font || '10px sans-serif';
-      // @TODO error is occurring below
-      ctx.fillText(set[2], x, y, (textOpts && textOpts.maxWidth) || undefined);
+      ctx.fillText(set[2], x + offsetX, y + offsetY, (textOpts && textOpts.maxWidth) || undefined);
     }
+  }
+
+  // Render a pie chart
+  function renderGaugeChart() {
+    var angle=45, centerX, centerY, endX, endY, startX, startY, x, y;
+    this.strokeWidth = 2;
+    angle = 45;//this.gauge.getAngle.call(this, this.displayedValue);
+    centerX = width/2;//this.canvas.width / 2;
+    centerY = height*0.9;//this.canvas.height * 0.9;
+    x = Math.round(centerX + this.length * Math.cos(angle));
+    y = Math.round(centerY + this.length * Math.sin(angle));
+    startX = Math.round(centerX + this.strokeWidth * Math.cos(angle - Math.PI / 2));
+    startY = Math.round(centerY + this.strokeWidth * Math.sin(angle - Math.PI / 2));
+    endX = Math.round(centerX + this.strokeWidth * Math.cos(angle + Math.PI / 2));
+    endY = Math.round(centerY + this.strokeWidth * Math.sin(angle + Math.PI / 2));
+    ctx.fillStyle = '#0f0';//this.options.color;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, this.strokeWidth, 0, Math.PI * 2, true);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(startX, startY);
+    ctx.lineTo(x, y);
+    ctx.lineTo(endX, endY);
+    ctx.fill();
   }
 
   // Render or re-render the chart for the given element

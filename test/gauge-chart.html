@@ -28,7 +28,7 @@ table tr td span:nth-child(6){color:brown;}
 
 <body>
 
-  <h3>Scatter Chart</h3>
+  <h3>Gauge Chart</h3>
 
   <section id="options">
     <p>
@@ -61,7 +61,7 @@ table tr td span:nth-child(6){color:brown;}
     <tr>
       <td>
         <canvas  class="chartlet" 
-          data-type="scatter"
+          data-type="gauge"
           data-colors="red green blue orange teal brown" 
           data-range="0 10" 
           data-sets="[2 2 'DOT' '#F00' 10] [4 4 'text' '#0F0' 20] [6 6 '*' '#00F' 30] [8 8 '-' '#FFA500' 40]"
@@ -74,7 +74,7 @@ table tr td span:nth-child(6){color:brown;}
       <td>
         <code>
           <canvas  class="chartlet" 
-          data-type="scatter"
+          data-type="gauge"
           data-colors="red green blue orange teal brown" 
           data-range="0 10" 
           data-sets="[2 2 '.' '#F00' 'Good'] [4 4 'x' '#0F0' 'Very Good'] [6 6 '*' '#00F' 'Excellent'] [8 8 '-' '#FFA500' 'Fair']"
@@ -82,33 +82,6 @@ table tr td span:nth-child(6){color:brown;}
           data-text-opts="font:'20px Verdana' maxWidth:10"
           data-text-stroke-opts="font:'20px Georgia' offsetX:2 offsetY:1"
           data-opts="alpha:0.5 xAxis:6 yAxis:6">
-        </canvas>
-        </code>
-      </td>
-    </tr>
-
-    <!-- Test Case -->
-    <tr>
-      <td><span>[2 2 '.' 'red' Good]</span><br><span>[2 8 'x' 'green' 'Very Good']</span><br><span>[8 8 '*' 'blue' 'Excellent']</span><br><span>[8 2 '-' 'orange' 'Fair']</span></td>
-    </tr>
-    <tr>
-      <td>
-        <canvas  class="chartlet" 
-          data-type="scatter"
-          data-colors="red green blue orange teal brown" 
-          data-sets="[2 2 '.' 'red' Good] [4 4 'x' 'green' 'Very Good'] [6 6 '*' 'blue' 'Excellent'] [8 8 '-' 'orange' 'Fair']"
-          width="200" height="200"
-          data-opts="alpha:0.5 xAxis:5 yAxis:6">
-        </canvas>
-      </td>
-      <td>
-        <code>
-          <canvas  class="chartlet" 
-          data-type="scatter"
-          data-colors="red green blue orange teal brown" 
-          data-sets="[2 2 '.' 'red' Good] [2 8 'x' 'green' 'Very Good'] [8 8 '*' 'blue' 'Excellent'] [8 2 '-' 'orange' 'Fair']"
-          width="200" height="200"
-          data-opts="alpha:0.5 xAxis:5 yAxis:6">
         </canvas>
         </code>
       </td>
