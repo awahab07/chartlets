@@ -56,19 +56,14 @@ table tr td span:nth-child(6){color:brown;}
 
     <!-- Test Case -->
     <tr>
-      <td><span>[2 2 '.' '#F00' Good]</span><br><span>[4 4 'x' '#0F0' 'Very Good']</span><br><span>[6 6 '*' '#00F' 'Excellent']</span><br><span>[8 8 '-' '#FFA500' 'Fair']</span></td>
-    </tr>
-    <tr>
       <td>
         <canvas  class="chartlet" 
           data-type="gauge"
           data-colors="red green blue orange teal brown" 
-          data-range="0 10" 
-          data-sets="[2 2 'DOT' '#F00' 10] [4 4 'text' '#0F0' 20] [6 6 '*' '#00F' 30] [8 8 '-' '#FFA500' 40]"
+          data-range="1 100" 
+          data-sets="[60 'rgba(50, 150, 20, 0.7)'] [85 'rgba(230, 150, 20, 0.8)'] [100 'rgba(250, 50, 0, 0.9)']"
           width="200" height="200"
-          data-text-opts="color:#000 offsetY:3"
-          data-text-stroke-opts="color:#FFF offsetY:4"
-          data-opts="alpha:0.5 xAxis:6 yAxis:6 bubbles:true">
+          data-opts="alpha:0.5 xAxis:6 yAxis:6 bubbles:true majorTicks:10 minorTicks:3 calibrate:true gradientAreas:true">
         </canvas>
       </td>
       <td>
@@ -76,16 +71,43 @@ table tr td span:nth-child(6){color:brown;}
           <canvas  class="chartlet" 
           data-type="gauge"
           data-colors="red green blue orange teal brown" 
-          data-range="0 10" 
-          data-sets="[2 2 '.' '#F00' 'Good'] [4 4 'x' '#0F0' 'Very Good'] [6 6 '*' '#00F' 'Excellent'] [8 8 '-' '#FFA500' 'Fair']"
+          data-range="1 100" 
+          data-sets="[60 'rgba(50, 150, 20, 0.7)'] [85 'rgba(230, 150, 20, 0.8)'] [100 'rgba(250, 50, 0, 0.9)']"
           width="200" height="200"
-          data-text-opts="font:'20px Verdana' maxWidth:10"
-          data-text-stroke-opts="font:'20px Georgia' offsetX:2 offsetY:1"
-          data-opts="alpha:0.5 xAxis:6 yAxis:6">
+          data-opts="alpha:0.5 xAxis:6 yAxis:6 bubbles:true majorTicks:10 minorTicks:3 calibrate:true gradientAreas:true">
         </canvas>
         </code>
       </td>
     </tr>
+
+    <!-- Test Case -->
+    <tr>
+      <td>
+        <canvas  class="chartlet" 
+          data-type="gauge"
+          data-colors="red green blue orange teal brown" 
+          data-range="1 100" 
+          data-sets="[2 2 'DOT' '#F00' 10] [4 4 'text' '#0F0' 20] [6 6 '*' '#00F' 30] [8 8 '-' '#FFA500' 40]"
+          data-calibrations = "['4&#176;C' '' '' '' '' '' '' '100&#176;C']";
+          width="300" height="150"
+          data-opts="alpha:0.5 xAxis:6 yAxis:6 bubbles:true majorTicks:8 calibrate:true widthRatio:0.8">
+        </canvas>
+      </td>
+      <td>
+        <code>
+          <canvas  class="chartlet" 
+          data-type="gauge"
+          data-colors="red green blue orange teal brown" 
+          data-range="1 100" 
+          data-sets="[2 2 'DOT' '#F00' 10] [4 4 'text' '#0F0' 20] [6 6 '*' '#00F' 30] [8 8 '-' '#FFA500' 40]"
+          data-calibrations = "['4&#176;C' '' '' '' '' '' '' '100&#176;C']";
+          width="300" height="150"
+          data-opts="alpha:0.5 xAxis:6 yAxis:6 bubbles:true majorTicks:8 calibrate:true widthRatio:0.8">
+        </canvas>
+        </code>
+      </td>
+    </tr>
+
 
   </table>
 

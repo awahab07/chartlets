@@ -156,7 +156,7 @@
 
   // Stripping single quotes around the string if present
   function stripSingleQuotes(str) {
-    if(str.startsWith("'") && str.endsWith("'")) {
+    if(str[0] == "'" && str[str.length-1] == "'") {
       return str.substring(1, str.length-1);
     }
     return str;
@@ -610,6 +610,67 @@
     }
   }
 
+  // Draws text along arc of given center and radius
+  function drawTextAlongArc(context, str, centerX, centerY, radius, angle) {
+    var len = str.length, s;
+    context.save();
+    context.translate(centerX, centerY);
+    context.rotate(-1 * angle / 2);
+    context.rotate(-1 * (angle / len) / 2);
+    for(var n = 0; n < len; n++) {
+      context.rotate(angle / len);
+      context.save();
+      context.translate(0, -1 * radius);
+      s = str[n];
+      context.fillText(s, 0, 0);
+      context.restore();
+    }
+    context.restore();
+  }
+
+    // Calculates and returns point object based on given values
+  function getPointOnCircle(center, radius, angle, offset) {
+    return {
+      x: (center.h - radius) + ( radius - (Math.cos(angle) * radius * offset) ),
+      y: (center.k - radius) + ( radius - (Math.sin(angle) * radius * offset) )
+    }
+  }
+
+  // Draws calibration for gauge chart speedometer for given parameters, draws major, minor ticks and values
+  function drawCalibration(center, radius, angle, start, end, value, style, lineWidth, font) {
+        var toPoint = getPointOnCircle(center, radius, angle, start); // Point towards outer arc
+
+        if(value === 'tick') {
+          var fromPoint = getPointOnCircle(center, radius, angle, end); // Point towards center
+          // Plotting ticks
+          ctx.beginPath();
+          ctx.lineWidth = lineWidth;
+          ctx.fillStyle = style;
+          ctx.strokeStyle = style;
+          ctx.moveTo(fromPoint.x, fromPoint.y);
+          ctx.lineTo(toPoint.x, toPoint.y);
+          ctx.stroke();
+          ctx.closePath();
+        } else {
+          // Drawing calibration text
+          ctx.font = font;
+          ctx.fillStyle = style;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'top';
+          ctx.fillText(value, toPoint.x, toPoint.y);
+        }
+  }
+
+  // Fill a circle sector
+  function drawFilledArc(center, outerRadius, innerRadius, startAngel, endAngle, style) {
+    ctx.beginPath();
+    ctx.arc(center.h, center.k, outerRadius, startAngel, endAngle, false);
+    ctx.arc(center.h, center.k, innerRadius, endAngle, startAngel, true);
+    ctx.fillStyle = style;
+    ctx.fill();
+    ctx.closePath();
+  }
+
   // Interpolate a value between a and b. e.g. interpolate(0,1,5,10) -> 0.5
   function interpolate(a, b, idx, steps) {
     return +a + ((+b - +a) * (idx / steps));
@@ -894,26 +955,86 @@
 
   // Render a pie chart
   function renderGaugeChart() {
-    var angle=45, centerX, centerY, endX, endY, startX, startY, x, y;
-    this.strokeWidth = 2;
-    angle = 45;//this.gauge.getAngle.call(this, this.displayedValue);
-    centerX = width/2;//this.canvas.width / 2;
-    centerY = height*0.9;//this.canvas.height * 0.9;
-    x = Math.round(centerX + this.length * Math.cos(angle));
-    y = Math.round(centerY + this.length * Math.sin(angle));
-    startX = Math.round(centerX + this.strokeWidth * Math.cos(angle - Math.PI / 2));
-    startY = Math.round(centerY + this.strokeWidth * Math.sin(angle - Math.PI / 2));
-    endX = Math.round(centerX + this.strokeWidth * Math.cos(angle + Math.PI / 2));
-    endY = Math.round(centerY + this.strokeWidth * Math.sin(angle + Math.PI / 2));
-    ctx.fillStyle = '#0f0';//this.options.color;
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, this.strokeWidth, 0, Math.PI * 2, true);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.moveTo(startX, startY);
-    ctx.lineTo(x, y);
-    ctx.lineTo(endX, endY);
-    ctx.fill();
+    var target, elem = ctx.canvas, i, j, gaugeDiameter, gaugeRadius, gaugeCenter, xMargin, tickValue, minorTickValue, gaugeShift, valueToRad, adjustValueForGaugeShift;
+    range = parseAttr(elem, "data-range") || [];
+    range[0] = range && !isNaN(range[0]) ? +range[0] : 0;
+    range[1] = range && !isNaN(range[1]) ? +range[1] : 100;
+    
+    target = !isNaN(elem.getAttribute("data-target")) ? +elem.getAttribute("data-target") : range[0];
+    opts = parseOptsWithStrings(elem, "data-opts");
+
+    // Here sets will represent the colured segments of gauge in a form [upperLimit fillStyle] e.g. "[30 'rgba(150, 100, 100, 0.6)'] [70 'rgba(255, 0, 0, 1)']"
+    sets = elem.getAttribute("data-sets") !== null ? parseSetsWithStrings(elem.getAttribute("data-sets")) : null;
+    calibrations = elem.getAttribute("data-calibrations") !== null ? parseSetsWithStrings(elem.getAttribute("data-calibrations")) : null;
+
+    // Tick Marks/Steps
+    opts.majorTicks = !isNaN(opts.majorTicks) ? +opts.majorTicks : 10;
+    opts.majorTicksWidth = !isNaN(opts.majorTicksWidth) ? +opts.majorTicksWidth : 2
+    opts.majorTicksStyle = opts.majorTicksStyle || 'rgba(0, 0, 0, 0.6)';
+    
+    opts.minorTicks = opts.minorTicks && !isNaN(opts.minorTicks) ? +opts.minorTicks : false; // Optional
+    opts.minorTicksWidth = !isNaN(opts.minorTicksWidth) ? +opts.minorTicksWidth : 1
+    opts.minorTicksStyle = opts.minorTicksStyle || 'rgba(50, 50, 50, 0.8)';
+    
+    gaugeDiameter = !isNaN(opts.widthRatio) ? (+opts.widthRatio * width) : (!isNaN(opts.heightRatio) ? (+opts.heightRatio * height) : (width * 0.95));
+    gaugeRadius = gaugeDiameter / 2;
+    xMargin = (width - gaugeDiameter) / 2;
+    gaugeCenter = {h: width / 2, k: height * 0.95};
+
+    tickValue = Math.PI / opts.majorTicks;
+    minorTickValue = opts.minorTicks && ( tickValue / (opts.minorTicks + 1) ) || false;
+    gaugeShift = tickValue / 2;
+
+    // Helper Functions
+    valueToRad = function(val){return val / range[1] * Math.PI}
+    adjustValueForGaugeShift = function(val){return val / valueToRad(range[1]) * tickValue * opts.majorTicks - gaugeShift}
+
+    // Drawing gauge background arc
+    drawFilledArc(gaugeCenter, ((width / 2)-xMargin), (width < 100 ? 5 : 10), Math.PI, Math.PI * 2, opts.gaugeBackground || 'rgba(90, 100, 120, 0.5)');
+
+    // Drawing gauge colored arcs
+    if(sets){
+      if(typeof opts.gradientAreas != 'undefined' && opts.gradientAreas) {
+        var startAngel = Math.PI + gaugeShift, endAngle;
+        for(i=0; i < sets.length; i++) {
+          var set = sets[i];
+          var startPoint = getPointOnCircle(gaugeCenter, gaugeRadius, startAngel, 0.88);
+          endAngle = Math.PI + adjustValueForGaugeShift(valueToRad(+set[0]));
+          var endPoint = getPointOnCircle(gaugeCenter, gaugeRadius, endAngle, 0.88);
+          var grd = ctx.createLinearGradient(startPoint.x, startPoint.y, endPoint.x, endPoint.y);
+          grd.addColorStop(0, set[1]);
+          grd.addColorStop(1, sets[i-1] && sets[i-1][1] || "white");
+          drawFilledArc(gaugeCenter, gaugeRadius * 0.88, gaugeRadius * 0.18, startAngel, endAngle, grd);
+          startAngel = endAngle;
+        }
+      } else {
+        
+      }
+    }
+
+    // Drawing major ticks
+    // Formula: x=h+rcosθ, y=k+rsinθ for point (x, y) on circle having center (h, k) and radius r for angle θ
+    for (i = 0; i < opts.majorTicks; i++)
+    {
+        var majorStep = (i * tickValue) + gaugeShift;
+        drawCalibration(gaugeCenter, gaugeRadius, majorStep, 0.88, 0.8, 'tick', opts.majorTicksStyle, opts.majorTicksWidth);
+
+        // Drawing calibration
+        if(opts.calibrate) {
+          var calibrationValue = (calibrations && typeof calibrations[0][i] != "undefined") ? calibrations[0][i] : Math.round( i == opts.majorTicks - 1 ? range[1] : ( range[1] / opts.majorTicks * (i + 1) ) );
+          var font = opts.calibrationFont || '10px sans-serif';
+          var style = opts.calibrationStyle || 'rgba(0, 0, 0, 0.9)';
+          drawCalibration(gaugeCenter, gaugeRadius, majorStep, 1, 0.9, calibrationValue, style, null, font);
+        }
+
+        // Calculating and plotting minor ticks for current major tick
+        if(minorTickValue && i < opts.majorTicks - 1) {
+          for(j=0; j < opts.minorTicks; j++) {
+            majorStep += minorTickValue
+            drawCalibration(gaugeCenter, gaugeRadius, majorStep, 0.88, 0.82, 'tick', opts.minorTicksStyle, opts.minorTicksWidth);
+          }
+        }
+    }
   }
 
   // Render or re-render the chart for the given element
@@ -935,7 +1056,7 @@
     width = elem.width;
     height = elem.height;
     colors = themes[opts.theme] || parseAttr(elem, "data-colors") || themes.basic;
-    range = parseAttr(elem, "data-range") || getRange(sets, isStacked());
+    range = parseAttr(elem, "data-range") || sets && getRange(sets, isStacked()) || null;
     rotated = false;
 
     // erase
