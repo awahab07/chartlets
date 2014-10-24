@@ -32,20 +32,87 @@ table tr td span:nth-child(6){color:brown;}
 
   <section id="options">
     <p>
-      This page contains tests for <code>barline</code> chart type defined as <span class="highlight">data-type="barline"</span>.
-      <code>barline</code> chart type consists of a line chart above and a bar chart below with same or separate series if explicitly provided. If cofiguration is provided in usual way, both charts will try to adopt the given configuration. Explicit or a mix of default and Explicit configuration can be provided by using <code>data-line-</code> or <code>data-bar-</code> prefixes instead of <code>data-</code> prefix for each chart type respectively for <span class="highlight">data-sets, data-opts, data-colors, data-range</span> configurations.
+      This page contains tests for <code>gauge</code> chart type defined as <span class="highlight">data-type="gauge"</span>.
+      Gauge chart type consists of a semi circle with needle pointing at the target value over styled and calibrated areas. The following figure can be consulted for various elements and vocabulary used in this documentation.
     </p>
-    <h4>Configurations Specific to barline</h4>
+    <img src="images/gaugeChartVocabulary.png" width="825" style="float:right;clear:both;">
+
+    <h4>Configurations of Gauge Chart</h4>
     <ul>
-      <li><p><strong>Data</strong> default can be provided as  <code>data-sets</code> or can be defined explicitly by <span class="highlight">data-line-sets</span> or <span class="highlight">data-bar-sets</span> for each chart.</p></li>
+      <li><p><strong>Areas</strong> used to provide styled segmentation of gauge reading and can be configured by <span class="highlight">data-areas</span>. The value of <code>data-areas</code> will hold sets of desired segments with each in the format <code>[&lt;value&gt; '&lt;style&gt;']</code> (Both sets and values within sets must be separated by a single space). Where <code>value</code> represent the ending limit of segment and should be within gauge <code>range</code> and style represent the fill style of segment arc and must be provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords.</p></li>
       
-      <li><p><strong>Options</strong> default can be provided as  <code>data-opts</code> or can be defined explicitly by <span class="highlight">data-line-opts</span> or <span class="highlight">data-bar-opts</span> for each chart.</p></li>
+      <li><p><strong>Range</strong> specifies the start and end value of gauge reading and configured by <span class="highlight">data-range</span>. This range will map to <code>Gauge Value Radius</code> as specified in the figure. Default is <code>1 100</code></li>
       
-      <li><p><strong>Colors</strong> default can be provided as  <code>data-colors</code> or can be defined explicitly by <span class="highlight">data-line-colors</span> or <span class="highlight">data-bar-colors</span> for each chart.</p></li>
-      
-      <li><p><strong>Range</strong> default can be provided as  <code>data-range</code> or can be defined explicitly by <span class="highlight">data-line-range</span> or <span class="highlight">data-bar-range</span> for each chart.</p></li>
-      
-      <li><p><strong>Height Ratio</strong> is the ratio of height of line chart to the height of bar chart. It is provided as a single decimal value and evaluated as <code>x:1</code> where <code>x</code> and <code>1</code> are the ratios of heights of line and bar charts respectively. For example  <span class="highlight">data-height-ratio="2"</span> evaluated as <code>2:1</code> will make the height of line chart twice of bar chart's height. It will not affect the overall height of chart's canvas.</p></li>
+      <li><p><strong>Calibrations</strong> is used to provide custom calibration strings. If calibration is enalbed by providing <code>calibration:true</code> in <code>data-opts</code>, the gauge will calibrate the Major Ticks according to Gauge Range. This calibration can be overwritten by configuring gauge with <span class="highlight">data-calibrations</span> in a format <code>['TextforMajorTick 1' 'TextforMajorTick 2' ... 'TextforMajorTick N']</code>. (Note: The number of major ticks drawn are 1+ConfiguredMajorTicks)</p></li>
+
+      <li><p><strong>Options</strong> configured as <span class="highlight">data-opts</span>. Various options can be provided to optimize gauge size, ticks, needle, needle target and styles of gauge elements etc. Options are provided in key:value format e.g. <code>key1:value1 key2:'String Value'</code>. Key:Value must be distinguished by a single <code>:</code> with no space whereas different key:value pairs must be separated by a single space. Available options for Gauge Chart are explained below.</p></li>
+
+      <li>
+        <h4>Options for Gauge Chart</h4>
+        <ul>
+          <li><p><strong>widthRatio</strong>, <strong>heightRatio</strong> Gauge Diameter size can be controlled by providing a ratio of Gauge Diameter to either Width of Canvas by <code>widthRatio:v</code> or to Height of Canvas by <code>heightRatio:v</code> where v is the ratio value for Gauge Diameter. Default is <code>0.95 of CanvasWidth</code></p></li>
+
+          <li><p><strong>gaugeBackground</strong> The fill style of gauge background semi circle provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. Default is <code>'rgba(90, 100, 120, 0.5)'</code></p></li>
+
+          <li><p><strong>areasRadiusRatio</strong> Ratio of Areas Radius to the Gauge Value Radius. Default is <code>1</code></p></li>
+
+          <li><p><strong>gradientAreas</strong> If provided as <code>true</code>, the areas colors will be applied as gradient. Default is <code>false</code></p></li>
+
+          <li><p><strong>calibrate</strong> If provided as <code>true</code>, calibrations will be plotted. Default value is <code>false</code>.</p></li>
+
+          <li><p><strong>calibrationFont</strong> Calibration font provided as string according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font">reference</a>. Default value is <code>'10px sans-serif'</code>.</p></li>
+          
+          <li><p><strong>calibrationStyle</strong> Fill style for Calibration. It is provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. Default value is <code>'rgba(0, 0, 0, 0.9)'</code>.</p></li>       
+          
+          <li><p><strong>calibrationRadiusRatio</strong> Decimal value to adjust position of Calibration. Default value is <code>1</code>.</p></li>
+          
+          <li><p><strong>majorTicks</strong> Integer value representing the number of major ticks. The gauge range will be devided by this number leaving marked Major Ticks of count 1+majorTicks. Default value is <code>10</code>.</p></li>
+
+          <li><p><strong>majorTicksWidth</strong> Line width of major ticks. Default value is <code>2</code>.</p></li>
+
+          <li><p><strong>majorTicksStyle</strong> Fill style for major ticks. It is provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. Default value is <code>'rgba(0, 0, 0, 0.6)'</code>.</p></li>
+
+          <li><p><strong>majorTicksLengthRatio</strong> Decimal value to adjust majorTicks length. Default value is <code>0.8</code>.</p></li>
+
+          <li><p><strong>minorTicks</strong> Integer value representing the number of minor ticks drawn within each major tick region. No minor ticks will be drawn by <code>Default</code>.</p></li>
+
+          <li><p><strong>minorTicksWidth</strong> Line width of minor ticks. Default value is <code>1</code>.</p></li>
+
+          <li><p><strong>minorTicksStyle</strong> Fill style for minor ticks. It is provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. Default value is <code>'rgba(50, 50, 50, 0.8)'</code>.</p></li>
+
+          <li><p><strong>minorTicksLengthRatio</strong> Decimal value to adjust minorTicks length. Default value is <code>0.82</code>.</p></li>
+
+          <li><p><strong>title</strong> Title to show in the middle of gauge. Default value is <code>None</code>.</p></li>
+          
+          <li><p><strong>titleFont</strong> Title font provided as string according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font">reference</a>. Default value is <code>'10px sans-serif'</code>.</p></li>
+          
+          <li><p><strong>titleStyle</strong> Fill style for title. It is provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. Default value is <code>'#000'</code>.</p></li>
+
+          <li><p>&#8614;<strong>target</strong> The target at which the Gauge Needle will point to. Providing <code>target</code> outside of Guage Range may lead the needle to point off the Gauge. Default value is <code>lower limit of Gauge Range</code>.</p></li>
+
+          <li><p><strong>needleWidthRatio</strong> Decimal value to optimize needle width. Default is <code>1</code>.</p></li>
+
+          <li><p><strong>needleFillStyle</strong> Fill style of needle. It is provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. Default value is <code>'rgba(220, 60, 20, 0.6)'</code>.</p></li>
+
+          <li><p><strong>needleStrokeStyle</strong> Stroke style of needle. It is provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. Default value is <code>'rgba(200, 50, 20, 0.8)'</code>.</p></li>
+
+          <li><p><strong>needleBaseFillStyle</strong> Fill style of needle base. It is provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. Default value is <code>'rgba(200, 150, 40, 0.9)'</code>.</p></li>
+
+          <li><p><strong>needleBaseStrokeStyle</strong> Stroke style of needle base. It is provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. Default value is <code>'rgba(220, 160, 30, 0.5)'</code>.</p></li>
+
+          <li><p><strong>objectName</strong> An optional name of the variable to expose an <code>object</code> in global scope(under <code>window</code> object). This object can be used to interact with the chart. The methods exposed by the object are:</p>
+            <ul>
+                <li><b>setTarget</b>(<i>value, doAnimation</i>) will set the target of gauge to provided <code>value</code> if inside Gauge Range. By default the needle will animate towards the new target which can be disabled by providing <code>doAnimation</code> as <code>false</code>.</li>
+
+                <li><b>getTarget</b>() returns the current target.</li>
+
+                <li><b>setTitle</b>(<i>title</i>) sets the title to provided <code>title</code>.</li>
+
+                <li><b>redraw</b>() redraws the chart.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
     </ul>
   </section>
 
@@ -55,15 +122,16 @@ table tr td span:nth-child(6){color:brown;}
   <table cellspacing="50">
 
     <!-- Test Case -->
+    <tr><td colspan="2" style="text-align:center;">Simple Gauge Chart with Gradient Areas</td></tr>
     <tr>
       <td>
         <canvas  class="chartlet" 
           data-type="gauge"
           data-colors="red green blue orange teal brown" 
           data-range="1 100" 
-          data-sets="[60 'rgba(50, 150, 20, 0.7)'] [85 'rgba(230, 150, 20, 0.8)'] [100 'rgba(250, 50, 0, 0.9)']"
-          width="200" height="200"
-          data-opts="alpha:0.5 xAxis:6 yAxis:6 bubbles:true majorTicks:10 minorTicks:3 calibrate:true gradientAreas:true">
+          data-areas="[60 'rgba(50, 150, 20, 0.7)'] [85 'rgba(230, 150, 20, 0.8)'] [100 'rgba(250, 50, 0, 0.9)']"
+          width="220" height="120"
+          data-opts="majorTicks:10 minorTicks:3 calibrate:true gradientAreas:true needleWidthRatio:1.6 target:45 objectName:'firstGaugeChart'">
         </canvas>
       </td>
       <td>
@@ -72,9 +140,9 @@ table tr td span:nth-child(6){color:brown;}
           data-type="gauge"
           data-colors="red green blue orange teal brown" 
           data-range="1 100" 
-          data-sets="[60 'rgba(50, 150, 20, 0.7)'] [85 'rgba(230, 150, 20, 0.8)'] [100 'rgba(250, 50, 0, 0.9)']"
+          data-areas="[60 'rgba(50, 150, 20, 0.7)'] [85 'rgba(230, 150, 20, 0.8)'] [100 'rgba(250, 50, 0, 0.9)']"
           width="200" height="200"
-          data-opts="alpha:0.5 xAxis:6 yAxis:6 bubbles:true majorTicks:10 minorTicks:3 calibrate:true gradientAreas:true">
+          data-opts="majorTicks:10 minorTicks:3 calibrate:true gradientAreas:true needleWidthRatio:1.6 target:45 objectName:'firstGaugeChart'">
         </canvas>
         </code>
       </td>
@@ -87,10 +155,10 @@ table tr td span:nth-child(6){color:brown;}
           data-type="gauge"
           data-colors="red green blue orange teal brown" 
           data-range="1 80" 
-          data-sets="[10 '#0f0'] [70 'transparent'] [80 '#f00']"
-          data-calibrations = "['Start' '4&#176;C' '' '' '' '' '' '70&#176;C' 'Max']";
+          data-areas="[10 '#0f0'] [70 'transparent'] [80 '#f00']"
+          data-calibrations = "['Start' '4&#176;C' '' '' '' '' '' '70&#176;C' 'Max']"
           width="300" height="150"
-          data-opts="alpha:0.5 xAxis:6 yAxis:6 bubbles:true majorTicks:8 calibrate:true widthRatio:0.8 gaugeBackground:'rgba(200, 150, 30, 0.4)'">
+          data-opts="majorTicks:8 minorTicks:3 calibrate:true widthRatio:0.8 gaugeBackground:'rgba(200, 150, 30, 0.4)' areasRadiusRatio:0.5 needleFillStyle:'rgba(210, 217, 40, 0.9)' needleWidthRatio:0.8 title:'Temperature' target:50">
         </canvas>
       </td>
       <td>
@@ -99,15 +167,83 @@ table tr td span:nth-child(6){color:brown;}
           data-type="gauge"
           data-colors="red green blue orange teal brown" 
           data-range="1 80" 
-          data-sets="[10 '#0f0'] [70 'transparent'] [80 '#f00']"
-          data-calibrations = "['Start' '4&#176;C' '' '' '' '' '' '70&#176;C' 'Max']";
+          data-areas="[10 '#0f0'] [70 'transparent'] [80 '#f00']"
+          data-calibrations = "['Start' '4&#176;C' '' '' '' '' '' '70&#176;C' 'Max']"
           width="300" height="150"
-          data-opts="alpha:0.5 xAxis:6 yAxis:6 bubbles:true majorTicks:8 calibrate:true widthRatio:0.8 gaugeBackground:'rgba(200, 150, 30, 0.4)'">
+          data-opts="majorTicks:8 minorTicks:3 calibrate:true widthRatio:0.8 gaugeBackground:'rgba(200, 150, 30, 0.4)' areasRadiusRatio:0.5 needleFillStyle:'rgba(210, 217, 40, 0.9)' needleWidthRatio:0.8 title:'Temperature' target:50">
         </canvas>
         </code>
       </td>
     </tr>
 
+    <!-- Test Case -->
+    <tr>
+      <td>
+        <canvas  class="chartlet" 
+          data-type="gauge"
+          data-range="1 80" 
+          data-areas="[50 '#0f0'] [70 'rgb(230, 150, 30)'] [80 '#f00']"
+          data-calibrations = "['Start' '4&#176;C' '' '' '' '' '' '70&#176;C' 'Max']"
+          width="300" height="150"
+          data-opts="majorTicks:8 calibrate:true widthRatio:0.8 gaugeBackground:'rgba(200, 150, 30, 0.4)' areasRadiusRatio:0.05 title:'Custom Areas Size' titleFont:'12px Georgia' titleStyle:'rgba(250, 120, 10, 0.8)' needleWidthRatio:0.5 needleFillStyle:'rgba(102, 151, 86, 0.7)' needleStrokeStyle:'rgba(130, 124, 31, 0.8)' target:60">
+        </canvas>
+      </td>
+      <td>
+        <code>
+          <canvas  class="chartlet" 
+          data-type="gauge"
+          data-range="1 80" 
+          data-areas="[50 '#0f0'] [70 'rgb(230, 150, 30)'] [80 '#f00']"
+          data-calibrations = "['Start' '4&#176;C' '' '' '' '' '' '70&#176;C' 'Max']"
+          width="300" height="150"
+          data-opts="majorTicks:8 calibrate:true widthRatio:0.8 gaugeBackground:'rgba(200, 150, 30, 0.4)' areasRadiusRatio:0.05 title:'Custom Areas Size' titleFont:'12px Georgia' titleStyle:'rgba(250, 120, 10, 0.8)' needleWidthRatio:0.5 needleFillStyle:'rgba(102, 151, 86, 0.7)' needleStrokeStyle:'rgba(130, 124, 31, 0.8)' target:60">
+        </canvas>
+        </code>
+      </td>
+    </tr>
+
+    <!-- Test Case -->
+    <tr><td colspan="2" style="text-align:center;">Speedometer Example with Animated Target Update</td></tr>
+    <tr>
+      <td>
+        <canvas  class="chartlet" 
+          data-type="gauge"
+          data-range="1 100" 
+          data-areas="[33 '#0f0'] [67 'rgb(230, 150, 30)'] [100 '#f00']"
+          data-calibrations = "['' '40' '' '' '70' '80' '100']"
+          width="300" height="150"
+          data-opts="
+            majorTicks:6 majorTicksWidth:4 majorTicksStyle:'#FFF' majorTicksLengthRatio:0.7 
+            minorTicks:3 minorTicksWidth:2 minorTicksStyle:'#FFF' minorTicksLengthRatio:0.77 
+            calibrate:true calibrationStyle:'#FFF' calibrationFont:'14px Verdana bold' calibrationRadiusRatio:0.7
+            gaugeBackground:'rgba(88, 88, 88, 1)' areasRadiusRatio:0.1 gradientAreas:true title:'MPH' titleFont:'14px Georgia' titleStyle:'#FFF' 
+            needleWidthRatio:1 needleFillStyle:'rgba(188, 41, 37, 1)' needleStrokeStyle:'transparent' 
+            needleBaseFillStyle:'#000' needleBaseStrokeStyle:'transparent' 
+            target:60
+            objectName:speedoMeter">
+        </canvas>
+      </td>
+      <td>
+        <code>
+          <canvas  class="chartlet" 
+          data-type="gauge"
+          data-range="1 100" 
+          data-areas="[20 '#0f0'] [70 'rgb(230, 150, 30)'] [100 '#f00']"
+          data-calibrations = "['' '40' '' '' '70' '80' '100']"
+          width="300" height="150"
+          data-opts="
+            majorTicks:6 majorTicksWidth:4 majorTicksStyle:'#FFF' majorTicksLengthRatio:0.7 
+            minorTicks:3 minorTicksWidth:2 minorTicksStyle:'#FFF' minorTicksLengthRatio:0.77 
+            calibrate:true calibrationStyle:'#FFF' calibrationFont:'14px Verdana bold' calibrationRadiusRatio:0.7
+            gaugeBackground:'rgba(88, 88, 88, 1)' areasRadiusRatio:0.1 gradientAreas:true title:'MPH' titleFont:'14px Georgia' titleStyle:'#FFF' 
+            needleWidthRatio:1 needleFillStyle:'rgba(188, 41, 37, 1)' needleStrokeStyle:'transparent' 
+            needleBaseFillStyle:'#000' needleBaseStrokeStyle:'transparent' 
+            target:60
+            objectName:speedoMeter">
+        </canvas>
+        </code>
+      </td>
+    </tr>
 
   </table>
 
@@ -129,5 +265,8 @@ table tr td span:nth-child(6){color:brown;}
     }
 
     Chartlets.render();
+
+    // Animating Speedometer
+    setInterval(function(){if(typeof speedoMeter != "undefined"){var random = Math.round(Math.random()*100) + 1;speedoMeter.setTarget(random);speedoMeter.setTitle(random + ' MPH')}}, 3000);
   </script>
 </body>
