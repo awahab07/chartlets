@@ -2,7 +2,7 @@
 
 <head>
 
-<title>Test</title>
+<title>Gauge Chart</title>
 
 <script src="../src/chartlets.js"></script>
 
@@ -45,7 +45,7 @@ table tr td span:nth-child(6){color:brown;}
       
       <li><p><strong>Calibrations</strong> is used to provide custom calibration strings. If calibration is enalbed by providing <code>calibration:true</code> in <code>data-opts</code>, the gauge will calibrate the Major Ticks according to Gauge Range. This calibration can be overwritten by configuring gauge with <span class="highlight">data-calibrations</span> in a format <code>['TextforMajorTick 1' 'TextforMajorTick 2' ... 'TextforMajorTick N']</code>. (Note: The number of major ticks drawn are 1+ConfiguredMajorTicks)</p></li>
 
-      <li><p><strong>Options</strong> configured as <span class="highlight">data-opts</span>. Various options can be provided to optimize gauge size, ticks, needle, needle target and styles of gauge elements etc. Options are provided in key:value format e.g. <code>key1:value1 key2:'String Value'</code>. Key:Value must be distinguished by a single <code>:</code> with no space whereas different key:value pairs must be separated by a single space. Available options for Gauge Chart are explained below.</p></li>
+      <li><p><strong>Options</strong> configured as <span class="highlight">data-opts</span>. Various options can be provided to optimize gauge size, ticks, needle, needle target and styles of gauge elements etc. Options are provided in key:value format e.g. <code>key1:value1 key2:'String Value'</code>. <i>Key:Value</i> must be distinguished by a single <code>:</code> with no space whereas different key:value pairs must be separated by a single space and strings containing space must be enclosed within <i>Single Quites ('')</i>. It is recommended to enclose all non decimal values within single quotes. Available options for Gauge Chart are explained below.</p></li>
 
       <li>
         <h4>Options for Gauge Chart</h4>
@@ -220,7 +220,7 @@ table tr td span:nth-child(6){color:brown;}
             needleWidthRatio:1 needleFillStyle:'rgba(188, 41, 37, 1)' needleStrokeStyle:'transparent' 
             needleBaseFillStyle:'#000' needleBaseStrokeStyle:'transparent' 
             target:60
-            objectName:speedoMeter">
+            objectName:speedoMeterObj">
         </canvas>
       </td>
       <td>
@@ -239,9 +239,16 @@ table tr td span:nth-child(6){color:brown;}
             needleWidthRatio:1 needleFillStyle:'rgba(188, 41, 37, 1)' needleStrokeStyle:'transparent' 
             needleBaseFillStyle:'#000' needleBaseStrokeStyle:'transparent' 
             target:60
-            objectName:speedoMeter">
+            objectName:speedoMeterObj">
         </canvas>
         </code>
+        <div style="padding:20px;">
+          <span style="color:brown">JavaScript </span><span style="color:black;">(Note that how exposed object "speedoMeterObj" is used to interact with the chart)</span>
+          <br>
+          <code>
+            setInterval(function(){if(typeof speedoMeterObj != "undefined"){var random = Math.round(Math.random()*100) + 1;speedoMeterObj.setTarget(random);speedoMeterObj.setTitle(random + ' MPH')}}, 3000);
+          </code>
+        </div>
       </td>
     </tr>
 
@@ -267,6 +274,6 @@ table tr td span:nth-child(6){color:brown;}
     Chartlets.render();
 
     // Animating Speedometer
-    setInterval(function(){if(typeof speedoMeter != "undefined"){var random = Math.round(Math.random()*100) + 1;speedoMeter.setTarget(random);speedoMeter.setTitle(random + ' MPH')}}, 3000);
+    setInterval(function(){if(typeof speedoMeterObj != "undefined"){var random = Math.round(Math.random()*100) + 1;speedoMeterObj.setTarget(random);speedoMeterObj.setTitle(random + ' MPH')}}, 3000);
   </script>
 </body>

@@ -1,0 +1,206 @@
+<html>
+
+<head>
+
+<title>Bubble Chart</title>
+
+<script src="../src/chartlets.js"></script>
+
+<!-- Documentation Style -->
+<style>
+.chartlet{border:1px solid #ddd;margin:2px}body{font-family:Helvetica,Arial;background-color:#fff;padding:20px 50px}header{margin-bottom:50px}footer{font-size:.8em;color:#999}h1,h2,h3{font-family:Helvetica,Arial;font-weight:400;color:#222;margin:0;padding:0}h1{font-size:3.75em}h2{font-size:1.7em}h3{font-size:1.5em;margin-bottom:.25em;color:hsl(336,76%,50%)}p{font-family:Helvetica,Arial}a,a:visited{color:hsl(225,65%,50%)}a:hover{color:hsl(336,76%,50%)}small{font-size:.75em;color:#999}section{margin-bottom:50px}#download{text-align:right;font-size:1.35em;font-weight:700;color:#222}table.examples tr td{padding:0 10px 15px 0}td,th{text-align:left;vertical-align:top}.highlight{background-color:#ffc;border:1px solid #fc3;padding:1px 2px;border-radius:4px}.swatch,.tx{display:inline-block}.swatch p{margin:4px 0;color:#999;font-size:.9em}.tx{margin:10px 10px 10px 0}.tx canvas{display:block;margin-bottom:6px}code,pre{font-family:Monaco,Courier,monospace;font-size:.8em}li strong{color:hsl(336,76%,50%)}@media only screen and (max-width: 480px){body{padding:8px}h1{font-size:3em}code,pre{white-space:pre-wrap;word-break:break-all}td,th{padding:2px}}
+</style>
+
+<style>
+canvas {
+  border: 1px solid #ddd;
+}
+
+table tr td span:first-child{color:red;}
+table tr td span:nth-child(2){color:green;}
+table tr td span:nth-child(3){color:blue;}
+table tr td span:nth-child(4){color:#FFA500;}
+table tr td span:nth-child(5){color:teal;}
+table tr td span:nth-child(6){color:brown;}
+</style>
+
+</head>
+
+<body>
+
+  <h3>Bubble Chart</h3>
+
+  <section id="options">
+    <p>
+      A bubble chart helps to plot data set with two to four dimensions. Two of them can be represented by x-y position of bubbles whereas the rest two can be represented by size and style of bubbles. In this library Bubbles charts are Scatter charts with option <code>bubbles:true</code> inside <span class="highlight">data-opts</span>. All configuration options are applicable as of Scatter Chart. FillStyles of bubbles are taken from <code>'color'</code> inside sets if present or from <code>bubblesFillColor</code> inside <span class="highlight">data-opts</span> if present or from <span class="highlight">data-colors</span>, themes or defaults to <code>'#000'</code>. Label over bubbles are letters inside sets as they are in scatter chart. Label position and styles can be adjusted by <span class="highlight">data-text-opts</span> and <span class="highlight">data-text-stroke-opts</span> configurations.
+    </p>
+    
+  </section>
+ 
+  <div class="documentation">
+  </div>
+
+  <table cellspacing="50">
+
+    <!-- Test Case -->
+    <tr>
+      <td>
+        <canvas  class="chartlet" 
+          data-type="scatter"
+          data-colors="red green blue orange teal brown" 
+          data-range="0 10" 
+          data-sets="[2 2 'DOT' '#F00' 10] [4 4 'text' '#0F0' 20] [6 6 '*' '#00F' 30] [8 8 '-' '#FFA500' 40]"
+          width="200" height="200"
+          data-text-opts="color:#000 offsetY:3"
+          data-text-stroke-opts="color:#FFF offsetY:4"
+          data-opts="alpha:0.5 xAxis:6 yAxis:6 bubbles:true">
+        </canvas>
+      </td>
+      <td>
+        <code>
+          <canvas  class="chartlet" 
+          data-type="scatter"
+          data-colors="red green blue orange teal brown" 
+          data-range="0 10" 
+          data-sets="[2 2 'DOT' '#F00' 10] [4 4 'text' '#0F0' 20] [6 6 '*' '#00F' 30] [8 8 '-' '#FFA500' 40]"
+          width="200" height="200"
+          data-text-opts="color:#000 offsetY:3"
+          data-text-stroke-opts="color:#FFF offsetY:4"
+          data-opts="alpha:0.5 xAxis:6 yAxis:6 bubbles:true">
+        </canvas>
+        </code>
+      </td>
+    </tr>
+
+    <!-- Test Case -->
+    <tr>
+      <td>
+        <canvas  class="chartlet" 
+          data-type="scatter"
+          data-range-x="65 85"
+          data-range-y="1 5"
+          data-sets="
+            [80.66 1.67 'CAN' 'rgba(24, 100, 214, 1)' 33739900]
+            [79.84 1.36 'DEU' 'rgba(208, 34, 40, 1)' 81902307]
+            [78.6, 1.84 'DNK' 'rgba(208, 34, 40, 1)' 5523095]
+            [72.73 2.78 'EGY' 'rgba(215, 118, 7, 1)' 79716203]
+            [80.05 2,   'GBR' 'rgba(208, 34, 40, 1)' 61801570]
+            [72.49 1.7, 'IRN' 'rgba(215, 118, 7, 1)' 73137148]
+            [68.09 4.77 'IRQ' 'rgba(215, 118, 7, 1)' 31090763]
+            [81.55 2.96 'ISR' 'rgba(215, 118, 7, 1)' 7485600]
+            [68.6, 1.54 'RUS' 'rgba(208, 34, 40, 1)' 141850000]
+            [78.09 2.05 'USA' 'rgba(24, 100, 214, 1)' 307007000]"
+          width="300" height="200"
+          data-text-opts="color:#000 offsetY:3 font:'10px sans-serif'"
+          data-text-stroke-opts="alpha:1 color:#FFF offsetX:1 offsetY:4 font:'10px sans-serif bold'"
+          data-opts="alphaBubbles:0.7 xAxis:6 yAxis:6 bubbles:true">
+        </canvas>
+
+      </td>
+      <td>
+        <code>
+          <canvas  class="chartlet" 
+          data-type="scatter"
+          data-range-x="65 85"
+          data-range-y="1 5"
+          data-sets="
+            [80.66 1.67 'CAN' 'rgba(24, 100, 214, 1)' 33739900]
+            [79.84 1.36 'DEU' 'rgba(208, 34, 40, 1)' 81902307]
+            [78.6, 1.84 'DNK' 'rgba(208, 34, 40, 1)' 5523095]
+            [72.73 2.78 'EGY' 'rgba(215, 118, 7, 1)' 79716203]
+            [80.05 2,   'GBR' 'rgba(208, 34, 40, 1)' 61801570]
+            [72.49 1.7, 'IRN' 'rgba(215, 118, 7, 1)' 73137148]
+            [68.09 4.77 'IRQ' 'rgba(215, 118, 7, 1)' 31090763]
+            [81.55 2.96 'ISR' 'rgba(215, 118, 7, 1)' 7485600]
+            [68.6, 1.54 'RUS' 'rgba(208, 34, 40, 1)' 141850000]
+            [78.09 2.05 'USA' 'rgba(24, 100, 214, 1)' 307007000]"
+          width="300" height="200"
+          data-text-opts="color:#000 offsetY:3 font:'10px sans-serif'"
+          data-text-stroke-opts="alpha:1 color:#FFF offsetX:1 offsetY:4 font:'10px sans-serif bold'"
+          data-opts="alphaBubbles:0.7 xAxis:6 yAxis:6 bubbles:true">
+        </canvas>
+        </code>
+      </td>
+    </tr>
+
+    <!-- Test Case -->
+    <tr>
+      <td>
+          [80 167 '' '' 120],
+          [79 136 '' '' 130],
+          [78 184 '' '' 50],
+          [72 278 '' '' 230],
+          [81 200 '' '' 210],
+          [72 170 '' '' 100],
+          [68 477 '' '' 80]
+
+        <canvas  class="chartlet" 
+          data-type="scatter"
+          data-range-x="65 85"
+          data-range-y="1 5"
+          data-sets="
+            [80.66 1.67 'CAN' 'rgba(24, 100, 214, 1)' 33739900]
+            [79.84 1.36 'DEU' 'rgba(208, 34, 40, 1)' 81902307]
+            [78.6, 1.84 'DNK' 'rgba(208, 34, 40, 1)' 5523095]
+            [72.73 2.78 'EGY' 'rgba(215, 118, 7, 1)' 79716203]
+            [80.05 2,   'GBR' 'rgba(208, 34, 40, 1)' 61801570]
+            [72.49 1.7, 'IRN' 'rgba(215, 118, 7, 1)' 73137148]
+            [68.09 4.77 'IRQ' 'rgba(215, 118, 7, 1)' 31090763]
+            [81.55 2.96 'ISR' 'rgba(215, 118, 7, 1)' 7485600]
+            [68.6, 1.54 'RUS' 'rgba(208, 34, 40, 1)' 141850000]
+            [78.09 2.05 'USA' 'rgba(24, 100, 214, 1)' 307007000]"
+          width="300" height="200"
+          data-text-opts="color:#000 offsetY:3 font:'10px sans-serif'"
+          data-text-stroke-opts="alpha:1 color:#FFF offsetX:1 offsetY:4 font:'10px sans-serif bold'"
+          data-opts="alphaBubbles:0.7 xAxis:6 yAxis:6 bubbles:true">
+        </canvas>
+
+      </td>
+      <td>
+        <code>
+          <canvas  class="chartlet" 
+          data-type="scatter"
+          data-range-x="65 85"
+          data-range-y="1 5"
+          data-sets="
+            [80.66 1.67 'CAN' 'rgba(24, 100, 214, 1)' 33739900]
+            [79.84 1.36 'DEU' 'rgba(208, 34, 40, 1)' 81902307]
+            [78.6, 1.84 'DNK' 'rgba(208, 34, 40, 1)' 5523095]
+            [72.73 2.78 'EGY' 'rgba(215, 118, 7, 1)' 79716203]
+            [80.05 2,   'GBR' 'rgba(208, 34, 40, 1)' 61801570]
+            [72.49 1.7, 'IRN' 'rgba(215, 118, 7, 1)' 73137148]
+            [68.09 4.77 'IRQ' 'rgba(215, 118, 7, 1)' 31090763]
+            [81.55 2.96 'ISR' 'rgba(215, 118, 7, 1)' 7485600]
+            [68.6, 1.54 'RUS' 'rgba(208, 34, 40, 1)' 141850000]
+            [78.09 2.05 'USA' 'rgba(24, 100, 214, 1)' 307007000]"
+          width="300" height="200"
+          data-text-opts="color:#000 offsetY:3 font:'10px sans-serif'"
+          data-text-stroke-opts="alpha:1 color:#FFF offsetX:1 offsetY:4 font:'10px sans-serif bold'"
+          data-opts="alphaBubbles:0.7 xAxis:6 yAxis:6 bubbles:true">
+        </canvas>
+        </code>
+      </td>
+    </tr>
+
+  </table>
+
+  <!-- JavaScript Tweek for displaying HTML code -->
+  <script type="text/javascript">
+    String.prototype.escapeHTML = function () {                                        
+      return(                                                                 
+        this.replace(/>/g,'&gt;').
+             replace(/</g,'&lt;').
+             replace(/"/g,'&quot;')
+      );
+    };
+
+    var codeElementsIndex, codeElements = document.getElementsByTagName('code');
+    for(codeElementsIndex=0; codeElementsIndex < codeElements.length; codeElementsIndex++) {
+      var codeElement = codeElements[codeElementsIndex];
+      if('undefined' != typeof codeElement.innerHTML)
+        codeElement.innerHTML = codeElement.innerHTML.escapeHTML();
+    }
+
+    Chartlets.render();
+  </script>
+</body>

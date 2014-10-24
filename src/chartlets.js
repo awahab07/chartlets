@@ -902,15 +902,15 @@
 
       // Draw Text and Circles for Scatter Plot Chart
       var x, y, z, alpha, 
-          fillColor = colorOf(i) || '#000';
+          fillColor = colors && colorOf(i) || themes[opts.theme] || themes.basic || '#000';
       
       x = getXForValueAndRange(set[0], xAxisRange);
       y = getYForValueAndRange(set[1], yAxisRange);
-      z = set[4] && zAxisRange ? getZForValueAndRange(set[4], zAxisRange) : width / 10;
+      z = set[4] && zAxisRange ? getZForValueAndRange(set[4], zAxisRange) : width / 25;
       
       if(opts.bubbles || opts.bubble) {
         alpha = opts.alphaBubbles || opts.alphaBubble || opts.alpha || 1;
-        fillColor = set[3] || fillColor;
+        fillColor = set[3] || opts.bubblesFillColor || fillColor;
         fillStyle = toRGBString(sheerColor(parseColor(fillColor), alpha));
         
         drawCircle(fillStyle, x, y, z);
@@ -931,7 +931,8 @@
           ctx.fillStyle = fillColor;
         
         ctx.font = textStrokeOpts.font || '10px sans-serif';
-        ctx.strokeText(set[2], x + offsetX, y + offsetY, textStrokeOpts.maxWidth || undefined);
+        //typeof textStrokeOpts.maxWidth != "undefined" ? ctx.strokeText(set[2], x + offsetX, y + offsetY, textStrokeOpts.maxWidth) : ctx.strokeText(set[2], x + offsetX, y + offsetY);
+        typeof textStrokeOpts.maxWidth != "undefined" ? ctx.fillText(set[2], x + offsetX, y + offsetY, textStrokeOpts.maxWidth) : ctx.fillText(set[2], x + offsetX, y + offsetY);
       }
 
       // Drawing Text
@@ -940,7 +941,7 @@
         offsetX = !isNaN(textOpts.offsetX) ? +textOpts.offsetX : 0;
         offsetY = !isNaN(textOpts.offsetY) ? +textOpts.offsetY : 0;
         alpha = textOpts.alpha || false;
-        fillColor = textOpts.color || set[3] || colorOf(i) || '#000';
+        fillColor = textOpts.color || set[3] || textOpts.defaulColor || colors && colorOf(i) || opts.theme && themes[opts.theme] || themes.basic || '#000';
       }
 
       if(alpha)
@@ -949,7 +950,13 @@
         ctx.fillStyle = fillColor;
 
       ctx.font = textOpts && textOpts.font || '10px sans-serif';
-      ctx.fillText(set[2], x + offsetX, y + offsetY, (textOpts && textOpts.maxWidth) || undefined);
+
+      // Drawshape via shapefn if provided or draw text
+      if(set[2].indexOf('fn#') > -1) {
+        eval(set[2].replace('fn#','') + '(ctx, x + offsetX, y + offsetY, z);');
+      } else {
+        textOpts && typeof textOpts.maxWidth != "undefined" ? ctx.fillText(set[2], x + offsetX, y + offsetY, textOpts.maxWidth) : ctx.fillText(set[2], x + offsetX, y + offsetY);
+      }
     }
   }
 

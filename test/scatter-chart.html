@@ -2,7 +2,7 @@
 
 <head>
 
-<title>Test</title>
+<title>Scatter Chart</title>
 
 <script src="../src/chartlets.js"></script>
 
@@ -32,23 +32,60 @@ table tr td span:nth-child(6){color:brown;}
 
   <section id="options">
     <p>
-      This page contains tests for <code>barline</code> chart type defined as <span class="highlight">data-type="barline"</span>.
-      <code>barline</code> chart type consists of a line chart above and a bar chart below with same or separate series if explicitly provided. If cofiguration is provided in usual way, both charts will try to adopt the given configuration. Explicit or a mix of default and Explicit configuration can be provided by using <code>data-line-</code> or <code>data-bar-</code> prefixes instead of <code>data-</code> prefix for each chart type respectively for <span class="highlight">data-sets, data-opts, data-colors, data-range</span> configurations.
+      Scatter chart defined as <code>data-type="scatter"</code> plots shapes or labels/letters scattered across x and y axes. Letters to plot with their colors can be provided in the form of data sets where each set represent a single letter/shape to plot. Additionaly a third dimension representing the size/volume of the shape can also be provided inside sets.
     </p>
-    <h4>Configurations Specific to barline</h4>
+    <h4>Scatter Chart Configuration</h4>
     <ul>
-      <li><p><strong>Data</strong> default can be provided as  <code>data-sets</code> or can be defined explicitly by <span class="highlight">data-line-sets</span> or <span class="highlight">data-bar-sets</span> for each chart.</p></li>
+      <li><p><strong>Sets</strong> Space separated and [ ] enclosed sets are provided for <span class="highlight">data-sets</span> attribute. A set is formatted as <code>[x y 'letter' 'color' z]</code> where <code>x</code> and <code>y</code> are x and y cartesian coordinates, <code>letter</code> is the label to plot, <i>Optioanl</i> <code>'color'</code> is the fill style of label and is provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. In th absence of <code>'color'</code> inside sets, colors will be taken from <code>color</code> property inside <span class="highlight">data-text-opts</span> if provided, or from <span class="highlight">data-colors</span> if provided or from themes. The <i>Optional</i> <code>z</code> is the decimal value and represents the size/volume of the custom shape(This will not work for letters).</p></li>
       
-      <li><p><strong>Options</strong> default can be provided as  <code>data-opts</code> or can be defined explicitly by <span class="highlight">data-line-opts</span> or <span class="highlight">data-bar-opts</span> for each chart.</p></li>
+      <li><p><strong>Ranges</strong> default can be provided as  <code>data-range</code> or can be defined explicitly for each x and y axes by <span class="highlight">data-range-x</span> and <span class="highlight">data-range-y</span>. Range for <code>z</code> axis will be computed if absent or can be provided by <span class="highlight">data-range-z</span>.</p></li>
       
-      <li><p><strong>Colors</strong> default can be provided as  <code>data-colors</code> or can be defined explicitly by <span class="highlight">data-line-colors</span> or <span class="highlight">data-bar-colors</span> for each chart.</p></li>
-      
-      <li><p><strong>Range</strong> default can be provided as  <code>data-range</code> or can be defined explicitly by <span class="highlight">data-line-range</span> or <span class="highlight">data-bar-range</span> for each chart.</p></li>
-      
-      <li><p><strong>Height Ratio</strong> is the ratio of height of line chart to the height of bar chart. It is provided as a single decimal value and evaluated as <code>x:1</code> where <code>x</code> and <code>1</code> are the ratios of heights of line and bar charts respectively. For example  <span class="highlight">data-height-ratio="2"</span> evaluated as <code>2:1</code> will make the height of line chart twice of bar chart's height. It will not affect the overall height of chart's canvas.</p></li>
+      <li><p><strong>Axes</strong> Both axes can be plotted by providing <code>axis:value</code> inside <span class="highlight">data-opts</span> where <code>value</code> is the axis value to plot axis marker at. Explicit values for <code>x-axis</code> and <code>y-axis</code> can be provided by <code>xAxis</code> and <code>yAxis</code> properties respectively providing inside <span class="highlight">data-opts</span>.</p></li>
+
+      <li><p><strong>Options</strong> Various option attributes can be provided to configure letter colors, fonts, alpha, axis and offsets etc. Options are provided in key:value format e.g. <code>key1:value1 key2:'String Value'</code>. <i>Key:Value</i> must be distinguished by a single <code>:</code> with no space whereas different key:value pairs must be separated by a single space and strings containing space must be enclosed within <i>Single Quotes ('')</i>. It is recommended to enclose all non decimal values within single quotes. Option configurations for Scatter Chart are explained below.</p>
+
+        <ul>
+          <li><span class="highlight">data-opts</span> used to configure options for scatter chart.
+            <ul>
+              <li><strong>alpha</strong> Global transparency for chart drawings, colors will be sheered with this alpha value.</li>
+              <li><strong>alphaBubbles</strong> alpha value for bubbles onlye (<i>For bubble chart</i>).</li>
+              <li><strong>bubblesFillColor</strong> Explicit value for bubbles fillStyle provided according to <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. It will override all other styles for bubbles except style within <code>sets</code>.</li>
+              <li><strong>axis</strong> Decimal identifying location to draw both x and y axes at.</li>
+              <li><strong>xAxis</strong> Decimal identifying location to draw x axis at.</li>
+              <li><strong>yAxis</strong> Decimal identifying location to draw y axis at.</li>
+            </ul>
+          </li>
+          <br>
+          <li><span class="highlight">data-text-opts</span> used to configure options for letters/labels.
+            <ul>
+              <li><strong>font</strong> Font for letters provided as a single string according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font">reference</a>. Default is <code>'10px sans-serif'</code>.</li>
+              <li><strong>color</strong> Style used in fillText for letters/labels provided as single string accordinng to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. This will also be used as fillStyle for custom shapes. For labels this option will override colors specified in sets. If absent, colors will be taken from <code>data-colors</code> or <code>themes</code> whichever applicable or evaluated by default to <code>'#000'</code></li>
+              <li><strong>alpha</strong> If provided or alpha in <code>data-opts</code> provided, letter colors/styles will be sheered with this alpha value.</li>
+              <li><strong>defaultColor</strong> Same as <code>color</code> but this will not override non empty styles present in sets.</li>
+              <li><strong>maxWidth</strong> Restrict the length of label text in pixels to this value. Default <i>Unrestricted</i></li>
+              <li><strong>offsetX</strong> Value to offset the letter/shape at x axis. Default is <code>0</code>.</li>
+              <li><strong>offsetY</strong> Value to offset the letter/shape at y axis. Default is <code>0</code>.</li>
+            </ul>
+          </li>
+          <br>
+          <li><span class="highlight">data-text-stroke-opts</span> used to configure options for text stroke/background of letters/labels. Can be used to produce shadow effect or for text readability over bubbles. Will be applicable only if <code>data-text-stroke-opts</code> present is attributes.
+            <ul>
+              <li><strong>font</strong> Font for strokeText of letters provided as a single string according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font">reference</a>. Default is <code>'10px sans-serif'</code>.</li>
+              <li><strong>color</strong> Style used in strokeText for letters/labels provided as single string accordinng to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. This will also be used as fillStyle for custom shapes. Defaults to <code>'#000'</code></li>
+              <li><strong>alpha</strong> If provided or alpha in <code>data-opts</code> provided, letter stroke colors will be sheered with this alpha value.</li>
+              <li><strong>maxWidth</strong> Restrict the length of stroke text in pixels to this value. Default <i>Unrestricted</i></li>
+              <li><strong>offsetX</strong> Value to offset the letter stroke at x axis. Default is <code>0</code>.</li>
+              <li><strong>offsetY</strong> Value to offset the letter stroke at y axis. Default is <code>0</code>.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+        </ul>
+      </li>
+
     </ul>
   </section>
-
+ 
   <div class="documentation">
   </div>
 
@@ -56,32 +93,27 @@ table tr td span:nth-child(6){color:brown;}
 
     <!-- Test Case -->
     <tr>
-      <td><span>[2 2 '.' '#F00' Good]</span><br><span>[4 4 'x' '#0F0' 'Very Good']</span><br><span>[6 6 '*' '#00F' 'Excellent']</span><br><span>[8 8 '-' '#FFA500' 'Fair']</span></td>
-    </tr>
-    <tr>
       <td>
         <canvas  class="chartlet" 
           data-type="scatter"
-          data-colors="red green blue orange teal brown" 
-          data-range="0 10" 
-          data-sets="[2 2 'DOT' '#F00' 10] [4 4 'text' '#0F0' 20] [6 6 '*' '#00F' 30] [8 8 '-' '#FFA500' 40]"
+          data-sets="[8 12 '*'] [4 5.5 '*'] [11 14 '*'] [4 5 '*'] [3 3.5 '*'] [6.5 7 '*']"
+          data-range-x="0 20"
+          data-range-y="0 20"
           width="200" height="200"
-          data-text-opts="color:#000 offsetY:3"
-          data-text-stroke-opts="color:#FFF offsetY:4"
-          data-opts="alpha:0.5 xAxis:6 yAxis:6 bubbles:true">
+          data-text-opts="font:'20px Georgia' color:'rgba(0, 76, 255, 1)'"
+          data-opts="alpha:0.5 xAxis:10 yAxis:10">
         </canvas>
       </td>
       <td>
         <code>
           <canvas  class="chartlet" 
           data-type="scatter"
-          data-colors="red green blue orange teal brown" 
-          data-range="0 10" 
-          data-sets="[2 2 '.' '#F00' 'Good'] [4 4 'x' '#0F0' 'Very Good'] [6 6 '*' '#00F' 'Excellent'] [8 8 '-' '#FFA500' 'Fair']"
+          data-sets="[8 12 '*'] [4 5.5 '*'] [11 14 '*'] [4 5 '*'] [3 3.5 '*'] [6.5 7 '*']"
+          data-range-x="0 20"
+          data-range-y="0 20"
           width="200" height="200"
-          data-text-opts="font:'20px Verdana' maxWidth:10"
-          data-text-stroke-opts="font:'20px Georgia' offsetX:2 offsetY:1"
-          data-opts="alpha:0.5 xAxis:6 yAxis:6">
+          data-text-opts="font:'20px Georgia' color:'rgba(0, 76, 255, 1)'"
+          data-opts="alpha:0.5 xAxis:10 yAxis:10">
         </canvas>
         </code>
       </td>
@@ -89,28 +121,170 @@ table tr td span:nth-child(6){color:brown;}
 
     <!-- Test Case -->
     <tr>
-      <td><span>[2 2 '.' 'red' Good]</span><br><span>[2 8 'x' 'green' 'Very Good']</span><br><span>[8 8 '*' 'blue' 'Excellent']</span><br><span>[8 2 '-' 'orange' 'Fair']</span></td>
-    </tr>
-    <tr>
+      <tr><td colspan="2" style="text-align:center;">Scatter Chart with custom shape</td></tr>
       <td>
         <canvas  class="chartlet" 
           data-type="scatter"
-          data-colors="red green blue orange teal brown" 
-          data-sets="[2 2 '.' 'red' Good] [4 4 'x' 'green' 'Very Good'] [6 6 '*' 'blue' 'Excellent'] [8 8 '-' 'orange' 'Fair']"
+          data-sets=" [0 8 'fn#drawStar' 'rgba(200, 150, 20, 0.9)'] [2 6 'fn#drawStar'] [4 4 'fn#drawStar'] [6 2 'fn#drawStar']
+                      [8 0 'fn#drawStar' 'rgba(200, 150, 20, 0.9)'] [6 -2 'fn#drawStar'] [4 -4 'fn#drawStar'] [2 -6 'fn#drawStar'] 
+                      [0 -8 'fn#drawStar' 'rgba(200, 150, 20, 0.9)'] [-2 -6 'fn#drawStar'] [-4 -4 'fn#drawStar'] [-6 -2 'fn#drawStar'] 
+                      [-8 0 'fn#drawStar' 'rgba(200, 150, 20, 0.9)'] [-6 2 'fn#drawStar'] [-4 4 'fn#drawStar'] [-2 6 'fn#drawStar']"
+          data-range-x="-9 9"
+          data-range-y="-9 9"
           width="200" height="200"
-          data-opts="alpha:0.5 xAxis:5 yAxis:6">
+          data-text-opts="font:'20px Georgia' defaultColor:'#000'"
+          data-opts="xAxis:0 yAxis:0">
         </canvas>
       </td>
       <td>
         <code>
           <canvas  class="chartlet" 
           data-type="scatter"
-          data-colors="red green blue orange teal brown" 
-          data-sets="[2 2 '.' 'red' Good] [2 8 'x' 'green' 'Very Good'] [8 8 '*' 'blue' 'Excellent'] [8 2 '-' 'orange' 'Fair']"
+          data-sets=" [0 8 'fn#drawStar' 'rgba(200, 150, 20, 0.9)'] [2 6 'fn#drawStar'] [4 4 'fn#drawStar'] [6 2 'fn#drawStar']
+                      [8 0 'fn#drawStar' 'rgba(200, 150, 20, 0.9)'] [6 -2 'fn#drawStar'] [4 -4 'fn#drawStar'] [2 -6 'fn#drawStar'] 
+                      [0 -8 'fn#drawStar' 'rgba(200, 150, 20, 0.9)'] [-2 -6 'fn#drawStar'] [-4 -4 'fn#drawStar'] [-6 -2 'fn#drawStar'] 
+                      [-8 0 'fn#drawStar' 'rgba(200, 150, 20, 0.9)'] [-6 2 'fn#drawStar'] [-4 4 'fn#drawStar'] [-2 6 'fn#drawStar']"
+          data-range-x="-9 9"
+          data-range-y="-9 9"
           width="200" height="200"
-          data-opts="alpha:0.5 xAxis:5 yAxis:6">
+          data-text-opts="font:'20px Georgia' defaultColor:'#000'"
+          data-opts="xAxis:0 yAxis:0">
         </canvas>
         </code>
+
+        <div style="padding:20px;">
+          <span style="color:brown">JavaScript: drawStar function </span><span style="color:black;">(Note how a shape function(drawStar) is provided to replace letter with a custom shape by prefixing label string with 'fn#')</span>
+          <br>
+          <code>
+            function drawStar(ctx, x, y, z)
+            {
+                var r = z || ctx.canvas.width/25, p = 5;
+                ctx.save();
+                ctx.beginPath();
+                ctx.translate(x, y);
+                ctx.moveTo(0,0-r);
+                for (var i = 0; i < p; i++)
+                {
+                    ctx.rotate(Math.PI / p);
+                    ctx.lineTo(0, 0 - (r * 0.5));
+                    ctx.rotate(Math.PI / p);
+                    ctx.lineTo(0, 0 - r);
+                }
+                ctx.fill();
+                ctx.restore();
+            }
+          </code>
+        </div>
+      </td>
+    </tr>
+
+    <!-- Test Case -->
+    <tr>
+      <tr><td colspan="2" style="text-align:center;">Scatter Chart with Letters and Colors</td></tr>
+      <td>
+        <canvas  class="chartlet" 
+          data-type="scatter"
+          data-range="1 9"
+          data-range-y="0 6"
+          data-text-opts="font:'18px Verdana'"
+          data-sets=" [1 1 '.' '#00F'] [2 2 '.' '#02D'] [3 3 '.' '#04B'] [4 4 '.' '#069'] [5 5 '.' '#087'] [6 4 '.' '#0A5']            [7 3 '.' '#0C3'] [8 2 '.' '#0E1'] [9 1 '.' '#0F0']
+                      [5 1 '-' '#0F0'] [2 4 '-' '#2D0'] [3 3 '-' '#4B0'] [4 2 '-' '#069'] [5 1 '-' '#870'] [6 2 '-' '#A50'] [7 3 '-' '#C30'] [8 4 '-' '#E10'] [9 5 '-' '#F00']
+                      [1 2 '^' '#00F'] [2 2 '^' '#02D'] [3 2 '^' '#04B'] [4 2 '^' '#069'] [5 2 '^' '#087'] [6 2 '^' '#0A5'] [7 2 '^' '#0C3'] [8 2 '^' '#0E1'] [9 2 '^' '#0F0']"
+          width="200" height="200">
+        </canvas>
+      </td>
+      <td>
+        <code>
+          <canvas  class="chartlet" 
+          data-type="scatter"
+          data-colors="red green blue orange teal brown"
+          data-range="1 9"
+          data-range-y="0 6"
+          data-text-opts="font:'18px Verdana'"
+          data-sets=" [1 1 '.' '#00F'] [2 2 '.' '#02D'] [3 3 '.' '#04B'] [4 4 '.' '#069'] [5 5 '.' '#087'] [6 4 '.' '#0A5']            [7 3 '.' '#0C3'] [8 2 '.' '#0E1'] [9 1 '.' '#0F0']
+                      [5 1 '-' '#0F0'] [2 4 '-' '#2D0'] [3 3 '-' '#4B0'] [4 2 '-' '#069'] [5 1 '-' '#870'] [6 2 '-' '#A50'] [7 3 '-' '#C30'] [8 4 '-' '#E10'] [9 5 '-' '#F00']
+                      [1 2 '^' '#00F'] [2 2 '^' '#02D'] [3 2 '^' '#04B'] [4 2 '^' '#069'] [5 2 '^' '#087'] [6 2 '^' '#0A5'] [7 2 '^' '#0C3'] [8 2 '^' '#0E1'] [9 2 '^' '#0F0']"
+          width="200" height="200">
+        </canvas>
+        </code>
+      </td>
+    </tr>
+
+    <!-- Test Case -->
+    <tr>
+      <tr><td colspan="2" style="text-align:center;">Scatter Chart with TextStroke</td></tr>
+      <td>
+        <canvas  class="chartlet" 
+          data-type="scatter"
+          data-range="1 10"
+          data-text-opts="font:'18px Arial'"
+          data-text-stroke-opts="font:'20px Arial' offsetX:2 offsetY:2 color:'#222'"
+          data-colors="red red blue blue green green"
+          data-sets=" [2 2 'X'] [2 8 'X'] [2 5 'Y'] [8 5 'Y'] [5 5 'Z'] [6 4 'Z']"
+          width="200" height="200">
+        </canvas>
+      </td>
+      <td>
+        <code>
+          <canvas  class="chartlet" 
+          data-type="scatter"
+          data-range="1 10"
+          data-text-opts="font:'18px Arial'"
+          data-text-stroke-opts="font:'20px Arial' offsetX:2 offsetY:2 color:'#222'"
+          data-colors="red red blue blue green green"
+          data-sets=" [2 2 'X'] [2 8 'X'] [2 5 'Y'] [8 5 'Y'] [5 5 'Z'] [6 4 'Z']"
+          width="200" height="200">
+        </canvas>
+        </code>
+      </td>
+    </tr>
+
+    <!-- Test Case -->
+    <tr>
+      <tr><td colspan="2" style="text-align:center;">Scatter Chart with Custom Shape and Third Dimension (Size)</td></tr>
+      <td>
+        <canvas  class="chartlet" 
+          data-type="scatter"
+          data-colors="#800000 #ff0000 #800080 #ff00ff #008000 #00ff00 #808000 #ffff00 #000080 #0000ff #008080 #00ffff #ffa500 #8a2be2 #a52a2a"
+          data-sets=" [0 8 'fn#drawSquare' '' 1] [2 6 'fn#drawSquare' '' 2] [4 4 'fn#drawSquare' '' 3] [6 2 'fn#drawSquare' '' 4]
+                      [8 0 'fn#drawSquare' '' 5] [6 -2 'fn#drawSquare' '' 6] [4 -4 'fn#drawSquare' '' 7] [2 -6 'fn#drawSquare' '' 8] 
+                      [0 -8 'fn#drawSquare' '' 9] [-2 -6 'fn#drawSquare' '' 10] [-4 -4 'fn#drawSquare' '' 11] [-6 -2 'fn#drawSquare' '' 12] 
+                      [-8 0 'fn#drawSquare' '' 13] [-6 2 'fn#drawSquare' '' 14] [-4 4 'fn#drawSquare' '' 15] [-2 6 'fn#drawSquare' '' 16]"
+          data-range="-9 9"
+          width="200" height="200"
+          data-opts="xAxis:0 yAxis:0">
+        </canvas>
+      </td>
+      <td>
+        <code>
+          <canvas  class="chartlet" 
+          data-type="scatter"
+          data-colors="#800000 #ff0000 #800080 #ff00ff #008000 #00ff00 #808000 #ffff00 #000080 #0000ff #008080 #00ffff #ffa500 #8a2be2 #a52a2a"
+          data-sets=" [0 8 'fn#drawSquare' '' 1] [2 6 'fn#drawSquare' '' 2] [4 4 'fn#drawSquare' '' 3] [6 2 'fn#drawSquare' '' 4]
+                      [8 0 'fn#drawSquare' '' 5] [6 -2 'fn#drawSquare' '' 6] [4 -4 'fn#drawSquare' '' 7] [2 -6 'fn#drawSquare' '' 8] 
+                      [0 -8 'fn#drawSquare' '' 9] [-2 -6 'fn#drawSquare' '' 10] [-4 -4 'fn#drawSquare' '' 11] [-6 -2 'fn#drawSquare' '' 12] 
+                      [-8 0 'fn#drawSquare' '' 13] [-6 2 'fn#drawSquare' '' 14] [-4 4 'fn#drawSquare' '' 15] [-2 6 'fn#drawSquare' '' 16]"
+          data-range="-9 9"
+          width="200" height="200"
+          data-opts="xAxis:0 yAxis:0">
+        </canvas>
+        </code>
+
+        <div style="padding:20px;">
+          <span style="color:brown">JavaScript: drawStar function </span><span style="color:black;">(Note how a shape function(drawSquare) is provided to replace letter with a custom shape by prefixing label string with 'fn#')</span>
+          <br>
+          <code>
+            function drawSquare(ctx, x, y, z)
+            {
+                var r = z || ctx.canvas.width/25, p = 5;
+                ctx.save();
+                ctx.beginPath();
+                ctx.fillRect(x-z/2,y-z/2,z,z);
+                ctx.fill();
+                ctx.restore();
+            }
+          </code>
+        </div>
       </td>
     </tr>
 
@@ -131,6 +305,36 @@ table tr td span:nth-child(6){color:brown;}
       var codeElement = codeElements[codeElementsIndex];
       if('undefined' != typeof codeElement.innerHTML)
         codeElement.innerHTML = codeElement.innerHTML.escapeHTML();
+    }
+
+    // function to draw custom shape for scatter chart
+    function drawStar(ctx, x, y, z)
+    {
+        var r = z || ctx.canvas.width/25, p = 5;
+        ctx.save();
+        ctx.beginPath();
+        ctx.translate(x, y);
+        ctx.moveTo(0,0-r);
+        for (var i = 0; i < p; i++)
+        {
+            ctx.rotate(Math.PI / p);
+            ctx.lineTo(0, 0 - (r * 0.5));
+            ctx.rotate(Math.PI / p);
+            ctx.lineTo(0, 0 - r);
+        }
+        ctx.fill();
+        ctx.restore();
+    }
+
+    // function to draw sized square
+    function drawSquare(ctx, x, y, z)
+    {
+        var r = z || ctx.canvas.width/25, p = 5;
+        ctx.save();
+        ctx.beginPath();
+        ctx.fillRect(x-z/2,y-z/2,z,z);
+        ctx.fill();
+        ctx.restore();
     }
 
     Chartlets.render();
