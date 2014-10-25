@@ -294,6 +294,16 @@
     };
   }
 
+  // Mixing colors based on provided ratio
+  function mixColor(startColor, endColor, ratio) {
+    return {
+      r: ((1-ratio) * startColor.r) + (ratio * endColor.r),
+      g: ((1-ratio) * startColor.g) + (ratio * endColor.g),
+      b: ((1-ratio) * startColor.b) + (ratio * endColor.b),
+      a: ratio >= 0.5 ? endColor.a : startColor.a
+    };
+  }
+
   // Multiply a color's alpha value (0 to 1) by n
   function sheerColor(color, n) {
     color.a *= n;
@@ -865,11 +875,17 @@
   // Render a x-y scatter chart
   // Bubble chart is plotted via the x-y scatter chart option if bubbles:true present in options
   function renderScatterChart() {
-    var i, xSets, ySets, xAxisRange, yAxisRange, zAxisRange, textOpts, textStrokeOpts, elem = ctx.canvas;
+    var i, colorRange, xSets, ySets, xAxisRange, yAxisRange, zAxisRange, textOpts, textStrokeOpts, elem = ctx.canvas;
     
     // Retrieving sets with string literals
     sets = elem.getAttribute("data-sets") !== null ? parseSetsWithStrings(elem.getAttribute("data-sets")) : null;
 
+    colorRange = parseAttr(elem, "data-color-range") || false;
+    if(colorRange) {
+      colorRange[0] = parseColor(colorRange[0]);
+      colorRange[1] = parseColor(colorRange[1]);
+    }
+    
     // Retrieving options for text and stroke text
     textOpts = parseOptsWithStrings(elem, "data-text-opts");
     textStrokeOpts = parseOptsWithStrings(elem, "data-text-stroke-opts");
@@ -906,13 +922,13 @@
       
       x = getXForValueAndRange(set[0], xAxisRange);
       y = getYForValueAndRange(set[1], yAxisRange);
-      z = set[4] && zAxisRange ? getZForValueAndRange(set[4], zAxisRange) : width / 25;
+      z = !isNaN(opts.bubblesRadius) ? +opts.bubblesRadius : (set[4] && zAxisRange ? getZForValueAndRange(set[4], zAxisRange) : (!isNaN(opts.bubblesDefaultRadius) ? +opts.bubblesDefaultRadius : width / 25));
       
       if(opts.bubbles || opts.bubble) {
-        alpha = opts.alphaBubbles || opts.alphaBubble || opts.alpha || 1;
-        fillColor = set[3] || opts.bubblesFillColor || fillColor;
+        alpha = opts.bubblesAlpha || opts.alphaBubble || opts.alpha || 1;
+        fillColor = set[3] || colorRange && toRGBString(mixColor(colorRange[0], colorRange[1], +set[4]/zAxisRange[1])) || opts.bubblesFillColor || fillColor;
         fillStyle = toRGBString(sheerColor(parseColor(fillColor), alpha));
-        
+
         drawCircle(fillStyle, x, y, z);
       }
 

@@ -39,6 +39,8 @@ table tr td span:nth-child(6){color:brown;}
       <li><p><strong>Sets</strong> Space separated and [ ] enclosed sets are provided for <span class="highlight">data-sets</span> attribute. A set is formatted as <code>[x y 'letter' 'color' z]</code> where <code>x</code> and <code>y</code> are x and y cartesian coordinates, <code>letter</code> is the label to plot, <i>Optioanl</i> <code>'color'</code> is the fill style of label and is provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. In th absence of <code>'color'</code> inside sets, colors will be taken from <code>color</code> property inside <span class="highlight">data-text-opts</span> if provided, or from <span class="highlight">data-colors</span> if provided or from themes. The <i>Optional</i> <code>z</code> is the decimal value and represents the size/volume of the custom shape(This will not work for letters).</p></li>
       
       <li><p><strong>Ranges</strong> default can be provided as  <code>data-range</code> or can be defined explicitly for each x and y axes by <span class="highlight">data-range-x</span> and <span class="highlight">data-range-y</span>. Range for <code>z</code> axis will be computed if absent or can be provided by <span class="highlight">data-range-z</span>.</p></li>
+
+      <li><p><strong>Color Range</strong> Bubbles can be styled mapping a color range to z value for example to visualize temperature transition or to produce a heat map effect. It is provided as <span class="highlight">data-color-range</span> attribute and will only affect those sets with no or empty styles. Its values must be a start and end color strings separated by a single space. Color strings are provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a>. Note that color keywords e.g. <code>red, green, blue</code> will not work in this regard. It is recommended to provide colors in RGBA format. <i>(For bubble chart)</i></p></li>
       
       <li><p><strong>Axes</strong> Both axes can be plotted by providing <code>axis:value</code> inside <span class="highlight">data-opts</span> where <code>value</code> is the axis value to plot axis marker at. Explicit values for <code>x-axis</code> and <code>y-axis</code> can be provided by <code>xAxis</code> and <code>yAxis</code> properties respectively providing inside <span class="highlight">data-opts</span>.</p></li>
 
@@ -48,8 +50,11 @@ table tr td span:nth-child(6){color:brown;}
           <li><span class="highlight">data-opts</span> used to configure options for scatter chart.
             <ul>
               <li><strong>alpha</strong> Global transparency for chart drawings, colors will be sheered with this alpha value.</li>
-              <li><strong>alphaBubbles</strong> alpha value for bubbles onlye (<i>For bubble chart</i>).</li>
-              <li><strong>bubblesFillColor</strong> Explicit value for bubbles fillStyle provided according to <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. It will override all other styles for bubbles except style within <code>sets</code>.</li>
+              <li><strong>bubbles</strong> If provided with <code>true</code> value, bubbles will be drawn to plot a bubble chart. <i>(For bubble chart)</i></li>
+              <li><strong>bubblesAlpha</strong> alpha value for bubbles onlye. <i>(For bubble chart)</i></li>
+              <li><strong>bubblesFillColor</strong> Explicit value for bubbles fillStyle provided according to <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. It will override all other styles for bubbles except style within <code>sets</code>. <i>(For bubble chart)</i></li>
+              <li><strong>bubblesRadius</strong> Radius of bubbles in pixels, will override calculated radius based on z valus in sets. <i>(For bubble chart)</i></li>
+              <li><strong>bubblesDefaultRadius</strong> Radius of bubbles in pixels, will only be applied to sets with empty or no z values. <i>(For bubble chart)</i></li>
               <li><strong>axis</strong> Decimal identifying location to draw both x and y axes at.</li>
               <li><strong>xAxis</strong> Decimal identifying location to draw x axis at.</li>
               <li><strong>yAxis</strong> Decimal identifying location to draw y axis at.</li>
