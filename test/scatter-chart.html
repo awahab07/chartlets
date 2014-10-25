@@ -27,33 +27,34 @@ table tr td span:nth-child(6){color:brown;}
 </head>
 
 <body>
-
+  <h2>Task 3 Scatter Chart</h2><br>
+  
   <h3>Scatter Chart</h3>
 
   <section id="options">
     <p>
       Scatter chart defined as <code>data-type="scatter"</code> plots shapes or labels/letters scattered across x and y axes. Letters to plot with their colors can be provided in the form of data sets where each set represent a single letter/shape to plot. Additionaly a third dimension representing the size/volume of the shape can also be provided inside sets.
     </p>
-    <h4>Scatter Chart Configuration</h4>
+    <h4>3.1 Scatter Chart Configuration</h4>
     <ul>
-      <li><p><strong>Sets</strong> Space separated and [ ] enclosed sets are provided for <span class="highlight">data-sets</span> attribute. A set is formatted as <code>[x y 'letter' 'color' z]</code> where <code>x</code> and <code>y</code> are x and y cartesian coordinates, <code>letter</code> is the label to plot, <i>Optioanl</i> <code>'color'</code> is the fill style of label and is provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. In th absence of <code>'color'</code> inside sets, colors will be taken from <code>color</code> property inside <span class="highlight">data-text-opts</span> if provided, or from <span class="highlight">data-colors</span> if provided or from themes. The <i>Optional</i> <code>z</code> is the decimal value and represents the size/volume of the custom shape(This will not work for letters).</p></li>
+      <li><p>3.1.1 <strong>Sets</strong> Space separated and [ ] enclosed sets are provided for <span class="highlight">data-sets</span> attribute. A set is formatted as <code>[x y 'letter' 'color' z]</code> where <code>x</code> and <code>y</code> are x and y cartesian coordinates, <code>letter</code> is the label to plot, <i>Optioanl</i> <code>'color'</code> is the fill style of label and is provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. In th absence of <code>'color'</code> inside sets, colors will be taken from <code>color</code> property inside <span class="highlight">data-text-opts</span> if provided, or from <span class="highlight">data-colors</span> if provided or from themes. The <i>Optional</i> <code>z</code> is the decimal value and represents the size/volume of the custom shape(This will not work for letters). For drawing custom shapes, function name as strinng can be provided to replace the letter with a shape. To identify that the given <code>'letter'</code> string is the name of the <code>function</code>, it must be prepened by <code>'fn#'</code> to make it look like <code>'fn#letter'</code>. This function will receive the arguments <code>ctx, x, y, z</code> where ctx is the current drawing 2d context, x, y and z are normalized dimensions present in current set being traversed. The provided function must be present in global/window scope<i>(See demo 3.3 and 3.6 for explanation)</i>.</p></li>
       
-      <li><p><strong>Ranges</strong> default can be provided as  <code>data-range</code> or can be defined explicitly for each x and y axes by <span class="highlight">data-range-x</span> and <span class="highlight">data-range-y</span>. Range for <code>z</code> axis will be computed if absent or can be provided by <span class="highlight">data-range-z</span>.</p></li>
+      <li><p>3.1.2 <strong>Ranges</strong> default can be provided as  <code>data-range</code> or can be defined explicitly for each x and y axes by <span class="highlight">data-range-x</span> and <span class="highlight">data-range-y</span>. Range for <code>z</code> axis will be computed if absent or can be provided by <span class="highlight">data-range-z</span>.</p></li>
 
-      <li><p><strong>Color Range</strong> Bubbles can be styled mapping a color range to z value for example to visualize temperature transition or to produce a heat map effect. It is provided as <span class="highlight">data-color-range</span> attribute and will only affect those sets with no or empty styles. Its values must be a start and end color strings separated by a single space. Color strings are provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a>. Note that color keywords e.g. <code>red, green, blue</code> will not work in this regard. It is recommended to provide colors in RGBA format. <i>(For bubble chart)</i></p></li>
+      <li><p>3.1.3 <strong>Color Range</strong> Bubbles can be styled mapping a color range to z value for example to visualize temperature transition or to produce a heat map effect. It is provided as <span class="highlight">data-color-range</span> attribute and will only affect those sets with no or empty styles. Its values must be a start and end color strings separated by a single space. Color strings are provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a>. Note that color keywords e.g. <code>red, green, blue</code> will not work in this regard. It is recommended to provide colors in RGBA format. <i>(For bubble chart, see demo 4.4)</i></p></li>
       
-      <li><p><strong>Axes</strong> Both axes can be plotted by providing <code>axis:value</code> inside <span class="highlight">data-opts</span> where <code>value</code> is the axis value to plot axis marker at. Explicit values for <code>x-axis</code> and <code>y-axis</code> can be provided by <code>xAxis</code> and <code>yAxis</code> properties respectively providing inside <span class="highlight">data-opts</span>.</p></li>
+      <li><p>3.1.4 <strong>Axes</strong> Both axes can be plotted by providing <code>axis:value</code> inside <span class="highlight">data-opts</span> where <code>value</code> is the axis value to plot axis marker at. Explicit values for <code>x-axis</code> and <code>y-axis</code> can be provided by <code>xAxis</code> and <code>yAxis</code> properties respectively providing inside <span class="highlight">data-opts</span>.</p></li>
 
-      <li><p><strong>Options</strong> Various option attributes can be provided to configure letter colors, fonts, alpha, axis and offsets etc. Options are provided in key:value format e.g. <code>key1:value1 key2:'String Value'</code>. <i>Key:Value</i> must be distinguished by a single <code>:</code> with no space whereas different key:value pairs must be separated by a single space and strings containing space must be enclosed within <i>Single Quotes ('')</i>. It is recommended to enclose all non decimal values within single quotes. Option configurations for Scatter Chart are explained below.</p>
+      <li><p>3.1.5 <strong>Options</strong> Various option attributes can be provided to configure letter colors, fonts, alpha, axis and offsets etc. Options are provided in key:value format e.g. <code>key1:value1 key2:'String Value'</code>. <i>Key:Value</i> must be distinguished by a single <code>:</code> with no space whereas different key:value pairs must be separated by a single space and strings containing space must be enclosed within <i>Single Quotes ('')</i>. It is recommended to enclose all non decimal values within single quotes. Option configurations for Scatter Chart are explained below.</p>
 
         <ul>
-          <li><span class="highlight">data-opts</span> used to configure options for scatter chart.
+          <li>3.1.5.1 <span class="highlight">data-opts</span> used to configure options for scatter chart.
             <ul>
               <li><strong>alpha</strong> Global transparency for chart drawings, colors will be sheered with this alpha value.</li>
               <li><strong>bubbles</strong> If provided with <code>true</code> value, bubbles will be drawn to plot a bubble chart. <i>(For bubble chart)</i></li>
               <li><strong>bubblesAlpha</strong> alpha value for bubbles onlye. <i>(For bubble chart)</i></li>
               <li><strong>bubblesFillColor</strong> Explicit value for bubbles fillStyle provided according to <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. It will override all other styles for bubbles except style within <code>sets</code>. <i>(For bubble chart)</i></li>
-              <li><strong>bubblesRadius</strong> Radius of bubbles in pixels, will override calculated radius based on z valus in sets. <i>(For bubble chart)</i></li>
+              <li><strong>bubblesRadius</strong> Radius of bubbles in pixels, will override calculated radius based on z valus in sets. <i>(For bubble chart, see demo 4.4)</i></li>
               <li><strong>bubblesDefaultRadius</strong> Radius of bubbles in pixels, will only be applied to sets with empty or no z values. <i>(For bubble chart)</i></li>
               <li><strong>axis</strong> Decimal identifying location to draw both x and y axes at.</li>
               <li><strong>xAxis</strong> Decimal identifying location to draw x axis at.</li>
@@ -61,19 +62,19 @@ table tr td span:nth-child(6){color:brown;}
             </ul>
           </li>
           <br>
-          <li><span class="highlight">data-text-opts</span> used to configure options for letters/labels.
+          <li>3.1.5.2 <span class="highlight">data-text-opts</span> used to configure options for letters/labels.
             <ul>
               <li><strong>font</strong> Font for letters provided as a single string according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font">reference</a>. Default is <code>'10px sans-serif'</code>.</li>
               <li><strong>color</strong> Style used in fillText for letters/labels provided as single string accordinng to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. This will also be used as fillStyle for custom shapes. For labels this option will override colors specified in sets. If absent, colors will be taken from <code>data-colors</code> or <code>themes</code> whichever applicable or evaluated by default to <code>'#000'</code></li>
               <li><strong>alpha</strong> If provided or alpha in <code>data-opts</code> provided, letter colors/styles will be sheered with this alpha value.</li>
-              <li><strong>defaultColor</strong> Same as <code>color</code> but this will not override non empty styles present in sets.</li>
+              <li><strong>defaultColor</strong> Same as <code>color</code> but this will not override non empty styles present in sets. <i>(See demo 3.3)</i></li>
               <li><strong>maxWidth</strong> Restrict the length of label text in pixels to this value. Default <i>Unrestricted</i></li>
               <li><strong>offsetX</strong> Value to offset the letter/shape at x axis. Default is <code>0</code>.</li>
               <li><strong>offsetY</strong> Value to offset the letter/shape at y axis. Default is <code>0</code>.</li>
             </ul>
           </li>
           <br>
-          <li><span class="highlight">data-text-stroke-opts</span> used to configure options for text stroke/background of letters/labels. Can be used to produce shadow effect or for text readability over bubbles. Will be applicable only if <code>data-text-stroke-opts</code> present is attributes.
+          <li>3.1.5.3 <span class="highlight">data-text-stroke-opts</span> used to configure options for text stroke/background of letters/labels <i>(see demo 3.5)</i>. Can be used to produce shadow effect or for text readability over bubbles <i>(see demo 4.3)</i>. Will be applicable only if <code>data-text-stroke-opts</code> present is attributes.
             <ul>
               <li><strong>font</strong> Font for strokeText of letters provided as a single string according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font">reference</a>. Default is <code>'10px sans-serif'</code>.</li>
               <li><strong>color</strong> Style used in strokeText for letters/labels provided as single string accordinng to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. This will also be used as fillStyle for custom shapes. Defaults to <code>'#000'</code></li>
@@ -87,16 +88,18 @@ table tr td span:nth-child(6){color:brown;}
       </li>
         </ul>
       </li>
-
     </ul>
+    Tip:<i> The <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Tools/ColorPicker_Tool">Color Pick</a> can be used for RGBA / HSLA / HEX color generation and comparison.</i>
   </section>
  
   <div class="documentation">
   </div>
 
   <table cellspacing="50">
+    <tr><td colspan="2"><hr></td></tr>
 
     <!-- Test Case -->
+    <tr><td colspan="2" style="text-align:center;">3.2 Simple Scatter Chart</td></tr>
     <tr>
       <td>
         <canvas  class="chartlet" 
@@ -123,10 +126,11 @@ table tr td span:nth-child(6){color:brown;}
         </code>
       </td>
     </tr>
+    <tr><td colspan="2"><hr></td></tr>
 
     <!-- Test Case -->
     <tr>
-      <tr><td colspan="2" style="text-align:center;">Scatter Chart with custom shape</td></tr>
+      <tr><td colspan="2" style="text-align:center;">3.3 Scatter Chart with custom shape</td></tr>
       <td>
         <canvas  class="chartlet" 
           data-type="scatter"
@@ -182,10 +186,11 @@ table tr td span:nth-child(6){color:brown;}
         </div>
       </td>
     </tr>
+    <tr><td colspan="2"><hr></td></tr>
 
     <!-- Test Case -->
     <tr>
-      <tr><td colspan="2" style="text-align:center;">Scatter Chart with Letters and Colors</td></tr>
+      <tr><td colspan="2" style="text-align:center;">3.4 Scatter Chart with Letters and Colors</td></tr>
       <td>
         <canvas  class="chartlet" 
           data-type="scatter"
@@ -214,10 +219,11 @@ table tr td span:nth-child(6){color:brown;}
         </code>
       </td>
     </tr>
+    <tr><td colspan="2"><hr></td></tr>
 
     <!-- Test Case -->
     <tr>
-      <tr><td colspan="2" style="text-align:center;">Scatter Chart with TextStroke</td></tr>
+      <tr><td colspan="2" style="text-align:center;">3.5 Scatter Chart with TextStroke</td></tr>
       <td>
         <canvas  class="chartlet" 
           data-type="scatter"
@@ -243,10 +249,11 @@ table tr td span:nth-child(6){color:brown;}
         </code>
       </td>
     </tr>
+    <tr><td colspan="2"><hr></td></tr>
 
     <!-- Test Case -->
     <tr>
-      <tr><td colspan="2" style="text-align:center;">Scatter Chart with Custom Shape and Third Dimension (Size)</td></tr>
+      <tr><td colspan="2" style="text-align:center;">3.6 Scatter Chart with Custom Shape and Third Dimension (Size)</td></tr>
       <td>
         <canvas  class="chartlet" 
           data-type="scatter"

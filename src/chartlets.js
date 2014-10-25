@@ -821,11 +821,13 @@
     var heightProportions = height / (heightRatio + 1);
     height = Math.round(heightProportions * heightRatio);
     var barChartHeight = Math.round(heightProportions);
+
+    var defaultOpts = opts;
     
     // Line Chart Definition Override's
     sets = elem.getAttribute("data-line-sets") !== null ? parseSets(elem.getAttribute("data-line-sets")) : sets;
     opts = parseAttr(elem, "data-line-opts") !== null ? parseOptsPairs(parseAttr(elem, "data-line-opts") || []) : opts;
-    colors = themes[opts.theme] || parseAttr(elem, "data-line-colors") || parseAttr(elem, "data-colors") || themes.basic;
+    colors = themes[opts.theme] || parseAttr(elem, "data-line-colors") || parseAttr(elem, "data-colors") || themes[defaultOpts.theme] || themes.basic;
     range = parseAttr(elem, "data-line-range") || parseAttr(elem, "data-range") || getRange(sets, isStacked());
     rotated = false;
     
@@ -840,7 +842,7 @@
     // Line Chart Definition Override's
     sets = elem.getAttribute("data-bar-sets") !== null ? parseSets(elem.getAttribute("data-bar-sets")) : parseSets(elem.getAttribute("data-sets"));
     opts = parseAttr(elem, "data-bar-opts") !== null ? parseOptsPairs(parseAttr(elem, "data-bar-opts") || []) : parseOpts(elem);
-    colors = themes[opts.theme] || parseAttr(elem, "data-bar-colors") || parseAttr(elem, "data-colors") || themes.basic;
+    colors = themes[opts.theme] || parseAttr(elem, "data-bar-colors") || parseAttr(elem, "data-colors") || themes[defaultOpts.theme] || themes.basic;
     range = parseAttr(elem, "data-bar-range") || parseAttr(elem, "data-range") || getRange(sets, isStacked());
     rotated = false;
 

@@ -27,28 +27,29 @@ table tr td span:nth-child(6){color:brown;}
 </head>
 
 <body>
+  <h2>Task 5 Speedometer / Gauge Chart</h2><br>
 
-  <h3>Gauge Chart</h3>
+  <h3>5.1 Gauge Chart</h3>
 
   <section id="options">
     <p>
       This page contains tests for <code>gauge</code> chart type defined as <span class="highlight">data-type="gauge"</span>.
-      Gauge chart type consists of a semi circle with needle pointing at the target value over styled and calibrated areas. The following figure can be consulted for various elements and vocabulary used in this documentation.
+      Gauge chart type consists of a semi circle with needle pointing at the target value over styled and calibrated areas. Figure 5a can be consulted for various elements and vocabulary used in this documentation.
     </p>
-    <img src="images/gaugeChartVocabulary.png" width="825" style="float:right;clear:both;">
+    <div style="float:right;text-align:center;width:825px;clear:both;"><img src="images/gaugeChartVocabulary.png" width="825"><i>Figure</i> 5a</div>
 
-    <h4>Configurations of Gauge Chart</h4>
+    <h4>5.1.1 Configurations of Gauge Chart</h4>
     <ul>
-      <li><p><strong>Areas</strong> used to provide styled segmentation of gauge reading and can be configured by <span class="highlight">data-areas</span>. The value of <code>data-areas</code> will hold sets of desired segments with each in the format <code>[&lt;value&gt; '&lt;style&gt;']</code> (Both sets and values within sets must be separated by a single space). Where <code>value</code> represent the ending limit of segment and should be within gauge <code>range</code> and style represent the fill style of segment arc and must be provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords.</p></li>
+      <li><p>5.1.1.1 <strong>Areas</strong> used to provide styled segmentation of gauge reading and can be configured by <span class="highlight">data-areas</span>. The value of <code>data-areas</code> will hold sets of desired segments with each in the format <code>[&lt;value&gt; '&lt;style&gt;']</code> (Both sets and values within sets must be separated by a single space). Where <code>value</code> represent the ending limit of segment and should be within gauge <code>range</code> and style represent the fill style of segment arc and must be provided according to the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords.</p></li>
       
-      <li><p><strong>Range</strong> specifies the start and end value of gauge reading and configured by <span class="highlight">data-range</span>. This range will map to <code>Gauge Value Radius</code> as specified in the figure. Default is <code>1 100</code></li>
+      <li><p>5.1.1.2 <strong>Range</strong> specifies the start and end value of gauge reading and configured by <span class="highlight">data-range</span>. This range will map to <code>Gauge Value Radius</code> as specified in the figure. Default is <code>1 100</code></li>
       
-      <li><p><strong>Calibrations</strong> is used to provide custom calibration strings. If calibration is enalbed by providing <code>calibration:true</code> in <code>data-opts</code>, the gauge will calibrate the Major Ticks according to Gauge Range. This calibration can be overwritten by configuring gauge with <span class="highlight">data-calibrations</span> in a format <code>['TextforMajorTick 1' 'TextforMajorTick 2' ... 'TextforMajorTick N']</code>. (Note: The number of major ticks drawn are 1+ConfiguredMajorTicks)</p></li>
+      <li><p>5.1.1.3 <strong>Calibrations</strong> is used to provide custom calibration strings. If calibration is enalbed by providing <code>calibration:true</code> in <code>data-opts</code>, the gauge will calibrate the Major Ticks according to Gauge Range. This calibration can be overwritten by configuring gauge with <span class="highlight">data-calibrations</span> in a format <code>['TextforMajorTick 1' 'TextforMajorTick 2' ... 'TextforMajorTick N']</code>. (Note: The number of major ticks drawn are 1+ConfiguredMajorTicks)</p></li>
 
-      <li><p><strong>Options</strong> configured as <span class="highlight">data-opts</span>. Various options can be provided to optimize gauge size, ticks, needle, needle target and styles of gauge elements etc. Options are provided in key:value format e.g. <code>key1:value1 key2:'String Value'</code>. <i>Key:Value</i> must be distinguished by a single <code>:</code> with no space whereas different key:value pairs must be separated by a single space and strings containing space must be enclosed within <i>Single Quites ('')</i>. It is recommended to enclose all non decimal values within single quotes. Available options for Gauge Chart are explained below.</p></li>
+      <li><p>5.1.1.4 <strong>Options</strong> configured as <span class="highlight">data-opts</span>. Various options can be provided to optimize gauge size, ticks, needle, needle target and styles of gauge elements etc. Options are provided in key:value format e.g. <code>key1:value1 key2:'String Value'</code>. <i>Key:Value</i> must be distinguished by a single <code>:</code> with no space whereas different key:value pairs must be separated by a single space and strings containing space must be enclosed within <i>Single Quites ('')</i>. It is recommended to enclose all non decimal values within single quotes. Available options for Gauge Chart are explained below.</p></li>
 
       <li>
-        <h4>Options for Gauge Chart</h4>
+        <h4>5.1.1.4.1 Options for Gauge Chart</h4>
         <ul>
           <li><p><strong>widthRatio</strong>, <strong>heightRatio</strong> Gauge Diameter size can be controlled by providing a ratio of Gauge Diameter to either Width of Canvas by <code>widthRatio:v</code> or to Height of Canvas by <code>heightRatio:v</code> where v is the ratio value for Gauge Diameter. Default is <code>0.95 of CanvasWidth</code></p></li>
 
@@ -121,8 +122,9 @@ table tr td span:nth-child(6){color:brown;}
 
   <table cellspacing="50">
 
+    <tr><td colspan="2"><hr></td></tr>
     <!-- Test Case -->
-    <tr><td colspan="2" style="text-align:center;">Simple Gauge Chart with Gradient Areas</td></tr>
+    <tr><td colspan="2" style="text-align:center;">5.2 Simple Gauge Chart with Gradient Areas</td></tr>
     <tr>
       <td>
         <canvas  class="chartlet" 
@@ -148,7 +150,9 @@ table tr td span:nth-child(6){color:brown;}
       </td>
     </tr>
 
+    <tr><td colspan="2"><hr></td></tr>
     <!-- Test Case -->
+    <tr><td colspan="2" style="text-align:center;">5.3 Gauge Chart with Transparent Area and Styled Needle</td></tr>
     <tr>
       <td>
         <canvas  class="chartlet" 
@@ -176,7 +180,9 @@ table tr td span:nth-child(6){color:brown;}
       </td>
     </tr>
 
+    <tr><td colspan="2"><hr></td></tr>
     <!-- Test Case -->
+    <tr><td colspan="2" style="text-align:center;">5.4 Gauge Chart styled Title, Smaller Gauge Areas Radius and Custom Calibrations</td></tr>
     <tr>
       <td>
         <canvas  class="chartlet" 
@@ -202,8 +208,9 @@ table tr td span:nth-child(6){color:brown;}
       </td>
     </tr>
 
+    <tr><td colspan="2"><hr></td></tr>
     <!-- Test Case -->
-    <tr><td colspan="2" style="text-align:center;">Speedometer Example with Animated Target Update</td></tr>
+    <tr><td colspan="2" style="text-align:center;">5.5 Speedometer Example with Animated Target Update</td></tr>
     <tr>
       <td>
         <canvas  class="chartlet" 

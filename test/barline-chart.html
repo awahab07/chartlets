@@ -36,7 +36,10 @@ table tr td span:nth-child(6){color:brown;}
       This page contains tests for <code>barline</code> chart type defined as <span class="highlight">data-type="barline"</span>.
       <code>barline</code> chart type consists of a line chart above and a bar chart below with same or separate series if explicitly provided. If cofiguration is provided in usual way, both charts will try to adopt the given configuration. Explicit or a mix of default and Explicit configuration can be provided by using <code>data-line-</code> or <code>data-bar-</code> prefixes instead of <code>data-</code> prefix for each chart type respectively for <span class="highlight">data-sets, data-opts, data-colors, data-range</span> configurations.
     </p>
-    <h4>Configurations Specific to barline</h4>
+    <h4>2.1.1 Configurations Specific to barline</h4>
+    <p>
+      All existig configurations are the same as Chartlet Library's <code>bar</code> and <code>line</code> charts. The way to provide these configurations individually to each chart in a single canvas configuration is explained below:
+    </p>
     <ul>
       <li><p><strong>Data</strong> default can be provided as  <code>data-sets</code> or can be defined explicitly by <span class="highlight">data-line-sets</span> or <span class="highlight">data-bar-sets</span> for each chart.</p></li>
       
@@ -46,7 +49,7 @@ table tr td span:nth-child(6){color:brown;}
       
       <li><p><strong>Range</strong> default can be provided as  <code>data-range</code> or can be defined explicitly by <span class="highlight">data-line-range</span> or <span class="highlight">data-bar-range</span> for each chart.</p></li>
       
-      <li><p><strong>Height Ratio</strong> is the ratio of height of line chart to the height of bar chart. It is provided as a single decimal value and evaluated as <code>x:1</code> where <code>x</code> and <code>1</code> are the ratios of heights of line and bar charts respectively. For example  <span class="highlight">data-height-ratio="2"</span> evaluated as <code>2:1</code> will make the height of line chart twice of bar chart's height. It will not affect the overall height of chart's canvas.</p></li>
+      <li><p><strong>Height Ratio</strong> is the ratio of height of line chart to the height of bar chart. It is provided as a single decimal value and evaluated as <code>x:1</code> where <code>x</code> and <code>1</code> are the ratios of heights of line and bar charts respectively. For example  <span class="highlight">data-height-ratio="2"</span> evaluated as <code>2:1</code> will make the height of line chart twice of bar chart's height. It will not affect the overall height of chart's canvas. Default is <code>1</code> i.e. both charts will hold half of the canvas height. <i>(Specific to barline Chart)</i></p></li>
     </ul>
   </section>
 
@@ -54,12 +57,10 @@ table tr td span:nth-child(6){color:brown;}
   </div>
 
   <table cellspacing="50">
+    <tr><td colspan="3"><hr></td></tr>
 
     <!-- Test Case -->
-    <tr>
-      <td>[1 3 -2 4]<br>[10 8 -6 2]<br>[20 6 -8 6]</td>
-      <td><span>[1 3 -2 4]</span><br><span>[10 8 -6 2]</span><br><span>[20 6 -8 6]</span><br><span>[6 7 -3 5]</span><br><span>[24 10 -8 8]</span><br><span>[10 8 -6 2]</span></td>
-    </tr>
+    <tr><td></td><td colspan="2" style="text-align:center;">2.2 Barline Chart</td></tr>
     <tr>
       <td colspan="2">
         <canvas  class="chartlet" 
@@ -89,11 +90,43 @@ table tr td span:nth-child(6){color:brown;}
         </canvas>
       </td>
     </tr>
+    <tr><td colspan="3"><hr></td></tr>
 
     <!-- Test Case -->
+    <tr><td></td><td colspan="2" style="text-align:center;">2.3 Barline Chart with Smooth Lines</td></tr>
     <tr>
-      <td><span>[1 -1 3 4]</span></td>
-      <td><span>[2 2 4 2]</span></td>
+      <td colspan="2">
+        <canvas  class="chartlet" 
+          data-type="barline"
+          data-line-range="-10 10" 
+          data-sets="[1 3 -2 4] [4 -3 8 10] [5 6 7 -1]"
+          data-bar-sets="[1 3 -2 4] [10 8 -6 2] [20 6 -8 6] [2 5 -3 6] [6 7 -3 5] [24 10 -8 8] [10 8 -6 2]"
+          data-height-ratio="0.8"
+          width="300" height="200"
+          data-opts="axis:0 theme:fire"
+          data-line-opts="alpha:0.1 axis:-8 shape:smooth">
+        </canvas>
+      </td>
+      <td>
+        <code>
+          <canvas  class="chartlet" 
+          data-type="barline"
+          data-line-range="-10 10" 
+          data-sets="[1 3 -2 4] [4 -3 8 10] [5 6 7 -1]"
+          data-bar-sets="[1 3 -2 4] [10 8 -6 2] [20 6 -8 6] [2 5 -3 6] [6 7 -3 5] [24 10 -8 8] [10 8 -6 2]"
+          data-height-ratio="0.8"
+          width="300" height="200"
+          data-opts="axis:0 theme:fire"
+          data-line-opts="alpha:0.1 axis:-8 shape:smooth">
+        </canvas>
+      </td>
+    </tr>
+    <tr><td colspan="3"><hr></td></tr>
+
+    <!-- Test Case -->
+    <tr><td></td><td colspan="2" style="text-align:center;">2.4 Barline Chart</td></tr>
+    <tr>
+      <td colspan="2">Sets: <span>[1 -1 3 4]</span> <span style="color:red">[2 2 4 2]</span></td>
     </tr>
     <tr>
       <td colspan="2">
@@ -114,14 +147,17 @@ table tr td span:nth-child(6){color:brown;}
           data-colors="red" 
           data-line-sets="[1 -1 3 4]"
           data-bar-sets="[2 2 4 2]"
+          data-bar-range="0 4"
           width="150" height="55"
           data-opts="stroke:4">
         </canvas>
         </code>
       </td>
     </tr>
+    <tr><td colspan="3"><hr></td></tr>
 
     <!-- Test Case -->
+    <tr><td></td><td colspan="2" style="text-align:center;">2.5 Barline Chart</td></tr>
     <tr><td><span>[1 2 3]</span><span>[1.5 -1 3.5]</span></td></tr>
     <tr>
       <td colspan="2">
