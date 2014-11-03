@@ -822,7 +822,7 @@
     height = Math.round(heightProportions * heightRatio);
     var barChartHeight = Math.round(heightProportions);
 
-    var defaultOpts = opts;
+    var defaultOpts = parseOptsWithStrings(elem, "data-opts") || {};
     
     // Line Chart Definition Override's
     sets = elem.getAttribute("data-line-sets") !== null ? parseSets(elem.getAttribute("data-line-sets")) : sets;
@@ -832,6 +832,10 @@
     rotated = false;
     
     renderLineChart();
+    
+    // Drawing separator, line chart portion
+    if(defaultOpts.separator && defaultOpts.separator || false)
+      drawRect(defaultOpts.separatorStyle || '#000', 0, height, width, defaultOpts.separatorWidth && defaultOpts.separatorWidth/2 || 0.5);
 
     // Requesting separate context for Bar Portion
     ctx = ctx.canvas.getContext("2d");
@@ -847,6 +851,10 @@
     rotated = false;
 
     renderBarChart();
+
+    // Drawing separator, line chart portion
+    if(defaultOpts.separator && defaultOpts.separator || false)
+      drawRect(defaultOpts.separatorStyle || '#000', 0, defaultOpts.separatorWidth && defaultOpts.separatorWidth/2 || 0.5, width, defaultOpts.separatorWidth && defaultOpts.separatorWidth/2);
   }
 
   // Render a pie chart

@@ -43,7 +43,13 @@ table tr td span:nth-child(6){color:brown;}
     <ul>
       <li><p><strong>Data</strong> default can be provided as  <code>data-sets</code> or can be defined explicitly by <span class="highlight">data-line-sets</span> or <span class="highlight">data-bar-sets</span> for each chart.</p></li>
       
-      <li><p><strong>Options</strong> default can be provided as  <code>data-opts</code> or can be defined explicitly by <span class="highlight">data-line-opts</span> or <span class="highlight">data-bar-opts</span> for each chart.</p></li>
+      <li><p><strong>Options</strong> default can be provided as  <code>data-opts</code> or can be defined explicitly by <span class="highlight">data-line-opts</span> or <span class="highlight">data-bar-opts</span> for each chart.</p> All line chart and bar chart options are same as of individual <code>line</code> and <code>bar</code> charts. Some additional options can be provided inside <span class="highlight">data-opts</span> to draw a styled separtor at charts partition, they are
+        <ul>
+          <li><strong>separator</strong> If present with a truthly value, a separator will be drawn.</li>
+          <li><strong>separatorWidth</strong> Width in pixels of the separator line. Default is <code>1</code>.</li>
+          <li><strong>separatorStyle</strong> fillStyle for the separator, provided according to <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/color_value">reference</a> without using color keywords. Default is <code>'#000'</code>.</li>
+        </ul>
+      </li>
       
       <li><p><strong>Colors</strong> default can be provided as  <code>data-colors</code> or can be defined explicitly by <span class="highlight">data-line-colors</span> or <span class="highlight">data-bar-colors</span> for each chart.</p></li>
       
@@ -124,7 +130,36 @@ table tr td span:nth-child(6){color:brown;}
     <tr><td colspan="3"><hr></td></tr>
 
     <!-- Test Case -->
-    <tr><td></td><td colspan="2" style="text-align:center;">2.4 Barline Chart</td></tr>
+    <tr><td></td><td colspan="2" style="text-align:center;">2.4 Barline Chart with Separator</td></tr>
+    <tr>
+      <td colspan="2">
+        <canvas  class="chartlet" 
+          data-type="barline"
+          data-range="-10 10" 
+          data-sets="[10 -10 10 -10 10] [-10 10 -10 10 -10] [5 -5 5 -5 5] [-5 5 -5 5 -5] [0 0 0 0 0]"
+          data-bar-sets="[10 5 -5 -10] [5 10 5 -10] [-5 5 10 5 ] [-10 -5 5 10] [10 5 -5 -10] [0 10 5 0] [-5 5 10 5]"
+          width="300" height="200"
+          data-opts="axis:0 theme:blues separator:true separatorStyle:'rgba(215, 40, 40, 0.9)' separatorWidth:4"
+          data-line-opts="alpha:0.1 shape:smooth">
+        </canvas>
+      </td>
+      <td>
+        <code>
+          <canvas  class="chartlet" 
+          data-type="barline"
+          data-range="-10 10" 
+          data-sets="[10 -10 10 -10 10] [-10 10 -10 10 -10] [5 -5 5 -5 5] [-5 5 -5 5 -5] [0 0 0 0 0]"
+          data-bar-sets="[10 5 -5 -10] [5 10 5 -10] [-5 5 10 5 ] [-10 -5 5 10] [10 5 -5 -10] [0 10 5 0] [-5 5 10 5]"
+          width="300" height="200"
+          data-opts="axis:0 theme:blues separator:true separatorStyle:'rgba(215, 40, 40, 0.9)' separatorWidth:4"
+          data-line-opts="alpha:0.1 shape:smooth">
+        </canvas>
+      </td>
+    </tr>
+    <tr><td colspan="3"><hr></td></tr>
+
+    <!-- Test Case -->
+    <tr><td></td><td colspan="2" style="text-align:center;">2.5 Barline Chart</td></tr>
     <tr>
       <td colspan="2">Sets: <span>[1 -1 3 4]</span> <span style="color:red">[2 2 4 2]</span></td>
     </tr>
@@ -157,7 +192,7 @@ table tr td span:nth-child(6){color:brown;}
     <tr><td colspan="3"><hr></td></tr>
 
     <!-- Test Case -->
-    <tr><td></td><td colspan="2" style="text-align:center;">2.5 Barline Chart</td></tr>
+    <tr><td></td><td colspan="2" style="text-align:center;">2.6 Barline Chart</td></tr>
     <tr><td><span>[1 2 3]</span><span>[1.5 -1 3.5]</span></td></tr>
     <tr>
       <td colspan="2">
