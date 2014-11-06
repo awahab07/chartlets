@@ -1,0 +1,165 @@
+<html>
+
+<head>
+
+<title>Null Values</title>
+
+<script src="../src/chartlets.js"></script>
+
+<!-- Documentation Style -->
+<style>
+.chartlet{border:1px solid #ddd;margin:2px}body{font-family:Helvetica,Arial;background-color:#fff;padding:20px 50px}header{margin-bottom:50px}footer{font-size:.8em;color:#999}h1,h2,h3{font-family:Helvetica,Arial;font-weight:400;color:#222;margin:0;padding:0}h1{font-size:3.75em}h2{font-size:1.7em}h3{font-size:1.5em;margin-bottom:.25em;color:hsl(336,76%,50%)}p{font-family:Helvetica,Arial}a,a:visited{color:hsl(225,65%,50%)}a:hover{color:hsl(336,76%,50%)}small{font-size:.75em;color:#999}section{margin-bottom:50px}#download{text-align:right;font-size:1.35em;font-weight:700;color:#222}table.examples tr td{padding:0 10px 15px 0}td,th{text-align:left;vertical-align:top}.highlight{background-color:#ffc;border:1px solid #fc3;padding:1px 2px;border-radius:4px}.swatch,.tx{display:inline-block}.swatch p{margin:4px 0;color:#999;font-size:.9em}.tx{margin:10px 10px 10px 0}.tx canvas{display:block;margin-bottom:6px}code,pre{font-family:Monaco,Courier,monospace;font-size:.8em}li strong{color:hsl(336,76%,50%)}@media only screen and (max-width: 480px){body{padding:8px}h1{font-size:3em}code,pre{white-space:pre-wrap;word-break:break-all}td,th{padding:2px}}
+</style>
+
+<style>
+canvas {
+  border: 1px solid #ddd;
+}
+
+table tr td span:first-child{color:red;}
+table tr td span:nth-child(2){color:green;}
+table tr td span:nth-child(3){color:blue;}
+table tr td span:nth-child(4){color:orange;}
+table tr td span:nth-child(5){color:teal;}
+table tr td span:nth-child(6){color:brown;}
+</style>
+
+</head>
+
+<body>
+  <h2>Task 6 Null/NaN Values</h2><br>
+  
+  <h3>6.1 Bar Chart and Zero Values</h3>
+
+  <section id="options">
+    <p>
+      For <code>bar</code> chart, by default zero values will not be plotted and will leave an empty space both in stacked and non-stacked bar charts. But if it is required to have zero values leave a hint, an option <code>mapZeroValueTo</code> can be configured inside <span class="highlight">data-opts</span> to map zero values to a non-zero decimal value. See the below demonstrations:
+    </p>
+  </section>
+
+  <div class="documentation">
+  </div>
+
+  <table cellspacing="50">
+    <tr><td colspan="3"><hr></td></tr>
+
+    <!-- Test Case -->
+    <tr><td></td><td colspan="2" style="text-align:center;">6.2 Bar Chart with Zero Values in Set</td></tr>
+    <tr>
+      <td colspan="2">
+        <canvas  class="chartlet" 
+          data-type="bar"
+          data-colors="red green blue orange teal brown" 
+          data-sets="[0 30 12 43 0 33]"
+          width="200" height="150">
+        </canvas>
+      </td>
+      <td>
+        <code>
+          <canvas  class="chartlet" 
+          data-type="bar"
+          data-colors="red green blue orange teal brown" 
+          data-sets="[0 30 12 43 0 33]"
+          width="200" height="150">
+        </canvas>
+      </td>
+    </tr>
+    <tr><td colspan="3"><hr></td></tr>
+
+    <!-- Test Case -->
+    <tr><td></td><td colspan="2" style="text-align:center;">6.3 Bar Chart with <b>Mapped</b> Zero Values in Set</td></tr>
+    <tr>
+      <td colspan="2">
+        <canvas  class="chartlet" 
+          data-type="bar"
+          data-colors="red green blue orange teal brown" 
+          data-sets="[0 30 12 43 0 33]"
+          width="200" height="150"
+          data-opts="mapZeroValueTo:2">
+        </canvas>
+      </td>
+      <td>
+        <code>
+          <canvas  class="chartlet" 
+          data-type="bar"
+          data-colors="red green blue orange teal brown" 
+          data-sets="[0 30 12 43 0 33]"
+          width="200" height="150"
+          data-opts="mapZeroValueTo:2">
+        </canvas>
+      </td>
+    </tr>
+    <tr><td colspan="3"><hr></td></tr>
+
+    <!-- Test Case -->
+    <tr><td></td><td colspan="2" style="text-align:center;">6.4 Stacked Bar Chart with Zero Values in Sets</td></tr>
+    <tr>
+      <td colspan="2">
+        <canvas  class="chartlet" 
+          data-type="bar"
+          data-colors="red green blue orange teal brown" 
+          data-sets="[0 30 12 15 0 -13] [0 0 12 10 10 0] [0 0 12 -5 10 13]"
+          width="200" height="150"
+          data-opts="axis:0 transform:stack">
+        </canvas>
+      </td>
+      <td>
+        <code>
+          <canvas  class="chartlet" 
+          data-type="bar"
+          data-colors="red green blue orange teal brown" 
+          data-sets="[0 30 12 43 0 -13] [0 0 12 43 10 0] [0 0 12 43 10 13]"
+          width="200" height="150"
+          data-opts="axis:0 transform:stack">
+        </canvas>
+      </td>
+    </tr>
+    <tr><td colspan="3"><hr></td></tr>
+
+    <!-- Test Case -->
+    <tr><td></td><td colspan="2" style="text-align:center;">6.5 Stacked Bar Chart with <b>Mapped</b> Zero Values in Sets</td></tr>
+    <tr>
+      <td colspan="2">
+        <canvas  class="chartlet" 
+          data-type="bar"
+          data-colors="red green blue orange teal brown" 
+          data-sets="[0 30 12 15 0 -13] [0 0 12 10 10 0] [0 0 12 -5 10 13]"
+          width="200" height="150"
+          data-opts="axis:0 transform:stack mapZeroValueTo:5">
+        </canvas>
+      </td>
+      <td>
+        <code>
+          <canvas  class="chartlet" 
+          data-type="bar"
+          data-colors="red green blue orange teal brown" 
+          data-sets="[0 30 12 15 0 -13] [0 0 12 10 10 0] [0 0 12 -5 10 13]"
+          width="200" height="150"
+          data-opts="axis:0 transform:stack mapZeroValueTo:5">
+        </canvas>
+      </td>
+    </tr>
+    <tr><td colspan="3"><hr></td></tr>
+    
+  </table>
+
+  <!-- JavaScript Tweek for displaying HTML code -->
+  <script type="text/javascript">
+    String.prototype.escapeHTML = function () {                                        
+      return(                                                                 
+        this.replace(/>/g,'&gt;').
+             replace(/</g,'&lt;').
+             replace(/"/g,'&quot;')
+      );
+    };
+
+    var codeElementsIndex, codeElements = document.getElementsByTagName('code');
+    for(codeElementsIndex=0; codeElementsIndex < codeElements.length; codeElementsIndex++) {
+      var codeElement = codeElements[codeElementsIndex];
+      if('undefined' != typeof codeElement.innerHTML)
+        codeElement.innerHTML = codeElement.innerHTML.escapeHTML();
+    }
+
+    Chartlets.render();
+  </script>
+</body>

@@ -795,7 +795,7 @@
         w = ((a / len) / sets.length) - ((p / sets.length) * i) - 1;
         x = (p / 2) + getXForIndex(j, len + 1) + (w * i) + 1;
         y = getYForValue(sets[i][j]);
-        h = y - getYForValue(0) || 1;
+        h = y - getYForValue(0) || !isNaN(opts.mapZeroValueTo) && +opts.mapZeroValueTo || 0;
 
         if (isStacked()) {
           // TODO account for negative and positive values in same stack
