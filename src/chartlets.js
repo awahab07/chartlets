@@ -743,6 +743,17 @@
   function renderLineChart() {
     var i, set, strokeStyle, fillStyle, alphaMultiplier, offset;
 
+    // If zero value mapper is provided, modify the values
+    if(opts.zeroValueMapperFn || false) {
+      for (i = 0; i < sets.length; i++) {
+        var set = sets[i];
+        for(j = 0; j < set.length; j++) {
+          if(set[j] == 0)
+            sets[i][j] = eval(opts.zeroValueMapperFn + "(set[j-1], set[j+1], j, set, sets);");
+        }
+      }
+    }
+
     drawAxis();
 
     for (i = 0; i < sets.length; i++) {
