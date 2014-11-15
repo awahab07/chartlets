@@ -599,6 +599,63 @@
     }
   }
 
+  function drawAxisCalibrations() {
+    var elem = ctx.canvas, i;
+    calibrationsX = elem.getAttribute("data-x-calibrations") !== null ? parseSetsWithStrings(elem.getAttribute("data-x-calibrations")) : null;
+    calibrationsY = elem.getAttribute("data-y-calibrations") !== null ? parseSetsWithStrings(elem.getAttribute("data-y-calibrations")) : null;
+    if(calibrationsX || calibrationsY) {
+      ctx.save();
+      ctx.strokeStyle = 'rgba(0,0,0,0.8)';
+      ctx.lineWidth = 1;
+      ctx.font = '9px sans-serif';
+      ctx.textBaseline = 'bottom';
+      ctx.color = 'rgba(0,0,0,0.8)';
+
+      opts.leftOffsetFactor = !isNaN(opts.leftOffsetFactor) ? +opts.leftOffsetFactor : 1;
+      opts.bottomOffsetFactor = !isNaN(opts.bottomOffsetFactor) ? +opts.bottomOffsetFactor : 1;
+      var xStart = width*0.07, yStart = height*0.07, xEnd = width*0.93, yEnd = height*0.93;
+
+      if(calibrationsX) {
+        calibrations = calibrationsX[0];
+        ctx.textAlign = 'center';
+
+        ctx.beginPath();
+        ctx.moveTo(xStart, yEnd);
+        ctx.lineTo(xEnd, yEnd);
+
+        for(i=0; i < calibrations.length; i++) {
+          ctx.moveTo(xEnd/(calibrations.length-1)*i || xStart, yEnd);
+          ctx.lineTo(xEnd/(calibrations.length-1)*i || xStart, height*0.9);
+          ctx.strokeText(calibrations[i], xEnd/(calibrations.length-1)*i || xStart, height);
+        }
+        ctx.stroke();
+        ctx.closePath();
+      }
+      
+      if(calibrationsY) {
+        calibrations = calibrationsY[0];
+        ctx.textAlign = 'start';
+
+        ctx.beginPath();
+        ctx.moveTo(xStart, yEnd);
+        ctx.lineTo(xStart, yStart);
+
+        for(i = calibrations.length-1; i >= 0; i--) {
+          ctx.moveTo(xStart, yEnd/(calibrations.length-1)*i || yStart);
+          ctx.lineTo(width*0.1, yEnd/(calibrations.length-1)*i || yStart);
+          ctx.strokeText(calibrations[calibrations.length-i-1], -width*0.02, yEnd/(calibrations.length-1)*i || yStart);
+        }
+        ctx.stroke();
+        ctx.closePath();
+      }
+
+      ctx.restore();
+      ctx.scale(0.86, 0.86);
+      ctx.translate(xStart, yStart);
+      ctx.globalCompositeOperation = "destination-over";
+    }
+  }
+
   function drawAxisForRanges(xAxisRange, yAxisRange) {
     if('undefined' == typeof xAxisRange || 'undefined' == typeof yAxisRange) {
       console.error('Range parameters for function "drawAxisForRanges" not provided');
@@ -785,6 +842,7 @@
 
   // Render a bar chart
   function renderBarChart() {
+    drawAxisCalibrations();
     var i, j, p, a, x, y, w, h, len;
 
     if (opts.orient === "horiz") {
