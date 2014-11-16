@@ -603,17 +603,19 @@
     var elem = ctx.canvas, i;
     calibrationsX = elem.getAttribute("data-x-calibrations") !== null ? parseSetsWithStrings(elem.getAttribute("data-x-calibrations")) : null;
     calibrationsY = elem.getAttribute("data-y-calibrations") !== null ? parseSetsWithStrings(elem.getAttribute("data-y-calibrations")) : null;
+
     if(calibrationsX || calibrationsY) {
       ctx.save();
       ctx.strokeStyle = 'rgba(0,0,0,0.8)';
       ctx.lineWidth = 1;
       ctx.font = '9px sans-serif';
-      ctx.textBaseline = 'bottom';
       ctx.color = 'rgba(0,0,0,0.8)';
 
-      opts.leftOffsetFactor = !isNaN(opts.leftOffsetFactor) ? +opts.leftOffsetFactor : 1;
-      opts.bottomOffsetFactor = !isNaN(opts.bottomOffsetFactor) ? +opts.bottomOffsetFactor : 1;
-      var xStart = width*0.07, yStart = height*0.07, xEnd = width*0.93, yEnd = height*0.93;
+      opts.paddingLeft = +opts.paddingLeft || 0.07;
+      opts.paddingTop = +opts.paddingTop || 0.07;
+      opts.paddingRight = +opts.paddingRight || 0.07;
+      opts.paddingBottom = +opts.paddingBottom || 0.07;
+      var xStart = width*opts.paddingLeft, yStart = height*opts.paddingTop, xEnd = width*(1-opts.paddingRight), yEnd = height*(1-opts.paddingBottom);
 
       if(calibrationsX) {
         calibrations = calibrationsX[0];
@@ -624,9 +626,9 @@
         ctx.lineTo(xEnd, yEnd);
 
         for(i=0; i < calibrations.length; i++) {
-          ctx.moveTo(xEnd/(calibrations.length-1)*i || xStart, yEnd);
-          ctx.lineTo(xEnd/(calibrations.length-1)*i || xStart, height*0.9);
-          ctx.strokeText(calibrations[i], xEnd/(calibrations.length-1)*i || xStart, height);
+          ctx.moveTo(xStart + (xEnd-xStart)/(calibrations.length-1)*i || xStart, yEnd);
+          ctx.lineTo(xStart + (xEnd-xStart)/(calibrations.length-1)*i || xStart, height*(1-opts.paddingBottom-0.03));
+          ctx.strokeText(calibrations[i], xStart + (xEnd-xStart)/(calibrations.length-1)*i || xStart, yEnd*1.07);
         }
         ctx.stroke();
         ctx.closePath();
@@ -634,24 +636,25 @@
       
       if(calibrationsY) {
         calibrations = calibrationsY[0];
-        ctx.textAlign = 'start';
+        ctx.textAlign = 'end';
 
         ctx.beginPath();
         ctx.moveTo(xStart, yEnd);
         ctx.lineTo(xStart, yStart);
 
         for(i = calibrations.length-1; i >= 0; i--) {
-          ctx.moveTo(xStart, yEnd/(calibrations.length-1)*i || yStart);
-          ctx.lineTo(width*0.1, yEnd/(calibrations.length-1)*i || yStart);
-          ctx.strokeText(calibrations[calibrations.length-i-1], -width*0.02, yEnd/(calibrations.length-1)*i || yStart);
+          ctx.moveTo(xStart, yStart + (yEnd-yStart)/(calibrations.length-1)*i || yStart);
+          ctx.lineTo(width*(0.03 + opts.paddingLeft), yStart + (yEnd-yStart)/(calibrations.length-1)*i || yStart);
+          ctx.strokeText(calibrations[calibrations.length-i-1], xStart*0.9, yStart + (yEnd-yStart)/(calibrations.length-1)*i || yStart);
         }
         ctx.stroke();
         ctx.closePath();
       }
 
       ctx.restore();
-      ctx.scale(0.86, 0.86);
-      ctx.translate(xStart, yStart);
+      ctx.translate(width*opts.paddingLeft, height*opts.paddingTop);
+      ctx.scale(1-opts.paddingLeft-opts.paddingRight, 1-opts.paddingTop-opts.paddingBottom);
+      
       ctx.globalCompositeOperation = "destination-over";
     }
   }

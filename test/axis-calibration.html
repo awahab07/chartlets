@@ -33,7 +33,14 @@ table tr td span:nth-child(6){color:brown;}
 
   <section id="options">
     <p>
-      Custom axis calibration arrays can be provided to plot x (bottom) and y (left) calibration axis with ticks and values. To provide calibration axis definition, <span class="highlight">data-x-calibrations</span> and <span class="highlight">data-y-calibrations</span> can be configured to plot x and y calibration axes respectively. The value should be a set of strings or decimals. Position of ticks and values will be determined by equally dividing the axis into segments based on the number of values present in calibration array.for See the below demonstrations:
+      Custom axis calibration arrays can be provided to plot x (bottom) and y (left) calibration axis with ticks and values. To provide calibration axis definition, <span class="highlight">data-x-calibrations</span> and <span class="highlight">data-y-calibrations</span> can be configured to plot x and y calibration axes respectively. The value should be a set of strings or decimals. Position of ticks and values will be determined by equally dividing the axis into segments based on the number of values present in calibration array. To make room for calibrations, paddings can be configured inside <span class="highlight">data-opts</span> as:
+      <ul>
+        <li><strong>paddingLeft</strong> The percentage of width of canvas to leave at left of chart drawing, Default is <code>0.07</code></li>
+        <li><strong>paddingRight</strong> The percentage of width of canvas to leave at right of chart drawing, Default is <code>0.07</code></li>
+        <li><strong>paddingTop</strong> The percentage of height of canvas to leave at top of chart drawing, Default is <code>0.07</code></li>
+        <li><strong>paddingBottom</strong> The percentage of height of canvas to leave at bottom of chart drawing, Default is <code>0.07</code></li>
+      </ul>
+      See the below demonstrations:
     </p>
   </section>
 
@@ -44,7 +51,7 @@ table tr td span:nth-child(6){color:brown;}
     <tr><td colspan="3"><hr></td></tr>
 
     <!-- Test Case -->
-    <tr><td></td><td colspan="2" style="text-align:center;">6.1.1 Bar Chart with Zero Values in Set</td></tr>
+    <tr><td></td><td colspan="2" style="text-align:center;">7.1.1 Bar Chart with X-Y Calibrations axes</td></tr>
     <tr>
       <td colspan="2">
         <canvas  class="chartlet" 
@@ -62,6 +69,8 @@ table tr td span:nth-child(6){color:brown;}
           data-type="bar"
           data-colors="red green blue orange teal brown" 
           data-sets="[0 30 12 43 0 33]"
+          data-x-calibrations="['-0.0' '-0.5' '-1.0']"
+          data-y-calibrations="['-1.1' '-1.2' '-1.3']"
           width="200" height="150">
         </canvas>
       </td>
@@ -69,7 +78,38 @@ table tr td span:nth-child(6){color:brown;}
     <tr><td colspan="3"><hr></td></tr>
 
     <!-- Test Case -->
-    <tr><td></td><td colspan="2" style="text-align:center;">6.1.2 Bar Chart with <b>Mapped</b> Zero Values in Set</td></tr>
+    <tr><td></td><td colspan="2" style="text-align:center;">7.1.2 Bar Chart with X-Y Calibrations axes and Padding</td></tr>
+    <tr>
+      <td colspan="2">
+        <canvas  class="chartlet" 
+          data-type="bar"
+          data-colors="red green" 
+          data-sets=" [2 6 10]
+                      [4 8 12]"
+          data-x-calibrations="['0' '30' '60' '90 (days)']"
+          data-y-calibrations="['0.99' '3' '6' '9' '12' '15' '% 18']"
+          width="300" height="220"
+          data-opts="paddingLeft:0.15 paddingTop:0.15 paddingBottom:0.15 paddingRight:0.15">
+        </canvas>
+      </td>
+      <td>
+        <code>
+          <canvas  class="chartlet" 
+          data-type="bar"
+          data-colors="red green" 
+          data-sets=" [2 6 10]
+                      [4 8 12]"
+          data-x-calibrations="['0' '30' '60' '90 (days)']"
+          data-y-calibrations="['0.99' '3' '6' '9' '12' '15' '% 18']"
+          width="300" height="220"
+          data-opts="paddingLeft:0.15 paddingTop:0.15 paddingBottom:0.15 paddingRight:0.15">
+        </canvas>
+      </td>
+    </tr>
+    <tr><td colspan="3"><hr></td></tr>
+
+    <!-- Test Case -->
+    <tr><td></td><td colspan="2" style="text-align:center;">7.1.3 Bar Chart with Y Calibration axis and Left Padding</td></tr>
     <tr>
       <td colspan="2">
         <canvas  class="chartlet" 
@@ -77,6 +117,7 @@ table tr td span:nth-child(6){color:brown;}
           data-colors="blue green red orange teal brown" 
           data-sets="[-5 -4 -3 -2 -1 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20]"
           data-y-calibrations="['-5.00' '1.00' '5.00' '10.00']"
+          data-opts="paddingLeft:0.15"
           width="200" height="150">
         </canvas>
       </td>
@@ -84,154 +125,12 @@ table tr td span:nth-child(6){color:brown;}
         <code>
           <canvas  class="chartlet" 
           data-type="bar"
-          data-colors="red green blue orange teal brown" 
-          data-sets="[0 30 12 43 0 33]"
+          data-colors="blue green red orange teal brown" 
+          data-sets="[-5 -4 -3 -2 -1 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20]"
+          data-y-calibrations="['-5.00' '1.00' '5.00' '10.00']"
+          data-opts="paddingLeft:0.15"
           width="200" height="150">
         </canvas>
-      </td>
-    </tr>
-    <tr><td colspan="3"><hr></td></tr>
-
-    <!-- Test Case -->
-    <tr><td></td><td colspan="2" style="text-align:center;">6.1.3 Stacked Bar Chart with Zero Values in Sets</td></tr>
-    <tr>
-      <td colspan="2">
-        <canvas  class="chartlet" 
-          data-type="bar"
-          data-colors="red green blue orange teal brown" 
-          data-sets="[0 30 12 15 0 -13] [0 0 12 10 10 0] [0 0 12 -5 10 13]"
-          width="200" height="150"
-          data-opts="axis:0 transform:stack">
-        </canvas>
-      </td>
-      <td>
-        <code>
-          <canvas  class="chartlet" 
-          data-type="bar"
-          data-colors="red green blue orange teal brown" 
-          data-sets="[0 30 12 43 0 -13] [0 0 12 43 10 0] [0 0 12 43 10 13]"
-          width="200" height="150"
-          data-opts="axis:0 transform:stack">
-        </canvas>
-      </td>
-    </tr>
-    <tr><td colspan="3"><hr></td></tr>
-
-    <!-- Test Case -->
-    <tr><td></td><td colspan="2" style="text-align:center;">6.1.4 Stacked Bar Chart with <b>Mapped</b> Zero Values in Sets</td></tr>
-    <tr>
-      <td colspan="2">
-        <canvas  class="chartlet" 
-          data-type="bar"
-          data-colors="red green blue orange teal brown" 
-          data-sets="[0 30 12 15 0 -13] [0 0 12 10 10 0] [0 0 12 -5 10 13]"
-          width="200" height="150"
-          data-opts="axis:0 transform:stack mapZeroValueTo:5">
-        </canvas>
-      </td>
-      <td>
-        <code>
-          <canvas  class="chartlet" 
-          data-type="bar"
-          data-colors="red green blue orange teal brown" 
-          data-sets="[0 30 12 15 0 -13] [0 0 12 10 10 0] [0 0 12 -5 10 13]"
-          width="200" height="150"
-          data-opts="axis:0 transform:stack mapZeroValueTo:5">
-        </canvas>
-      </td>
-    </tr>
-    <tr><td colspan="3"><hr></td></tr>
-  </table>
-  
-
-  <h3>6.2 Line Charts and Zero Values</h3>
-
-  <section id="options">
-    <p>
-      For <code>line</code> charts, by default markers on zero values will tend to touch the zero axis. The behavior can be overridden by providing a mapper function. Zeros values in <code>line</code> charts cannot be plotted as empty spaces because a Line series is supposed to be a connected series thus zero values should be normalised to valid decimal values. The normalisation can be calculated based on values occurring before or after the zero value or by some algorithm applied on zero value's set or all sets. To allow this a mapper function can be provided by <code>zeroValueMapperFn</code> inside <span class="highlight">data-opts</span>. The value of <code>zeroValueMapperFn</code> must be the name of a function present in global (window) scope. For each zero value this function will be called with the following parameters injected in order:
-      <ul>
-        <li><strong>previousValue</strong> Value occurring before the zero value or <code>undefined</code> if start of set.</li>
-        <li><strong>nextValue</strong> Value occurring next the zero value or <code>undefined</code> if end of set.</li>
-        <li><strong>index</strong> The index of the zero value in current set.</li>
-        <li><strong>set</strong> Current set (Array).</li>
-        <li><strong>sets</strong> All sets (Array of Arrays).</li>
-      </ul>
-      See the below demonstrations:
-    </p>
-  </section>
-
-  <table cellspacing="50">
-  <tr><td colspan="3"><hr></td></tr>
-    
-    <!-- Test Case -->
-    <tr><td></td><td colspan="2" style="text-align:center;">6.2.1 Stacked Line Chart with Zero Values in Sets</td></tr>
-    <tr>
-      <td colspan="2">
-        <canvas id="test_1b" 
-          class="chartlet" 
-          data-type="line" 
-          data-sets="[1 2 0 3 5 6 7 8 0 10] [10 0 8 7 6 0 4 3 6 1] [20 8 6 0 6 6 5 4 0 2]" 
-          data-colors="#f00 #0f0 #00f" 
-          width="200" 
-          height="150" 
-          data-opts="cap:circle shape:smooth  transform:stack">
-        </canvas>
-      </td>
-      <td>
-        <code>
-          <canvas id="test_1b" 
-          class="chartlet" 
-          data-type="line" 
-          data-sets="[1 2 0 3 5 6 7 8 0 10] [10 0 8 7 6 0 4 3 6 1] [20 8 6 0 6 6 5 4 0 2]" 
-          data-colors="#f00 #0f0 #00f" 
-          width="200" 
-          height="150" 
-          data-opts="cap:circle shape:smooth  transform:stack">
-        </canvas>
-      </td>
-    </tr>
-    <tr><td colspan="3"><hr></td></tr>
-
-    <!-- Test Case -->
-    <tr><td></td><td colspan="2" style="text-align:center;">6.2.2 Stacked Line Chart with <b>Mapped</b> Zero Values in Sets</td></tr>
-    <tr>
-      <td colspan="2">
-        <canvas id="test_1b" 
-          class="chartlet" 
-          data-type="line" 
-          data-sets="[1 2 0 3 5 6 7 8 0 10] [10 0 8 7 6 0 4 3 6 1] [20 8 6 0 6 6 5 4 0 2]" 
-          data-colors="#f00 #0f0 #00f" 
-          width="200" 
-          height="150" 
-          data-opts="cap:circle shape:smooth transform:stack zeroValueMapperFn:averageZeroValue">
-        </canvas>
-        <br><br>
-        <script type="text/javascript">
-          function averageZeroValue(previousValue, nextValue, index, currentSet, sets) {
-            return (previousValue || 0) + (nextValue || 0) / 2;
-          }
-        </script>
-      </td>
-      <td>
-        <code>
-          <canvas id="test_1b" 
-            class="chartlet" 
-            data-type="line" 
-            data-sets="[1 2 0 3 5 6 7 8 0 10] [10 0 8 7 6 0 4 3 6 1] [20 8 6 0 6 6 5 4 0 2]" 
-            data-colors="#f00 #0f0 #00f" 
-            width="200" 
-            height="150" 
-            data-opts="cap:circle shape:smooth transform:stack zeroValueMapperFn:averageZeroValue">
-          </canvas>
-        </code>
-        <br><br>
-        <code>
-          <script type="text/javascript">
-            function averageZeroValue(previousValue, nextValue, index, currentSet, sets) {
-              return (previousValue || 0) + (nextValue || 0) / 2;
-            }
-          </script>
-        </code>
       </td>
     </tr>
     <tr><td colspan="3"><hr></td></tr>
