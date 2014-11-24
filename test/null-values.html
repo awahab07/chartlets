@@ -161,9 +161,111 @@ table tr td span:nth-child(6){color:brown;}
 
   <table cellspacing="50">
   <tr><td colspan="3"><hr></td></tr>
+
+    <!-- Test Case -->
+    <tr><td></td><td colspan="2" style="text-align:center;">6.2.1 Line Chart with Zero Values in Sets</td></tr>
+    <tr>
+      <td colspan="2">
+        <canvas id="test_1b" 
+          class="chartlet" 
+          data-type="line" 
+          data-sets="[1 2 0 3 5 6 7 8 0 10] [10 0 8 7 6 0 4 3 6 1] [20 8 6 0 6 6 5 4 0 2]" 
+          data-colors="#f00 #0f0 #00f" 
+          width="200" 
+          height="150" 
+          data-opts="cap:circle shape:smooth">
+        </canvas>
+      </td>
+      <td>
+        <code>
+          <canvas id="test_1b" 
+          class="chartlet" 
+          data-type="line" 
+          data-sets="[1 2 0 3 5 6 7 8 0 10] [10 0 8 7 6 0 4 3 6 1] [20 8 6 0 6 6 5 4 0 2]" 
+          data-colors="#f00 #0f0 #00f" 
+          width="200" 
+          height="150" 
+          data-opts="cap:circle shape:smooth">
+        </canvas>
+      </td>
+    </tr>
+    <tr><td colspan="3"><hr></td></tr>
     
     <!-- Test Case -->
-    <tr><td></td><td colspan="2" style="text-align:center;">6.2.1 Stacked Line Chart with Zero Values in Sets</td></tr>
+    <tr><td></td><td colspan="2" style="text-align:center;">6.2.2 Line Chart with Disconnected Zero Values</td></tr>
+    <tr>
+      <td colspan="2">
+        <canvas id="test_1b" 
+          class="chartlet" 
+          data-type="line" 
+          data-sets="[1 2 0 3 5 6 7 8 0 10] [10 0 8 7 6 0 4 3 6 1] [20 8 6 0 6 6 5 4 0 2] [0 2 4 6 8 0 6 4 2 0]" 
+          data-colors="#f00 #0f0 #00f #333"
+          width="200" 
+          height="150" 
+          data-opts="shape:smooth disconnectOn:0">
+        </canvas>
+      </td>
+      <td>
+        <code>
+          <canvas id="test_1b" 
+          class="chartlet" 
+          data-type="line" 
+          data-sets="[1 2 0 3 5 6 7 8 0 10] [10 0 8 7 6 0 4 3 6 1] [20 8 6 0 6 6 5 4 0 2]" 
+          data-colors="#f00 #0f0 #00f" 
+          width="200" 
+          height="150" 
+          data-opts="shape:smooth disconnectOn:0">
+        </canvas>
+      </td>
+    </tr>
+    <tr><td colspan="3"><hr></td></tr>
+
+    <!-- Test Case -->
+    <tr><td></td><td colspan="2" style="text-align:center;">6.2.3 Stacked Line Chart with <b>Mapped</b> Zero Values in Sets</td></tr>
+    <tr>
+      <td colspan="2">
+        <canvas id="test_1b" 
+          class="chartlet" 
+          data-type="line" 
+          data-sets="[1 2 0 3 5 6 7 8 0 10] [10 0 8 7 6 0 4 3 6 1] [20 8 6 0 6 6 5 4 0 2]" 
+          data-colors="#f00 #0f0 #00f" 
+          width="200" 
+          height="150" 
+          data-opts="cap:circle shape:smooth zeroValueMapperFn:averageZeroValue">
+        </canvas>
+        <br><br>
+        <script type="text/javascript">
+          function averageZeroValue(previousValue, nextValue, index, currentSet, sets) {
+            return (previousValue || 0) + (nextValue || 0) / 2;
+          }
+        </script>
+      </td>
+      <td>
+        <code>
+          <canvas id="test_1b" 
+          class="chartlet" 
+          data-type="line" 
+          data-sets="[1 2 0 3 5 6 7 8 0 10] [10 0 8 7 6 0 4 3 6 1] [20 8 6 0 6 6 5 4 0 2]" 
+          data-colors="#f00 #0f0 #00f" 
+          width="200" 
+          height="150" 
+          data-opts="cap:circle shape:smooth zeroValueMapperFn:averageZeroValue">
+        </canvas>
+        </code>
+        <br><br>
+        <code>
+          <script type="text/javascript">
+            function averageZeroValue(previousValue, nextValue, index, currentSet, sets) {
+              return (previousValue || 0) + (nextValue || 0) / 2;
+            }
+          </script>
+        </code>
+      </td>
+    </tr>
+    <tr><td colspan="3"><hr></td></tr>
+
+    <!-- Test Case -->
+    <tr><td></td><td colspan="2" style="text-align:center;">6.2.4 Stacked Line Chart with Zero Values in Sets</td></tr>
     <tr>
       <td colspan="2">
         <canvas id="test_1b" 
@@ -192,7 +294,7 @@ table tr td span:nth-child(6){color:brown;}
     <tr><td colspan="3"><hr></td></tr>
 
     <!-- Test Case -->
-    <tr><td></td><td colspan="2" style="text-align:center;">6.2.2 Stacked Line Chart with <b>Mapped</b> Zero Values in Sets</td></tr>
+    <tr><td></td><td colspan="2" style="text-align:center;">6.2.5 Stacked Line Chart with Disconnected Zero Values</td></tr>
     <tr>
       <td colspan="2">
         <canvas id="test_1b" 
@@ -202,11 +304,40 @@ table tr td span:nth-child(6){color:brown;}
           data-colors="#f00 #0f0 #00f" 
           width="200" 
           height="150" 
-          data-opts="cap:circle shape:smooth transform:stack zeroValueMapperFn:averageZeroValue">
+          data-opts="cap:circle shape:smooth  transform:stack disconnectOn:0">
+        </canvas>
+      </td>
+      <td>
+        <code>
+          <canvas id="test_1b" 
+          class="chartlet" 
+          data-type="line" 
+          data-sets="[1 2 0 3 5 6 7 8 0 10] [10 0 8 7 6 0 4 3 6 1] [20 8 6 0 6 6 5 4 0 2]" 
+          data-colors="#f00 #0f0 #00f" 
+          width="200" 
+          height="150" 
+          data-opts="cap:circle shape:smooth  transform:stack disconnectOn:0">
+        </canvas>
+      </td>
+    </tr>
+    <tr><td colspan="3"><hr></td></tr>
+
+    <!-- Test Case -->
+    <tr><td></td><td colspan="2" style="text-align:center;">6.2.6 Stacked Line Chart with <b>Mapped</b> Zero Values in Sets</td></tr>
+    <tr>
+      <td colspan="2">
+        <canvas id="test_1b" 
+          class="chartlet" 
+          data-type="line" 
+          data-sets="[1 2 0 3 5 6 7 8 0 10] [10 0 8 7 6 0 4 3 6 1] [20 8 6 0 6 6 5 4 0 2]" 
+          data-colors="#f00 #0f0 #00f" 
+          width="200" 
+          height="150" 
+          data-opts="cap:circle shape:smooth transform:stack zeroValueMapperFn:averageZeroValueLine">
         </canvas>
         <br><br>
         <script type="text/javascript">
-          function averageZeroValue(previousValue, nextValue, index, currentSet, sets) {
+          function averageZeroValueLine(previousValue, nextValue, index, currentSet, sets) {
             return (previousValue || 0) + (nextValue || 0) / 2;
           }
         </script>
@@ -220,13 +351,13 @@ table tr td span:nth-child(6){color:brown;}
             data-colors="#f00 #0f0 #00f" 
             width="200" 
             height="150" 
-            data-opts="cap:circle shape:smooth transform:stack zeroValueMapperFn:averageZeroValue">
+            data-opts="cap:circle shape:smooth transform:stack zeroValueMapperFn:averageZeroValueLine">
           </canvas>
         </code>
         <br><br>
         <code>
           <script type="text/javascript">
-            function averageZeroValue(previousValue, nextValue, index, currentSet, sets) {
+            function averageZeroValueLine(previousValue, nextValue, index, currentSet, sets) {
               return (previousValue || 0) + (nextValue || 0) / 2;
             }
           </script>

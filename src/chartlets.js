@@ -459,7 +459,18 @@
         opts.shape = "straight";
       }
 
-      drawLineSegment(set, i, x, y, step, opts.shape);
+      if(opts.disconnectOn !== false) {
+        if(set[i-1] != undefined && set[i-1] == opts.disconnectOn) {
+          if(isStacked()) {
+          } else {
+            ctx.moveTo(x, y);
+          }
+        } else if (set[i] != opts.disconnectOn) {
+          drawLineSegment(set, i, x, y, step, opts.shape);
+        }
+      } else {
+        drawLineSegment(set, i, x, y, step, opts.shape);
+      }
     }
 
     // TODO support transform=band (upper + lower baselines)
@@ -814,6 +825,9 @@
       }
     }
 
+    // Determine disconnectOn option
+    opts.disconnectOn = !isNaN(opts.disconnectOn) ? +opts.disconnectOn : false;
+
     drawAxis();
 
     for (i = 0; i < sets.length; i++) {
@@ -825,7 +839,8 @@
         offset = i > 0 ? mergeSets(sets.slice(0, i)) : null;
       }
 
-      
+      console.log(set, offset);
+
       drawLineForSet(set, strokeStyle, opts.stroke || 1.5, null, offset);
 
       // TODO account for negative and positive values in same stack
