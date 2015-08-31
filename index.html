@@ -1,69 +1,380 @@
+
+<!DOCTYPE html>
 <html>
 
 <head>
 
-<title>Test</title>
+<title>Chartlets: Tiny charts for tablet and mobile web apps - Enhanced</title>
+
+<meta name="description" content="Chartlets: Tiny charts for tablet and mobile web apps" />
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+<link rel="stylesheet" type="text/css" href="css/main.css">
 
 <script src="src/chartlets.js"></script>
-
-<style>
-canvas {
-  border: 1px solid #ddd;
-}
-</style>
 
 </head>
 
 <body>
 
-<canvas id="test_1" class="chartlet" data-type="line" data-sets="[1 2 3 4 5 6 7 8 9 10] [10 9 8 7 6 5 4 3 2 1]" data-colors="#f00 #00f" width="150" height="55" data-opts="cap:circle"></canvas>
+<header>
+  <div id="download">
+    <a href="https://github.com/awahab07/Chartlets/tree/master/src">Download</a>
+  </div>
+  <h1>Chartlets</h1>
+  <h2>(Tiny charts for tablet and mobile web apps.)</h2>
+</header>
 
-<canvas id="test_1a" class="chartlet" data-type="line" data-sets="[1 2 3 4 5 6 7 8 9 10] [10 9 8 7 6 5 4 3 2 1]" data-colors="#f00 #00f" width="150" height="55" data-opts="cap:circle shape:smooth"></canvas>
+<section id="showcase-line">
+  <h3>Line charts</h3>
+  <canvas class="chartlet" data-type="line" data-colors="#ffcc00 #ff66cc" data-range="0 10" data-sets="[1 5 3 9 4] [4 3 9 7 2]" width="90" height="50" data-opts="stroke:2 shape:smooth"></canvas>
+  <canvas class="chartlet" data-type="line" data-colors="#ffcc00 #9966ff" data-range="0 10" data-sets="[1 5 3 9 4] [4 3 9 7 2]" width="90" height="50" data-opts="stroke:2 shape:smooth cap:circle"></canvas>
+  <canvas class="chartlet" data-type="line" data-range="0 10" data-sets="[1 5 3 9 4] [4 3 9 7 2]" width="90" height="50" data-opts="stroke:1 shape:smooth fill:solid theme:blues"></canvas>
+  <canvas class="chartlet" data-type="line" data-range="0 10" data-sets="[1 5 3 9 4] [4 3 9 7 2]" width="90" height="50" data-opts="stroke:3 cap:square theme:money"></canvas>
+  <canvas class="chartlet" data-type="line" data-sets="[1 5 3 9 4] [4 3 4 7 2] [1 2 3 3 2]" width="90" height="50" data-opts="stroke:1 shape:smooth transform:stack theme:garden"></canvas>
+  <canvas class="chartlet" data-type="line" data-colors="rgb(255,168,57)" data-range="0 10" data-sets="[2 3 7 6 8 7 6 1 3 7]" width="90" height="50" data-opts="stroke:3 shape:step"></canvas>
+  <canvas class="chartlet" data-type="line" data-colors="#fc0 rgba(200,135,12,0.5)" data-range="0 10" data-sets="[2 3 7 6 8 7 6 1 3 7] [5 6 5 3 5 9 8 9 8 5]" width="90" height="50" data-opts="stroke:2 cap:square axis:5"></canvas>
+  <canvas class="chartlet" data-type="line" data-colors="#03a" data-sets="[1 2 6 3 7 2 3 3 1 2 3 4 2 3 3 2 3 2 3 5 3 2 3 2]" width="90" height="50" data-opts="stroke:1 shape:step fill:solid"></canvas>
+  <canvas class="chartlet" data-type="line" data-colors="hsl(336, 76%, 50%)" data-range="0 15" data-sets="[7 8 7 6 7 9 8 7 8 7 7 6 6 5 6 6 7 8 9 8 7 9 7 9 7 9 8 9 8 9 8 9 8 7 5 4 6]" width="90" height="50" data-opts="stroke:2"></canvas>
+  <canvas class="chartlet" data-type="line" data-colors="#cf0 #fc0" data-range="0 10" data-sets="[1 5 3 9 4] [4 3 9 7 2]" width="90" height="50" data-opts="stroke:3 shape:smooth bgcolor:#006"></canvas>
+</section>
 
-<canvas id="test_2" class="chartlet" data-type="line" data-sets="[1 2 3 4 5 6 7 8 9 10] [10 9 8 7 6 5 4 3 2 1]" data-colors="#f00 #00f" width="150" height="55" data-opts="fill:solid"></canvas>
+<section id="showcase-bar">
+  <h3>Bar charts</h3>
+  <canvas class="chartlet" data-type="bar" data-colors="rgb(249,40,48) rgb(47,180,177) rgb(255,168,57)" data-sets="[1 2 3 4 5 6] [2 3 4 5 6 7] [3 4 5 6 7 8]" width="90" height="50" data-opts="transform:stack"></canvas>
+  <canvas class="chartlet" data-type="bar" data-range="0 15" data-sets="[1 2 3 4] [2 3 4 5] [3 4 5 6]" width="90" height="50" data-opts="orient:horiz transform:stack theme:ocean"></canvas>
+  <canvas class="chartlet" data-type="bar" data-colors="hsl(34,57%,50%) hsl(194,67%,50%) hsl(49,89%,60%)" data-sets="[1 2 3 4] [2 3 4 5] [3 4 5 6]" width="90" height="50"></canvas>
+  <canvas class="chartlet" data-type="bar" data-sets="[1 2 -3 -4 2 3] [2 3 -2 -3 3 5]" width="90" height="50" data-opts="theme:money axis:0"></canvas>
+  <canvas class="chartlet" data-type="bar" data-range="0 6" data-sets="[3] [4] [2] [3] [5]" width="90" height="50" data-opts="theme:crayon"></canvas>
+</section>
 
-<canvas id="test_3" class="chartlet" data-type="line" data-sets="[1 2 3 4 5 6 7 8 9 10] [10 9 8 7 6 5 4 3 2 1]" data-colors="#f00 #00f" width="150" height="55" data-opts="transform:stack"></canvas>
+<section id="showcase-pie">
+  <h3>Pie charts</h3>
+  <canvas class="chartlet" data-type="pie" data-sets="[1 2 3]" width="70" height="70" data-opts="theme:blues"></canvas>
+  <canvas class="chartlet" data-type="pie" data-sets="[1 2 3 4 5]" width="70" height="70" data-opts="theme:circus"></canvas>
+  <canvas class="chartlet" data-type="pie" data-sets="[15 35 20 15 10]" width="70" height="70" data-opts="theme:money"></canvas>
+</section>
 
-<canvas id="test_4" class="chartlet" data-type="line" data-sets="" data-colors="#fc0 #0cf" width="150" height="55"></canvas>
+<section id="showcase-custom">
+  <h3>Custom charts</h3>
+  <canvas class="chartlet" data-type="brick" data-sets="[30 20 10]" data-colors="#e00 #0c0 #fc0" width="70" height="70"></canvas>
+  <canvas class="chartlet" data-type="brick" data-sets="[10 20 30 40]" data-opts="theme:party" width="70" height="70"></canvas>
+  <canvas class="chartlet" data-type="brick" data-sets="[20 10 5]" data-opts="theme:blues shape:circle" width="70" height="70"></canvas>
+</section>
 
-<canvas id="test_5" class="chartlet" data-type="bar" data-sets="[1 2 3 4 5 6 7 8 9 10] [10 9 8 7 6 5 4 3 2 1]" data-colors="#f00 #00f" width="150" height="55"></canvas>
+<header id="docs">
+  <h2>Docs</h2>
+</header>
 
-<canvas id="test_6" class="chartlet" data-type="bar" data-sets="[1 2 3 4 5 6 7 8 9 10] [10 9 8 7 6 5 4 3 2 1]" data-colors="#f00 #00f" width="150" height="55" data-opts="transform:stack"></canvas>
+<section id="intro">
+  <h3>What are Chartlets?</h3>
+  <p>Chartlets are tiny charts without grids or legends, like <a href="http://en.wikipedia.org/wiki/Sparklines">Sparklines</a>. They're perfect for conveying simple relationships or trends, especially when space is scarce.</p>
+  <p>Chartlets uses the HTML5 <a href="http://diveintohtml5.info/canvas.html"><code>&lt;canvas&gt;</code></a> element for fast performance and is only 2.8k when minified and gzipped. It has no dependencies.</p>
+</section>
 
-<canvas id="test_7" class="chartlet" data-type="pie" data-sets="[1 2 3 4 5 6 7 8 9 10]" data-colors="#9351a4 #ff99cc #e31a1c #66cdaa #ffcc33 #f92830 #2fb4b1 #ffa839 #3375cd #5fd1d5" width="75" height="75"></canvas>
+<section id="usage">
+  <h3>Usage</h3>
+  <p>1. <a href="https://github.com/adammark/Chartlets/tree/master/src">Download</a> and include <code>&lt;script src="chartlets.min.js"&gt;&lt;/script&gt;.</code></p>
+  <p>2. Create a <code>&lt;canvas&gt;</code> element with a width, height, and the class name "chartlet." Then add HTML5 data attributes as described below.</p>
+  <p>3. Call <code>Chartlets.render()</code>.</p>
+</section>
 
-<canvas class="chartlet" data-type="brick" data-sets="[100 200 300]" data-colors="#e00 #0c0 #ddd" width="100" height="100"></canvas>
+<section id="examples">
+  <h3>Examples</h3>
+  <table class="examples">
+    <tbody>
+      <tr>
+        <td><canvas class="chartlet" data-type="line" data-colors="#ffcc00 #ff66cc" data-range="0 10" data-sets="[1 5 3 9 4] [4 3 9 7 2]" width="100" height="55" data-opts="stroke:2 shape:smooth cap:circle"></canvas></td>
+        <td><code>&lt;canvas class="chartlet" data-type="line" data-colors="#ffcc00 #ff66cc" data-range="0 10" data-sets="[1 5 3 9 4] [4 3 9 7 2]" width="100" height="55" data-opts="stroke:2 shape:smooth cap:circle"&gt;&lt;/canvas&gt;</code></td>
+      </tr>
+      <tr>
+        <td><canvas class="chartlet" data-type="line" data-colors="hsl(319,83%,65%) hsl(200,83%,50%)" data-sets="[10 15 10 16 20 15 16 14 9] [5 12 15 20 14 -2 -5 8 15]" width="100" height="55" data-opts="stroke:1 fill:solid axis:0"></canvas></td>
+        <td><code>&lt;canvas class="chartlet" data-type="line" data-colors="hsla(319,83%,65%) hsl(200,83%,50%)" data-sets="[10 15 10 16 20 15 16 14 9] [5 12 15 20 14 -2 -5 8 15]" width="100" height="55" data-opts="stroke:1 fill:solid axis:0"&gt;&lt;/canvas&gt;</code></td>
+      </tr>
+      <tr>
+        <td><canvas class="chartlet" data-type="line" data-sets="[1 3 2 4 3] [2 1 3 3 2] [1 4 3 4 2]" width="100" height="55" data-opts="transform:stack theme:money"></canvas></td>
+        <td><code>&lt;canvas class="chartlet" data-type="line" data-sets="[1 3 2 4 3] [2 1 3 3 2] [1 4 3 4 2]" width="100" height="55" data-opts="transform:stack theme:money"&gt;&lt;/canvas&gt;</code></td>
+      </tr>
+      <tr>
+        <td><canvas class="chartlet" data-type="line" data-colors="hsl(268, 74%, 50%)" data-range="-10 10" data-sets="[1 3 8 7 4 -4 -5 3 4 7 8]" width="100" height="55" data-opts="shape:step stroke:2.5 axis:0"></canvas></td>
+        <td><code>&lt;canvas class="chartlet" data-type="line" data-colors="hsl(268, 74%, 50%)" data-range="-10 10" data-sets="[1 3 8 7 4 -4 -5 3 4 7 8]" width="100" height="55" data-opts="shape:step stroke:2.5 axis:0"&gt;&lt;/canvas&gt;</code></td>
+      </tr>
+      <tr>
+        <td><canvas class="chartlet" data-type="bar" data-colors="hsl(34,57%,50%) hsl(194,67%,50%) hsl(49,89%,60%)" data-sets="[1 2 3 4] [2 3 4 5] [3 4 5 6]" width="100" height="50"></canvas></td>
+        <td><code>&lt;canvas class="chartlet" data-type="bar" data-colors="hsl(34,57%,50%) hsl(194,67%,50%) hsl(49,89%,60%)" data-sets="[1 2 3 4] [2 3 4 5] [3 4 5 6]" width="100" height="50"&gt;&lt;/canvas&gt;</code></td>
+      </tr>
+      <tr>
+        <td><canvas class="chartlet" data-type="bar" data-colors="rgb(249,40,48) rgb(47,180,177) rgb(255,168,57)" data-range="0 15" data-sets="[1 2 3 4] [2 3 4 5] [3 4 5 6]" width="100" height="50" data-opts="orient:horiz axis:0 transform:stack"></canvas></td>
+        <td><code>&lt;canvas class="chartlet" data-type="bar" data-colors="rgb(249,40,48) rgb(47,180,177) rgb(255,168,57)" data-range="0 15" data-sets="[1 2 3 4] [2 3 4 5] [3 4 5 6]" width="100" height="50" data-opts="orient:horiz transform:stack"&gt;&lt;/canvas&gt;</code></td>
+      </tr>
+      <tr>
+        <td><canvas class="chartlet" data-type="pie" data-sets="[1 2 3 4 5]" width="65" height="65" data-opts="theme:money"></canvas></td>
+        <td><code>&lt;canvas class="chartlet" data-type="pie" data-sets="[1 2 3 4 5]" width="65" height="65" data-opts="theme:money"&gt;&lt;/canvas&gt;</code></td>
+      </tr>
+      <tr>
+        <td><canvas class="chartlet" data-type="pie" data-colors="#ED729D #72CAED" data-sets="[2 4]" width="85" height="65" data-opts="bgcolor:#003"></canvas></td>
+        <td><code>&lt;canvas class="chartlet" data-type="pie" data-colors="#ED729D #72CAED" data-sets="[2 4]" width="85" height="65" data-opts="bgcolor:#003"&gt;&lt;/canvas&gt;</code></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
 
-<canvas class="chartlet" data-type="brick" data-sets="[1000 1000 1000]" data-colors="#e00 #0c0 #ddd" data-opts="shape:circle" width="100" height="100"></canvas>
+<section id="types">
+  <h3>Chart Types</h3>
+  <p>Chartlets includes three basic chart types:</p>
+  <p><code>&lt;canvas class="chartlet" <span class="highlight">data-type="line"</span> ...&gt;&lt;/canvas&gt;</code></p>
+  <p><code>&lt;canvas class="chartlet" <span class="highlight">data-type="bar"</span> ...&gt;&lt;/canvas&gt;</code></p>
+  <p><code>&lt;canvas class="chartlet" <span class="highlight">data-type="pie"</span> ...&gt;&lt;/canvas&gt;</code></p>
+</section>
 
-<canvas class="chartlet" data-type="brick" data-sets="[20 10 5]" data-colors="#e00 #0c0 #ddd" width="100" height="100"></canvas>
+<section id="data">
+  <h3>Chart Data</h3>
+  <p>Data is expressed as one or more sets of y-values, depending on the chart type. Sets must be of equal length; x-scales are assumed to have even increments.</p>
+  <p><code>&lt;canvas class="chartlet" data-type="line" ... <span class="highlight">data-sets="[1 2 3 4 5] [5 4 3 2 1]"</span>&gt;&lt;/canvas&gt;</code></p>
+  <p><code>&lt;canvas class="chartlet" data-type="bar" ... <span class="highlight">data-sets="[1.5 2.5 3.5] [4.5 5.5 6.5]"</span>&gt;&lt;/canvas&gt;</code></p>
+  <p><code>&lt;canvas class="chartlet" data-type="pie" ... <span class="highlight">data-sets="[10 20 30]"</span>&gt;&lt;/canvas&gt;</code></p>
 
-<canvas class="chartlet" data-type="brick" data-sets="[10 20 30]" data-colors="#e00 #0c0 #ddd" width="75" height="75"></canvas>
+  <br>
 
-<canvas class="chartlet" data-type="brick" data-sets="[1 2 3]" data-colors="#e00 #0c0 #ddd" width="75" height="75"></canvas>
+  <p>Scales are derived from the minimum and maximum data points unless explicited stated:</p>
+  <p><code>&lt;canvas class="chartlet" ... <span class="highlight">data-range="0 10"</span> data-sets="[1 3 5] [2 4 6]"&gt;&lt;/canvas&gt;</code></p>
 
-<canvas class="chartlet" data-type="brick" data-sets="[1 2 3]" data-colors="#e00 #0c0 #ddd" width="75" height="35"></canvas>
+  <br>
 
-<canvas class="chartlet" data-type="brick" data-sets="[1 2 3]" data-colors="#e00 #0c0 #ddd" data-opts="shape:circle" width="75" height="35"></canvas>
+  <p><strong>Pro tip:</strong> Data can be expressed in shorthand notation (e.g. <code>"[1 2] [3 4]"</code>) or JSON (e.g. <code>"[[1, 2], [3, 4]]"</code>).</p>
+</section>
 
-<canvas class="chartlet" data-type="brick" data-sets="[1 2 3]" data-colors="#e00 #0c0 #ddd" width="35" height="75"></canvas>
+<section id="colors">
+  <h3>Chart Colors</h3>
+  <p>Colors are expressed in hexadecimal, RGB(A) or HSL(A) notation, one color for each data set.</p>
+  <p><code>&lt;canvas class="chartlet" ... <span class="highlight">data-colors="#f00 #bada55"</span>&gt;&lt;/canvas&gt;</code></p>
+  <p><code>&lt;canvas class="chartlet" ... <span class="highlight">data-colors="rgb(255,0,0) rgba(10,20,30,0.5)"</span>&gt;&lt;/canvas&gt;</code></p>
+  <p><code>&lt;canvas class="chartlet" ... <span class="highlight">data-colors="hsl(200, 83%, 50%) hsla(319, 83%, 50%, 0.5)"</span>&gt;&lt;/canvas&gt;</code></p>
 
-<canvas class="chartlet" data-type="brick" data-sets="[10 20 30]" data-colors="#e00 #0c0 #ddd" width="35" height="75"></canvas>
+  <h4>Themes</h4>
 
-<canvas class="chartlet" data-type="brick" data-sets="[1 2 3]" data-colors="#e00 #0c0 #ddd" data-opts="shape:circle" width="35" height="75"></canvas>
+  <p>Instead of specifying an array of colors, you can apply a color theme:</p>
+  <p><code>&lt;canvas class="chartlet" ... <span class="highlight">data-opts="theme:money"</span>&gt;&lt;/canvas&gt;</code></p>
+  <p>Pick from one of ten built-in themes, each with five colors:</p>
 
-<canvas class="chartlet" data-type="brick" data-sets="[10 20 30]" data-colors="#e00 #0c0 #ddd" data-opts="shape:circle" width="35" height="75"></canvas>
+  <div class="swatch">
+    <canvas class="chartlet" data-type="bar" data-range="0 2" data-sets="[1] [1.5] [1] [1.5] [1]" width="85" height="35" data-opts="orient:side theme:blues"></canvas>
+    <p>blues</p>
+  </div>
 
-<canvas class="chartlet" data-type="brick" data-sets="[100 200 300]" data-colors="#e00 #0c0 #ddd" data-opts="shape:circle" width="35" height="75"></canvas>
+  <div class="swatch">
+    <canvas class="chartlet" data-type="bar" data-range="0 2" data-sets="[1] [1.5] [1] [1.5] [1]" width="85" height="35" data-opts="orient:side theme:money"></canvas>
+    <p>money</p>
+  </div>
 
-<canvas class="chartlet" data-type="brick" data-sets="[100 200 300]" data-colors="#e00 #0c0 #ddd" data-opts="shape:circle" width="75" height="35"></canvas>
+  <div class="swatch">
+    <canvas class="chartlet" data-type="bar" data-range="0 2" data-sets="[1] [1.5] [1] [1.5] [1]" width="85" height="35" data-opts="orient:side theme:circus"></canvas>
+    <p>circus</p>
+  </div>
 
-<canvas class="chartlet" data-type="brick" data-sets="[1000 2000 3000]" data-colors="#e00 #0c0 #ddd" data-opts="shape:circle" width="35" height="75"></canvas>
-<br>
-<br>
-<br>
+  <div class="swatch">
+    <canvas class="chartlet" data-type="bar" data-range="0 2" data-sets="[1] [1.5] [1] [1.5] [1]" width="85" height="35" data-opts="orient:side theme:party"></canvas>
+    <p>party</p>
+  </div>
 
-<button onclick="updateAll()">update all</button>
+  <div class="swatch">
+    <canvas class="chartlet" data-type="bar" data-range="0 2" data-sets="[1] [1.5] [1] [1.5] [1]" width="85" height="35" data-opts="orient:side theme:garden"></canvas>
+    <p>garden</p>
+  </div>
+
+  <div class="swatch">
+    <canvas class="chartlet" data-type="bar" data-range="0 2" data-sets="[1] [1.5] [1] [1.5] [1]" width="85" height="35" data-opts="orient:side theme:crayon"></canvas>
+    <p>crayon</p>
+  </div>
+
+  <div class="swatch">
+    <canvas class="chartlet" data-type="bar" data-range="0 2" data-sets="[1] [1.5] [1] [1.5] [1]" width="85" height="35" data-opts="orient:side theme:ocean"></canvas>
+    <p>ocean</p>
+  </div>
+
+  <div class="swatch">
+    <canvas class="chartlet" data-type="bar" data-range="0 2" data-sets="[1] [1.5] [1] [1.5] [1]" width="85" height="35" data-opts="orient:side theme:spring"></canvas>
+    <p>spring</p>
+  </div>
+
+  <div class="swatch">
+    <canvas class="chartlet" data-type="bar" data-range="0 2" data-sets="[1] [1.5] [1] [1.5] [1]" width="85" height="35" data-opts="orient:side theme:beach"></canvas>
+    <p>beach</p>
+  </div>
+
+  <div class="swatch">
+    <canvas class="chartlet" data-type="bar" data-range="0 2" data-sets="[1] [1.5] [1] [1.5] [1]" width="85" height="35" data-opts="orient:side theme:fire"></canvas>
+    <p>fire</p>
+  </div>
+
+  <p>Or create a custom theme using any number and combination of hex, RGB(A) or HSL(A) strings:</p>
+
+  <code>Chartlets.setTheme("rainbow", ["#eb1f1f", "#fcb13a", "#ffd026"]);</code>
+
+  <p>To load the current color set:</p>
+
+  <code>var colors = Chartlets.getTheme();</code>
+
+  <p>Or to load colors for a particular theme:</p>
+
+  <code>var colors = Chartlets.getTheme("money");</code>
+
+</section>
+
+<section id="options">
+  <h3>Chart Options</h3>
+  <p>Chartlets can be customized via the <code>data-opts</code> attribute:</p>
+  <p><code>&lt;canvas class="chartlet" data-type="line" ... <span class="highlight">data-opts="stroke:2 shape:smooth cap:circle"</span>&gt;&lt;/canvas&gt;</code></p>
+
+  <h4>Global options</h4>
+  <ul>
+    <li><p><strong>bgcolor</strong> sets the background color of the entire chart. It can be in hex, RGB(A) or HSL(A) notation. The background is transparent by default.</p></li>
+    <li><p><strong>theme</strong> sets the color theme for the chart data, overriding any colors specified in <code>data-colors</code>. If no theme is specified and <code>data-colors</code> is empty, the "blues" theme is applied.</p></li>
+  </ul>
+
+  <h4>Line options</h4>
+  <ul>
+    <li><p><strong>stroke</strong> sets the line width, a value between <code>1</code> and <code>3</code>, inclusive. The default value is <code>1</code>.</p></li>
+    <li><p><strong>shape</strong> sets the line contour. Acceptable values are <code>straight</code>, <code>smooth</code> and <code>step</code>. The default value is <code>straight</code>.</p></li>
+    <li><p><strong>cap</strong> renders an icon at each data point. Acceptable values are <code>none</code>, <code>circle</code> and <code>square</code>. The default value is <code>none</code>.</p></li>
+    <li><p><strong>fill</strong> sets the fill style, either <code>none</code> or <code>solid</code>. The default value is <code>none</code>.</p></li>
+    <li><p><strong>alpha</strong> sets the opacity of the fill, a number between <code>0</code> and <code>1.0</code>, inclusive. The default value is <code>0.5</code> (or <code>1.0</code> if <code>transform</code> is set to <code>stack</code>).</p></li>
+    <li><p><strong>transform</strong> specifies how to structure the data sets. Acceptable values are <code>none</code> and <code>stack</code>. If <code>stack</code>, data sets are "stacked" bottom to top. The default value is <code>none</code>.</p></li>
+    <li><p><strong>axis</strong> renders a dashed line at the given y-value.</p></li>
+  </ul>
+
+  <h4>Bar options</h4>
+  <ul>
+    <li><p><strong>orient</strong> sets the orientation of the chart, either <code>horiz</code> or <code>vert</code>. The default value is <code>vert</code>.</p></li>
+    <li><p><strong>transform</strong> specifies how to structure the data sets. Acceptable values are <code>none</code> and <code>stack</code>. If <code>stack</code>, data sets are "stacked" bottom to top. The default value is <code>none</code>.</p></li>
+    <li><p><strong>axis</strong> renders an axis line at the given y-value.</p></li>
+  </ul>
+</section>
+
+<section id="updating">
+  <h3>Updating Data</h3>
+
+  <p>The <code>update</code> method helps you re-render charts with new data (or populate charts with data from an AJAX request). It accepts an element (or element ID) and an array of data sets. Below, the <code>&lt;canvas&gt;</code> element with ID <code>"demo1"</code> is updated with new values every 500ms.</p>
+
+  <canvas class="chartlet" id="demo1" data-type="line" data-colors="#ffcc00 #ff66cc" data-range="0 10" data-sets="[2 3 5 3 6 3 7 8 4 2] [8 3 4 7 2 7 2 4 6 1]" width="150" height="55" data-opts="stroke:2 shape:smooth"></canvas>
+
+<pre>
+var a = [2, 3, 5, 3, 6, 3, 7, 8, 4, 2];
+var b = [8, 3, 4, 7, 2, 7, 2, 4, 6, 1];
+
+setInterval(function() {
+  a.push(Math.ceil(Math.random() * 9));
+  b.push(Math.ceil(Math.random() * 9));
+  a.shift();
+  b.shift();
+
+  <span class="highlight">Chartlets.update("demo1", [a, b]);</span>
+}, 500);
+</pre>
+
+  <br>
+
+  <p>Here, a pie chart acts as a progress meter:</p>
+
+  <canvas id="demo2" style="border:none" class="chartlet" data-type="pie" data-sets="[0 100]" data-colors="#0c0 #ddd" width="60" height="60"></canvas>
+
+<pre>
+var a = 0;
+
+setInterval(function() {
+  if (++a > 100) {
+    a = 0;
+  }
+
+  <span class="highlight">Chartlets.update("demo2", [[a, 100 - a]]);</span>
+}, 50);
+</pre>
+
+</section>
+
+<section id="transitions">
+  <h3>Transitions</h3>
+
+  <p>You can apply a transition effect during an update if the old and new data structures are identical. For example:</p>
+
+  <code>Chartlets.update("my-chart-id", [[1,2,3], [4,5,6]], <span class="highlight">{ transition: "linear" }</span>);</code>
+
+  <p>The only transition type is "linear." Try it out below:</p>
+
+  <div class="tx">
+    <canvas id="tx_line" class="chartlet" data-type="line" data-sets="[1 2 3 4 5 6 7 8] [8 7 6 5 4 3 2 1]" width="125" height="55" data-opts="cap:circle stroke:2 theme:party"></canvas>
+    <button onclick="tx_demo('tx_line')">Update</button>
+  </div>
+
+  <div class="tx">
+    <canvas id="tx_line_stack" class="chartlet" data-type="line" data-sets="[1 2 3 4 5 6 7 8] [1 2 3 4 5 6 7 8]" width="125" height="55" data-opts="transform:stack theme:beach"></canvas>
+    <button onclick="tx_demo('tx_line_stack')">Update</button>
+  </div>
+
+  <div class="tx">
+    <canvas id="tx_bar" class="chartlet" data-type="bar" data-sets="[1 2 3 4 5 6 7 8] [8 7 6 5 4 3 2 1]" width="125" height="55" data-opts="theme:crayon"></canvas>
+    <button onclick="tx_demo('tx_bar')">Update</button>
+  </div>
+
+  <div class="tx">
+    <canvas id="tx_bar_stack" class="chartlet" data-type="bar" data-sets="[1 2 3 4 5 6 7 8] [3 3 3 3 3 3 3 3]" width="125" height="55" data-opts="transform:stack theme:ocean"></canvas>
+    <button onclick="tx_demo('tx_bar_stack')">Update</button>
+  </div>
+
+  <div class="tx">
+    <canvas id="tx_pie" class="chartlet" data-type="pie" data-sets="[1 1 1 1 1 1 1 1]" data-colors="#9351a4 #ff99cc #e31a1c #66cdaa #ffcc33 #f92830 #2fb4b1 #ffa839" width="65" height="65"></canvas>
+    <button onclick="tx_demo('tx_pie')">Update</button>
+  </div>
+
+</section>
+
+<section id="custom">
+  <h3>Custom Chart Types</h3>
+
+  <p>You can create your own chart type by writing a custom renderer. For example, say you want to draw a smiley face with a configurable smile:</p>
+
+<code>
+&lt;canvas class="chartlet" id="smiley1" data-type="<span class="highlight">smiley</span>" data-sets="[1 2] [3 4]" width="75" height="75" data-opts="gender:male hair:yes"&gt;&lt;/canvas&gt;
+</code>
+
+<p>The <code>setRenderer</code> method accepts a chart type and rendering function, which gives you direct access to the canvas context, chart data and other properties:</p>
+
+<pre>
+Chartlets.setRenderer("<span class="highlight">smiley</span>", <span class="highlight">function (ctx, width, height, sets, opts)</span> {
+  // width = 75
+  // height = 75
+  // sets = [[1,2], [3,4]]
+  // opts = { gender: "male", hair: "yes" }
+  // colors = Chartlets.getTheme()
+
+  // now draw into ctx
+});
+</pre>
+
+<p>Transitions should work without any additional logic. Following on the above example, a smiley face might transition from a smile to a frown when the chart is updated:</p>
+
+<code>
+Chartlets.update("smiley1", [[4,3], [2,1]], { transition: "linear" });
+</code>
+
+</section>
+
+<section id="notes">
+  <h3>Notes</h3>
+  <ul>
+    <li><p>You can apply additional styles to the <code>&lt;canvas&gt;</code> element with CSS. For example: <code>.chartlet { border: 1px solid #ddd; }</code></p></li>
+    <li><p>At this time, positive and negative values cannot be comingled in a stacked bar chart or stacked line chart.</p></li>
+    <li><p>For older browsers that don't support the <code>&lt;canvas&gt;</code> element, consider a <a href="https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills#canvas">polyfill</a>.</p></li> 
+    <li><p>For larger, canvas-based charts, consider <a href="http://www.chartjs.org/">Chart.js</a>. For interactive, SVG-based charts, consider <a href="http://d3js.org/">D3.js</a>.</p></li>
+    <li><p>Bugs or requests? Please <a href="https://github.com/adammark/Chartlets/issues?state=open">submit an issue</a>.</p></li>
+  </ul>
+</section>
+
+<footer>
+  &copy; 2013 <a href="http://adammark.net/about">Adam Mark</a>. <a href="http://opensource.org/licenses/MIT">MIT License</a>
+</footer>
 
 <script>
 Chartlets.setRenderer("brick", function (ctx, width, height, sets, opts) {
@@ -92,25 +403,24 @@ Chartlets.setRenderer("brick", function (ctx, width, height, sets, opts) {
   var i;
   var set = sets[0];
   var sum = sumSet(set);
-  var m = Math.min((width * height) / 100, sum); // number of dots
+  var m = Math.min((width * height) / 100, sum);
   var z = opts.basis ? Math.max(opts.basis, m) : m;
   var c = 0;
   var t = [set[0] / sum];
-  var n = Math.ceil(width / Math.sqrt((width * height) / z)); // dots per row
-  var o = Math.ceil(z / n); // dots per col
-  var p = 2; // padding between dots
+  var n = Math.ceil(width / Math.sqrt((width * height) / z));
+  var o = Math.ceil(z / n);
+  var p = 2;
   var w = Math.min((width - (p * (n-1))) / n, (height - (p * (o-1))) / o);
-  var x1 = opts.shape === "circle" ? w / 2 : 0; // x origin
-  var y1 = x1; // y origin
-  var x = x1; // current x
-  var y = y1; // current y
+  var x1 = opts.shape === "circle" ? w / 2 : 0;
+  var y1 = x1;
+  var x = x1;
+  var y = y1;
   var colors = Chartlets.getTheme();
 
   for (i = 1; i < set.length; i++) {
     t.push(t[i - 1] + (set[i] / sum));
   }
 
-  // left to right, top to bottom
   for (i = 0; i < m; i++) {
     if (i && i % n == 0) {
       x = x1;
@@ -134,26 +444,46 @@ Chartlets.setRenderer("brick", function (ctx, width, height, sets, opts) {
 
 Chartlets.render();
 
-function update(id) {
+(function () {
+  var a = [2, 3, 5, 3, 6, 3, 7, 8, 4, 2];
+  var b = [8, 3, 4, 7, 2, 7, 2, 4, 6, 1];
+
+  setInterval(function() {
+    a.push(Math.ceil(Math.random() * 9));
+    b.push(Math.ceil(Math.random() * 9));
+    a.shift();
+    b.shift();
+
+    Chartlets.update("demo1", [a, b]);
+  }, 500);
+}());
+
+(function () {
+  var a = 0;
+
+  setInterval(function() {
+    if (++a > 100) {
+      a = 0;
+    }
+
+    Chartlets.update("demo2", [[a, 100 - a]]);
+  }, 50);
+}());
+
+function tx_demo(id) {
   var a = [];
   var b = [];
+  var i;
 
-  for (var i = 0; i < 10; i++) {
-    a[i] = Math.ceil(Math.random() * 9);
-    b[i] = Math.ceil(Math.random() * 9);
+  for (i = 0; i < 8; i++) {
+    a[i] = Math.ceil(Math.random() * 7);
+    b[i] = Math.ceil(Math.random() * 7);
   }
 
   Chartlets.update(id, [a, b], { transition: "linear" });
 }
-
-function updateAll() {
-  var elems = document.querySelectorAll("[id*='test_']");
-
-  for (var i = 0; i < elems.length; i++) {
-  	update(elems[i].id);
-  }
-}
 </script>
 
-
 </body>
+
+</html>

@@ -1,0 +1,110 @@
+<style>
+.chartlet {
+  border: 1px solid #ddd;
+  margin: 2px;
+}
+
+body {
+  font-family: Helvetica, Arial;
+  background-color: white;
+  padding: 20px 50px;
+}
+header {
+  margin-bottom: 50px;
+}
+footer {
+  font-size: .8em;
+  color: #999;
+}
+h1, h2, h3 {
+  font-family: Helvetica, Arial;
+  font-weight: normal;
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+h1 {
+  font-size: 3.75em;
+}
+h2 {
+  font-size: 1.7em;
+}
+h3 {
+  font-size: 1.5em;
+  margin-bottom: .25em;
+  color: hsl(336, 76%, 50%);
+}
+p {
+  font-family: Helvetica, Arial;
+}
+a, a:visited {
+  color: hsl(225, 65%, 50%);
+}
+a:hover {
+  color: hsl(336, 76%, 50%);
+}
+small {
+  font-size: .75em;
+  color: #999;
+}
+section {
+  margin-bottom: 50px;
+}
+#download {
+  text-align: right;
+  font-size: 1.35em;
+  font-weight: bold;
+  color: #222;
+}
+table.examples tr td {
+  padding: 0 10px 15px 0;
+}
+td, th {
+  text-align: left;
+  vertical-align: top;
+}
+.highlight {
+  background-color: #ffc;
+  border: 1px solid #fc3;
+  padding: 1px 2px;
+  border-radius: 4px;
+}
+.swatch, .tx {
+  display: inline-block;
+}
+.swatch p {
+  margin: 4px 0;
+  color: #999;
+  font-size: .9em;
+}
+.tx {
+  margin: 10px 10px 10px 0;
+}
+.tx canvas {
+  display: block;
+  margin-bottom: 6px;
+}
+code, pre {
+  font-family: Monaco, Courier, monospace;
+  font-size: .8em;
+}
+li strong {
+  color: hsl(336, 76%, 50%);
+}
+
+@media only screen and (max-width: 480px) {
+  body {
+    padding: 8px;
+  }
+  h1 {
+    font-size: 3em;
+  }
+  code, pre {
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  td, th {
+    padding: 2px;
+  }
+}
+</style>
