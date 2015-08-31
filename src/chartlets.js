@@ -839,8 +839,6 @@
         offset = i > 0 ? mergeSets(sets.slice(0, i)) : null;
       }
 
-      console.log(set, offset);
-
       drawLineForSet(set, strokeStyle, opts.stroke || 1.5, null, offset);
 
       // TODO account for negative and positive values in same stack
